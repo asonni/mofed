@@ -10,6 +10,10 @@ app.config(['$routeProvider', function($routeProvider) {
   .when('/register', {
     templateUrl: 'register.html',
     controller: 'RegisterCtrl'
+  })
+  .when('/restore', {
+    templateUrl: 'restore.html',
+    controller: 'RestoreCtrl'
   });
 }]);
 
