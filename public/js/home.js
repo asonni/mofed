@@ -4,7 +4,7 @@ var app = angular.module('mofed', ['ngRoute']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {
-    templateUrl: 'home.html',
+    templateUrl: '../home.html',
     controller: 'HomeCtrl'
   });
 }]);

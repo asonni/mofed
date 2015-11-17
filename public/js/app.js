@@ -14,6 +14,9 @@ app.config(['$routeProvider', function($routeProvider) {
   .when('/restore', {
     templateUrl: 'restore.html',
     controller: 'RestoreCtrl'
+  })
+  .otherwise({
+    reditectTo: 'pages/login.html'
   });
 }]);
 
@@ -22,5 +25,9 @@ app.controller('LoginCtrl', ['$scope', function($scope) {
 }]);
 
 app.controller('RegisterCtrl', ['$scope', function($scope) {
+
+}]);
+
+app.controller('RestoreCtrl', ['$scope', function($scope) {
 
 }]);

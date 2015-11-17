@@ -6,8 +6,4 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'شاشة الدخول' });
 });
 
-router.get('/home', function(req, res, next) {
-  res.render('home', { title: 'الرئيسية' });
-});
-
 module.exports = router;
