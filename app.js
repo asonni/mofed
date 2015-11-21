@@ -10,6 +10,17 @@ var user = require('./routes/user');
 
 var app = express();
 
+var mongoose = require('mongoose');
+var config = require('./config'); // get our config file
+
+var options = {
+  db: { native_parser: true },
+  server: { poolSize: 5 },
+  user: config.user,
+  pass: config.password
+}
+mongoose.connect(config.url, options);
+
 // view engine setup
 app.engine('html', require('ejs').renderFile);
 app.set('views', path.join(__dirname, 'views'));
