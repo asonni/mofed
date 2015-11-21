@@ -13,12 +13,17 @@ router.post('/register', function(req, res, next) {
   user.register(req.body,function(result){
     if(result){
       //send email with activation link
-      res.render('home', { title: 'الرئيسية', msg: 1 });
+      res.render('index', { title: 'الرئيسية', msg: 1 });
     } else {
       //something went wrong
-      res.render('home', { title: 'الرئيسية', msg: 2 });
+      res.render('index', { title: 'الرئيسية', msg: 2 });
     }
   });
+});
+
+
+router.get('/confirm', function(req, res, next) {
+  res.render('confirm', { title: 'مطابقة البيانات' });
 });
 
 module.exports = router;

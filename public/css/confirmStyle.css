@@ -54,3 +54,16 @@ nav.navbar-findcond span.badge.new { background: rgba(255, 0, 0, 0.8); color: #f
 .container .text-muted {
   margin: 20px 0;
 }
+
+label {
+  color: #337ab7;
+  font-weight: 500;
+}
+
+.form-group>.form-control {
+  line-height: 25px;
+}
+
+.title {
+  color: #337ab7;
+}
