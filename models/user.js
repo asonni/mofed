@@ -16,4 +16,4 @@ var User = new Schema({
 });
 User.plugin(timestamps);
 
-module.exports = mongoose.model('User', User));
+module.exports = mongoose.model('User', User);
