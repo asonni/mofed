@@ -1,10 +1,15 @@
 @font-face {
+  font-family: 'JFFlat';
+  src : url("../fonts/JF-Flat-regular.ttf") format("truetype");
+}
+
+@font-face {
   font-family: 'droidkufi';
   src : url("../fonts/DroidKufi-Regular.ttf") format("truetype");
 }
 
 body{
-  font-family: 'droidkufi', sans-serif;
+  font-family: 'JFFlat', sans-serif;
   padding-top: 100px;
 }
 
