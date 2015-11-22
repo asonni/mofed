@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('mofed', ['ngRoute', 'ui-notification']);
+var app = angular.module('mofed', ['ngRoute', 'ui-notification', 'remoteValidation']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {
@@ -48,7 +48,7 @@ app.controller('RegisterCtrl', ['$scope', '$location', '$http', 'Notification', 
       $scope.email='';
       $scope.password='';
       $location.path("/");
-      Notification.success({message: 'تم التسجيل بنجاح الرجاء التأكيد علي البريد الالكتروني', title: 'نجاح'});
+      Notification.success({message: 'تم التسجيل بنجاح الرجاء التأكيد علي البريد الالكتروني', title: '<div class="text-right">نجاح</div>'});
     }).error(function (data, status){
       console.log(data);
     });
