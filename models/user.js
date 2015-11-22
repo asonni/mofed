@@ -6,9 +6,9 @@ var Schema = mongoose.Schema;
 
 var User = new Schema({
     name: {type: String, index: true},
-  	password: String, 
+  	password: {type: String, required: true},
   	salt: String,
-  	email: String,
+  	email: {type: String, unique : true, required : true},
   	status: Boolean,
   	activated : {type: Boolean, default:false},
   	verified: { type: Number, min: 1, max: 10 },
