@@ -21,6 +21,19 @@ router.post('/register', function(req, res, next) {
   });
 });
 
+/* check if Registered. */
+router.get('/isRegistered/:email', function(req, res, next) {
+  user.isRegistered(req.params.email,function(result){
+    if(result){
+      //send email with activation link
+      res.send(true);
+    } else {
+      //something went wrong
+      res.send(false);
+    }
+  });
+});
+
 
 router.get('/confirm', function(req, res, next) {
   res.render('confirm', { title: 'مطابقة البيانات' });
