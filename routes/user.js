@@ -22,13 +22,13 @@ router.post('/register', function(req, res, next) {
 });
 
 /* check if Registered. */
-router.post('/isRegistered/', function(req, res, next) {
-  user.isRegistered(req.body.email,function(result){
+router.get('/isRegistered/:email', function(req, res, next) {
+  user.isRegistered(req.params.email,function(result){
     if(result){
-      //send email with activation link
+      //send true if we find a match
       res.send(true);
     } else {
-      //something went wrong
+      //send false if we didn't find a match
       res.send(false);
     }
   });
