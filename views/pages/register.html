@@ -7,7 +7,7 @@
         <div class="row">
           <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-              <input type="email" name="email" id="email" class="form-control" placeholder="البريد الالكتروني" tabindex="3" style="line-height: 30px;">
+              <input type="email" name="email" id="email" ng-model="email" class="form-control" placeholder="البريد الالكتروني" tabindex="3" style="line-height: 30px;">
             </div>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-6">
@@ -19,7 +19,7 @@
         <div class="row">
           <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-              <input type="password" name="password" id="password" class="form-control" placeholder="كلمة المرور" tabindex="5" style="line-height: 30px;">
+              <input type="password" name="password" id="password" ng-model="password" class="form-control" placeholder="كلمة المرور" tabindex="5" style="line-height: 30px;">
             </div>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-6">
@@ -30,7 +30,7 @@
         </div>
         <hr class="colorgraph">
         <div class="row">
-          <div class="col-xs-12 col-md-6"><input type="submit" value="تسجيل" class="btn btn-primary btn-block" tabindex="7"></div>
+          <div class="col-xs-12 col-md-6"><input type="submit" ng-click="register()" value="تسجيل" class="btn btn-primary btn-block" tabindex="7"></div>
           <div class="col-xs-12 col-md-6"><a href="/#/" class="btn btn-success btn-block">دخول</a></div>
         </div>
       </form>
