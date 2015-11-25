@@ -1,13 +1,16 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-      <form role="form" ng-submit="register()">
+      <form role="form" ng-submit="register()" name="registerForm">
         <h3>الرجاء التسجيل</h3>
         <hr class="colorgraph">
         <div class="row">
           <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-              <input type="email" ng-model="email" class="form-control" placeholder="البريد الالكتروني" tabindex="3" style="line-height: 30px;">
+              <input type="email" name="email" ng-model="email" ng-remote-validate="/user/isRegistered/" ng-remote-throttle="800" ng-remote-method="GET" class="form-control" placeholder="البريد الالكتروني" tabindex="3" style="line-height: 30px;">
+              <i style="position:absolute; margin:-32px;" class="fa fa-spinner fa-pulse fa-2x" ng-show="registerForm.email.$pending"></i>
+              <span ng-show="registerForm.$error.ngRemoteValidate" style="position:absolute;color:red;">هذا البريد موجود مسبقا!</span>
+              <span ng-show="registerForm.$error.email" style="position:absolute;color:red;">الرجاء ادخال بريد الكتروني صالح</span>
             </div>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-6">
@@ -16,21 +19,24 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top: 10px;">
           <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-              <input type="password" ng-model="password" class="form-control" placeholder="كلمة المرور" tabindex="5" style="line-height: 30px;">
+              <input type="password" name="newPassword" ng-model="password" class="form-control" placeholder="كلمة المرور" tabindex="5" style="line-height: 30px;" required>
             </div>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-              <input type="password" class="form-control" placeholder="تأكيد كلمة المرور" tabindex="6" style="line-height: 30px;">
+              <input type="password" name="confirmPassword" ng-match="password" class="form-control" placeholder="تأكيد كلمة المرور" tabindex="6" style="line-height: 30px;" required>
+              <span ng-show="registerForm.confirmPassword.$error.match">
+                عفوا كلمة المرور ليست متطابقة
+              </span>
             </div>
           </div>
         </div>
         <hr class="colorgraph">
         <div class="row">
-          <div class="col-xs-12 col-md-6"><input type="submit" value="تسجيل" class="btn btn-primary btn-block" tabindex="7"></div>
+          <div class="col-xs-12 col-md-6"><input type="submit" value="تسجيل" ng-disabled="registerForm.$invalid || registerForm.$pending" class="btn btn-primary btn-block" tabindex="7"></div>
           <div class="col-xs-12 col-md-6"><a href="/#/" class="btn btn-success btn-block">دخول</a></div>
         </div>
       </form>
