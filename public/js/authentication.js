@@ -38,7 +38,7 @@ app.config(function(NotificationProvider) {
 app.controller('LoginCtrl', ['$scope', '$http', function($scope, $http) {
   $scope.login = function(){
     $http.post('/user/login',{
-      'email': $scope.email,
+      'username': $scope.email,
       'password': $scope.password
     }).success(function (result){
       $scope.email='';

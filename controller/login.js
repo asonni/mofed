@@ -39,18 +39,17 @@ passport.deserializeUser(function (id, done) {
 
 module.exports = function (router) {
   //login here we get the email and password and check if they're conrrect
-  router.post('/user/login', passport.authenticate('local', {
+  router.post('/login', passport.authenticate('local', {
     failureRedirect: '/?msg=2'
   }), function (req, res) {
     findById(req.session.passport.user, function (err, user) {
-      console.log(user);
       req.session.idu = user.id;
       req.session.name = user.name;
-      res.redirect('/user/home');
+      res.redirect('/user');
     });
   });
   // here if a user wants to logout of the app
-  router.get('/user/logout', ensureAuthenticated, function (req, res) {
+  router.get('/logout', ensureAuthenticated, function (req, res) {
     req.session.destroy();
     res.redirect('/');
   });
@@ -58,7 +57,7 @@ module.exports = function (router) {
 }
 
 function findById(id, fn) {
-  User.findOne({_id : id, activated : true}, function(err, user){
+  User.findOne({_id : id}, function(err, user){
     if (user) {
       fn(null, user);
     } else {
@@ -70,7 +69,7 @@ function findById(id, fn) {
 function findByUserName(username, fn) {
   User.findOne({email : username}, function(err, user){
     if (user) {
-      return fn(null, user[0]);
+      return fn(null, user);
     } else {
       return fn(null, null);
     }
