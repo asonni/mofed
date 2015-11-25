@@ -35,8 +35,18 @@ app.config(function(NotificationProvider) {
 });
 // Angular Notification Configuration End
 
-app.controller('LoginCtrl', ['$scope', function($scope) {
-
+app.controller('LoginCtrl', ['$scope', '$http', function($scope, $http) {
+  $scope.login = function(){
+    $http.post('/user/login',{
+      'email': $scope.email,
+      'password': $scope.password
+    }).success(function (result){
+      $scope.email='';
+      $scope.password='';
+    }).error(function (data, status){
+      console.log(data);
+    });
+  };
 }]);
 
 app.controller('RegisterCtrl', ['$scope', '$location', '$http', 'Notification', function($scope, $location, $http, Notification) {
