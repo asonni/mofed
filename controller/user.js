@@ -1,18 +1,28 @@
 var User = require("../models/user"),
+    easyPbkdf2 = require("easy-pbkdf2")(),
     user = null;
+
 
 module.exports = {
   /* here we add a new user to the system */
   register: function (body, cb) {
-    user = new User(body);
-    user.save(function(err,result){
-      if (!err) {
-        cb(result);
-      } else {
-        //TODO: return page with errors
-        console.log(err)
-        cb(null);
-      }
+    var salt = easyPbkdf2.generateSalt(); //we generate a new salt for every new user
+    easyPbkdf2.secureHash( body.password, salt, function( err, passwordHash, originalSalt ) {
+      var obj={
+        email : body.email,
+        password : passwordHash,
+        salt : originalSalt,
+      };
+      user = new User(obj);
+      user.save(function(err,result){
+        if (!err) {
+          cb(result);
+        } else {
+          //TODO: return page with errors
+          console.log(err)
+          cb(null);
+        }
+      });
     });
   },
 
