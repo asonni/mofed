@@ -1,13 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var user = require("../controller/user");
-var login = require('../controller/login')(router);
 var helpers = require('../controller/userHelpers');
 
 
 
 /* GET users listing. */
-router.get('/',helpers.isLogin, function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.render('home', { title: 'الرئيسية' });
 });
 
