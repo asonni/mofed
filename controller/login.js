@@ -37,22 +37,28 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
+// app.post('/login',
+//   passport.authenticate('local', { successRedirect: '/',
+//                                    failureRedirect: '/login' }));
+
 module.exports = function (router) {
   //login here we get the email and password and check if they're conrrect
-  router.post('/login', passport.authenticate('local', {
+  router.post('/user/login', passport.authenticate('local', {
     failureRedirect: '/?msg=2'
   }), function (req, res) {
     findById(req.session.passport.user, function (err, user) {
-      req.session.idu = user.id;
-      req.session.name = user.name;
-      res.redirect('/user');
-      // res.redirect(301,'http://localhost:3000/user#/');
-      // res.redirect('http://google.com');
-      // res.location('/user#/');
+      if(user.activated) {
+        req.session.idu = user.id;
+        req.session.name = user.name;
+        req.send({ login: true });
+      } else {
+        req.session.destroy();
+        req.send({login:3});
+      }
     });
   });
   // here if a user wants to logout of the app
-  router.get('/logout', ensureAuthenticated, function (req, res) {
+  router.get('/user/logout', ensureAuthenticated, function (req, res) {
     req.session.destroy();
     res.redirect('/');
   });
