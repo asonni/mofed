@@ -46,6 +46,9 @@ module.exports = function (router) {
       req.session.idu = user.id;
       req.session.name = user.name;
       res.redirect('/user');
+      // res.redirect(301,'http://localhost:3000/user#/');
+      // res.redirect('http://google.com');
+      // res.location('/user#/');
     });
   });
   // here if a user wants to logout of the app

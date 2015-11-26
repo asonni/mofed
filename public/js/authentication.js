@@ -2,7 +2,7 @@
 
 var app = angular.module('mofed', ['ngRoute', 'ui-notification', 'remoteValidation']);
 
-app.config(['$routeProvider', function($routeProvider) {
+app.config(['$routeProvider','$locationProvider', function($routeProvider,$locationProvider) {
   $routeProvider.when('/', {
     templateUrl: 'login.html',
     controller: 'LoginCtrl'
@@ -16,8 +16,9 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'RestoreCtrl'
   })
   .otherwise({
-    reditectTo: 'login.html'
+    reditectTo: '/'
   });
+  // $locationProvider.html5Mode(true);
 }]);
 
 // Angular Notification Configuration Start
@@ -35,7 +36,7 @@ app.config(function(NotificationProvider) {
 });
 // Angular Notification Configuration End
 
-app.controller('LoginCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('LoginCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
   $scope.login = function(){
     $http.post('/user/login',{
       'username': $scope.email,
@@ -43,6 +44,7 @@ app.controller('LoginCtrl', ['$scope', '$http', function($scope, $http) {
     }).success(function (result){
       $scope.email='';
       $scope.password='';
+      window.location.replace('/user');
     }).error(function (data, status){
       console.log(data);
     });
