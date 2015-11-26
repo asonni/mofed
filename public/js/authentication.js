@@ -36,15 +36,21 @@ app.config(function(NotificationProvider) {
 });
 // Angular Notification Configuration End
 
-app.controller('LoginCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification', function($scope, $http, $location, Notification) {
   $scope.login = function(){
     $http.post('/user/login',{
       'username': $scope.email,
       'password': $scope.password
     }).success(function (result){
-      $scope.email='';
-      $scope.password='';
-      window.location.replace('/user');
+      if (result.login == true) {
+        $scope.email='';
+        $scope.password='';
+        window.location.replace('/user');
+      } else if (result.login == 3) {
+        $scope.email='';
+        $scope.password='';
+        Notification.warning({message: 'حسابك غير مفعل الرجاء زيار بريدك الالكتروني', title: '<div class="text-right">فشل</div>'});
+      }
     }).error(function (data, status){
       console.log(data);
     });
