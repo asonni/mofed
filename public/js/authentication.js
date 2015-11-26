@@ -2,7 +2,7 @@
 
 var app = angular.module('mofed', ['ngRoute', 'ui-notification', 'remoteValidation']);
 
-app.config(['$routeProvider','$locationProvider', function($routeProvider,$locationProvider) {
+app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {
     templateUrl: 'login.html',
     controller: 'LoginCtrl'
@@ -16,9 +16,8 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider,$locat
     controller: 'RestoreCtrl'
   })
   .otherwise({
-    reditectTo: '/'
+    templateUrl: '404.html'
   });
-  // $locationProvider.html5Mode(true);
 }]);
 
 // Angular Notification Configuration Start
@@ -36,12 +35,15 @@ app.config(function(NotificationProvider) {
 });
 // Angular Notification Configuration End
 
-app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification','$routeParams', function($scope, $http, $location, Notification,$routeParams) {
+app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification','$routeParams', function($scope, $http, $location, Notification, $routeParams) {
   if($routeParams.msg==4){
+    $location.url($location.path());
     Notification.info({message: 'تم تفعيل حسابك, الرجاء قم بالدخول', title: '<div class="text-right">نجح</div>'});
+  } else if ($routeParams.msg==5){
+    $location.url($location.path());
+    Notification.error({message: 'لم يتم العتور علي حسابك, الرجاء التفعيل من جديد', title: '<div class="text-right">خطأ</div>'});
   }
   $scope.login = function(){
-    
     $http.post('/user/login',{
       'username': $scope.email,
       'password': $scope.password
