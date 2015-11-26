@@ -50,10 +50,10 @@ module.exports = function (router) {
       if(user.activated) {
         req.session.idu = user.id;
         req.session.name = user.name;
-        req.send({ login: true });
+        res.send({login: true });
       } else {
         req.session.destroy();
-        req.send({login:3});
+        res.send({login:3});
       }
     });
   });

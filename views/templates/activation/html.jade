@@ -1,0 +1,24 @@
+html
+  head
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    title #{user.title}
+    style(media='all', type='text/css')
+  body
+    table(cellspacing='0', cellpadding='0', border='0', width='100%' dir ="rtl")
+      tr
+        td.navbar.navbar-inverse(align='right')
+          //This setup makes the nav background stretch the whole width of the screen. 
+          a.brand.pull-left(href='mofed.ly')
+            img(src="#")
+      tr
+        td
+          hr
+      tr
+        td(bgcolor='#FFFFFF', align='left') لقد تم اضافتك كمستخدم في منظومة موفد ، الرجاء تفعيل حسابك بزيارة الرابط بالأسفل وشكراً
+          p
+            a(href='http://localhost:3000/user/activate/#{user.token}') اضغط هنا لتفعيل حسابك
+          p بريد المستخدم : #{user.email} 
+      tr
+        td(bgcolor='#FFFFFF', align='center')
+          hr
+          p منظومة موف

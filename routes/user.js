@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var user = require("../controller/user");
-var helpers = require('../controller/userHelpers');
+var helpers = require('../controller/userHelpers'),
+    mailer = require('../controller/mailer');
 
 
 
@@ -14,6 +15,18 @@ router.get('/', function(req, res, next) {
 router.post('/register', function(req, res, next) {
   user.register(req.body,function(result){
     if(result){
+      var obj = {
+          template : "activation",
+          subject : "Your HNEC app credentials",
+          locals : {
+            email : result.email,
+            user : {
+              email : result.email,
+              token : result._id
+            }
+          }
+        }
+        mailer.send(obj); // 
       //send email with activation link
       res.render('index', { title: 'الرئيسية', msg: 1 });
     } else {
