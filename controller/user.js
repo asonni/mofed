@@ -28,18 +28,21 @@ module.exports = {
 
   /* here we activate the user */
   activate: function (token, cb) {
-    User.findOne({studentId : token}, function(err, user){
-      console.log(user);
-      user.activated = true;
-      user.save(function(err,result){
-        if (!err) {
-          cb(result);
-        } else {
-          //TODO: return page with errors
-          console.log(err)
-          cb(null);
-        }
-      });
+    User.findOne({_id : token}, function(err, user){
+      if(!err && user != null){
+        user.activated = true;
+        user.save(function(err,result){
+          if (!err) {
+            cb(result);
+          } else {
+            //TODO: return page with errors
+            console.log(err)
+            cb(null);
+          }
+        });
+      } else {
+        cb(null);
+      }
     });
   },
 

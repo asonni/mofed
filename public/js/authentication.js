@@ -36,8 +36,12 @@ app.config(function(NotificationProvider) {
 });
 // Angular Notification Configuration End
 
-app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification', function($scope, $http, $location, Notification) {
+app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification','$routeParams', function($scope, $http, $location, Notification,$routeParams) {
+  if($routeParams.msg==4){
+    Notification.info({message: 'تم تفعيل حسابك, الرجاء قم بالدخول', title: '<div class="text-right">نجح</div>'});
+  }
   $scope.login = function(){
+    
     $http.post('/user/login',{
       'username': $scope.email,
       'password': $scope.password

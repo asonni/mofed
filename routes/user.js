@@ -24,14 +24,14 @@ router.post('/register', function(req, res, next) {
 });
 
 /* activate new user. */
-router.get('/activate', function(req, res, next) {
-  user.register(req.body,function(result){
+router.get('/activate/:token', function(req, res, next) {
+  user.activate(req.params.token,function(result){
     if(result){
       //send email with activation link
-      res.render('index', { title: 'الرئيسية', msg: 1 });
+      res.redirect('/#/?msg=4');
     } else {
       //something went wrong
-      res.render('index', { title: 'الرئيسية', msg: 2 });
+      res.redirect('/#/?msg=5');
     }
   });
 });
