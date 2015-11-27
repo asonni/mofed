@@ -16,17 +16,17 @@ router.post('/register', function(req, res, next) {
   user.register(req.body,function(result){
     if(result){
       var obj = {
-          template : "activation",
-          subject : "Mofed app registration",
-          locals : {
+        template : "activation",
+        subject : "Mofed app registration",
+        locals : {
+          email : result.email,
+          user : {
             email : result.email,
-            user : {
-              email : result.email,
-              token : result._id
-            }
+            token : result._id
           }
         }
-        mailer.send(obj); // 
+      }
+      mailer.send(obj); // 
       //send email with activation link
       res.render('index', { title: 'الرئيسية', msg: 1 });
     } else {
@@ -62,6 +62,11 @@ router.get('/isRegistered', function(req, res, next) {
   });
 });
 
+
+router.post('/check', function(req, res, next) {
+  console.log(req.body);
+  res.render('confirm', { title: 'مطابقة البيانات' });
+});
 
 router.get('/confirm', function(req, res, next) {
   res.render('confirm', { title: 'مطابقة البيانات' });
