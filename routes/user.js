@@ -65,7 +65,7 @@ router.get('/isRegistered', function(req, res, next) {
 
 router.post('/check', function(req, res, next) {
   console.log(req.body);
-  res.render('confirm', { title: 'مطابقة البيانات' });
+  res.rend({check:true});
 });
 
 router.get('/confirm', function(req, res, next) {
