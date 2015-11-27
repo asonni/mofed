@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var user = require("../controller/user");
+var user = require("../controller/user"),
+    mofednid = require('../controller/mofednid'),
+    mofedbase = require('../controller/mofedbase');
 var helpers = require('../controller/userHelpers'),
     mailer = require('../controller/mailer');
 
@@ -64,8 +66,13 @@ router.get('/isRegistered', function(req, res, next) {
 
 
 router.post('/check', function(req, res, next) {
-  console.log(req.body);
-  res.rend({check:true});
+  mofedbase.getStudents(req.body.lawnum, function(students){
+    mofednid.getPerson(req.body.nid,req.body.regnum, function(person){
+      console.log(person);
+      res.render('confirm', {students: students,person: person});
+    })
+    // res.send({check:true});
+  });
 });
 
 router.get('/confirm', function(req, res, next) {

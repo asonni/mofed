@@ -5,21 +5,20 @@ var Schema = mongoose.Schema;
 // set up a mongoose model
                
 var Mofedbase = new Schema({
-    sid: {type: String, index: true},
+    sid: Number,
     name: {type: String, index: true},
     degree: String,
-    lawnum: String,
+    lawnum: Number,
     begfinance: {type: String},
     endfinance:{type: String},
-    socialstatus : {type: String}
+    socialstatus : {type: String},
     country: String,
-    stipen: String,
+    stipen: Number,
     begmandate: String,
     endmandate: String,
-    months: String,
-    total: String,
+    months: Number,
+    total: Number,
     currency: String,
-    totalinlyd: String,
+    totalinlyd: Number,
 });
-Mofedbase.plugin(timestamps);
 module.exports = mongoose.model('Mofedbase', Mofedbase);

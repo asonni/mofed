@@ -4,13 +4,13 @@ var Schema = mongoose.Schema;
 
 // set up a mongoose model
 var Mofednid = new Schema({
-    nid: {type: String, index: true},
+    nid: Number,
     name: {type: String, index: true},
-    regnum: {type: String, index: true},
+    regnum: Number,
     dob: String,
     pob: String,
     mothername:{type: String, index: true},
-    familynum : {type: String, index: true}
+    familynum : Number
 });
 Mofednid.plugin(timestamps);
 module.exports = mongoose.model('Mofednid', Mofednid);
