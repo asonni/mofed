@@ -65,7 +65,7 @@ router.get('/isRegistered', function(req, res, next) {
 
 router.post('/check', function(req, res, next) {
   console.log(req.body);
-  res.rend({check:true});
+  res.send({check:true});
 });
 
 router.get('/confirm', function(req, res, next) {
