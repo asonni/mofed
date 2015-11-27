@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('mofed', ['ngRoute', 'ui-notification', 'remoteValidation']);
+var app = angular.module('mofed', ['ngRoute', 'ui-notification', 'remoteValidation', 'validation.match']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider,$locationProvider) {
   $routeProvider.when('/', {
@@ -24,6 +24,29 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider,$loca
   });
 }]);
 
+app.directive('checkEmailOnBlur', function(){
+  var EMAIL_REGX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function(scope, elm, attr, ctrl) {
+      if (attr.type === 'radio' || attr.type === 'checkbox') return;
+      elm.unbind('input').unbind('keydown').unbind('change');
+      elm.bind('blur', function () {
+        scope.$apply(dovalidation);
+      });
+      scope.$on('kickOffValidations', dovalidation)
+      function dovalidation() {
+        if (EMAIL_REGX.test(elm.val())) {
+          ctrl.$setValidity('emails', true);
+        } else {
+          ctrl.$setValidity('emails', false);
+        }
+      }
+    }
+  };
+});
+
 // Angular Notification Configuration Start
 app.config(function(NotificationProvider) {
   NotificationProvider.setOptions({
@@ -40,7 +63,6 @@ app.config(function(NotificationProvider) {
 // Angular Notification Configuration End
 
 app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification','$routeParams', function($scope, $http, $location, Notification, $routeParams) {
-  console.log($routeParams);
   if($routeParams.msg==2){
     $location.url($location.path());
     Notification.error({message: 'الرجاء التأكد من البريد الالكتروني وكلمة المرور', title: '<div class="text-right">خطأ</div>'});
@@ -58,21 +80,23 @@ app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification','$ro
   //   return ($scope.form[field].$dirty && $scope.form[field].$invalid) || ($scope.submitted && $scope.form[field].$invalid);
   // };
   $scope.login = function(){
-    $scope.submitted = true;
+    $scope.allowValidation = function () {
+      $scope.$broadcast('kickOffValidations');
+    };
     $http.post('/user/login',{
-      'username': $scope.email,
+      'username': $scope.username,
       'password': $scope.password
     }).success(function (result){
       if (result.login == true) {
-        $scope.email='';
+        $scope.username='';
         $scope.password='';
         window.location.replace('/user');
       } else if (result.login == 2) {
-        $scope.email='';
+        $scope.username='';
         $scope.password='';
         Notification.warning({message: ' خطأ في كلمة المرور او البريد الالكتروني', title: '<div class="text-right">فشل</div>'});
       } else if (result.login == 3) {
-        $scope.email='';
+        $scope.username='';
         $scope.password='';
         Notification.warning({message: 'حسابك غير مفعل الرجاء زيار بريدك الالكتروني', title: '<div class="text-right">فشل</div>'});
       }
