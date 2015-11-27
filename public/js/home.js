@@ -25,7 +25,7 @@ app.controller('HomeCtrl', ['$scope', function($scope) {
 
 }]);
 
-app.controller('CheckCtrl', ['$scope', '$http', 'Notification', function($scope, $http, Notification) {
+app.controller('CheckCtrl', ['$scope', '$http', 'Notification', '$location', function($scope, $http, Notification, $location) {
   $scope.check = function(){
     $http.post('/user/check',{
       'nid': $scope.nid,
@@ -33,10 +33,11 @@ app.controller('CheckCtrl', ['$scope', '$http', 'Notification', function($scope,
       'lawnum': $scope.lawnum
     }).success(function (result){
       if (result.check == true) {
-        $scope.nid='';
-        $scope.regnum='';
-        $scope.lawnum='';
-        window.location.replace('/user#/results');
+        // $scope.nid='';
+        // $scope.regnum='';
+        // $scope.lawnum='';
+        $location.path('/results');
+        // window.location.replace('/user#/results');
       } else {
         $scope.nid='';
         $scope.regnum='';

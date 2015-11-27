@@ -68,7 +68,6 @@ router.get('/isRegistered', function(req, res, next) {
 router.post('/check', function(req, res, next) {
   mofedbase.getStudents(req.body.lawnum, function(students){
     mofednid.getPerson(req.body.nid,req.body.regnum, function(person){
-      console.log(person);
       res.render('confirm', {students: students,person: person});
     })
     // res.send({check:true});
