@@ -1,22 +1,23 @@
 <div class="container">
   <div class="row" style="margin-top:20px">
     <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-      <form role="form" ng-submit="login()">
+      <form role="form" ng-submit="login()" name="loginForm">
         <fieldset>
           <h3>الرجاء تسجيل الدخول</h3>
           <hr class="colorgraph">
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-error' : loginForm.email.$invalid && !loginForm.email.$pristine }">
             <input type="email" name="email" ng-model="email" class="form-control" placeholder="البريد الالكتروني" style="line-height: 30px;">
+            <p ng-show="loginForm.email.$invalid && !loginForm.email.$pristine" class="help-block">Email is required.</p>
           </div>
           <div class="form-group">
-            <input type="password" name="password" ng-model="password" class="form-control" placeholder="كلمة المرور" style="line-height: 30px;">
+            <input type="password" name="password" ng-model="password" class="form-control" placeholder="كلمة المرور" style="line-height: 30px;" required>
           </div>
           <a href="/#/restore" class="btn btn-link pull-left">إستعادة كلمة المرور ؟</a>
           <br>
           <hr class="colorgraph">
           <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6">
-              <input type="submit" class="btn btn-success btn-block" value="دخول">
+              <input type="submit" class="btn btn-success btn-block" value="دخول" ng-disabled="loginForm.$invalid">
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
               <a href="/#/register" class="btn btn-primary btn-block">تسجيل</a>

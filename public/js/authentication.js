@@ -2,7 +2,7 @@
 
 var app = angular.module('mofed', ['ngRoute', 'ui-notification', 'remoteValidation']);
 
-app.config(['$routeProvider', function($routeProvider) {
+app.config(['$routeProvider', '$locationProvider', function($routeProvider,$locationProvider) {
   $routeProvider.when('/', {
     templateUrl: 'login.html',
     controller: 'LoginCtrl'
@@ -17,6 +17,10 @@ app.config(['$routeProvider', function($routeProvider) {
   })
   .otherwise({
     templateUrl: '404.html'
+  });
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
   });
 }]);
 
@@ -36,14 +40,25 @@ app.config(function(NotificationProvider) {
 // Angular Notification Configuration End
 
 app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification','$routeParams', function($scope, $http, $location, Notification, $routeParams) {
-  if($routeParams.msg==4){
+  console.log($routeParams);
+  if($routeParams.msg==2){
+    $location.url($location.path());
+    Notification.error({message: 'الرجاء التأكد من البريد الالكتروني وكلمة المرور', title: '<div class="text-right">خطأ</div>'});
+  } else if($routeParams.msg==4){
     $location.url($location.path());
     Notification.info({message: 'تم تفعيل حسابك, الرجاء قم بالدخول', title: '<div class="text-right">نجح</div>'});
   } else if ($routeParams.msg==5){
     $location.url($location.path());
     Notification.error({message: 'لم يتم العتور علي حسابك, الرجاء التفعيل من جديد', title: '<div class="text-right">خطأ</div>'});
   }
+  // $scope.hasError = function(field, validation){
+  //   if(validation){
+  //     return ($scope.form[field].$dirty && $scope.form[field].$error[validation]) || ($scope.submitted && $scope.form[field].$error[validation]);
+  //   }
+  //   return ($scope.form[field].$dirty && $scope.form[field].$invalid) || ($scope.submitted && $scope.form[field].$invalid);
+  // };
   $scope.login = function(){
+    $scope.submitted = true;
     $http.post('/user/login',{
       'username': $scope.email,
       'password': $scope.password
@@ -52,6 +67,10 @@ app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification','$ro
         $scope.email='';
         $scope.password='';
         window.location.replace('/user');
+      } else if (result.login == 2) {
+        $scope.email='';
+        $scope.password='';
+        Notification.warning({message: ' خطأ في كلمة المرور او البريد الالكتروني', title: '<div class="text-right">فشل</div>'});
       } else if (result.login == 3) {
         $scope.email='';
         $scope.password='';

@@ -17,7 +17,7 @@ router.post('/register', function(req, res, next) {
     if(result){
       var obj = {
           template : "activation",
-          subject : "Your HNEC app credentials",
+          subject : "Mofed app registration",
           locals : {
             email : result.email,
             user : {
@@ -41,10 +41,10 @@ router.get('/activate/:token', function(req, res, next) {
   user.activate(req.params.token,function(result){
     if(result){
       //send email with activation link
-      res.redirect('/#/?msg=4');
+      res.redirect('/?msg=4');
     } else {
       //something went wrong
-      res.redirect('/#/?msg=5');
+      res.redirect('/?msg=5');
     }
   });
 });

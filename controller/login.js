@@ -41,22 +41,47 @@ passport.deserializeUser(function (id, done) {
 //   passport.authenticate('local', { successRedirect: '/',
 //                                    failureRedirect: '/login' }));
 
+// router.post('/user/login', function(req, res, next) {
+//   passport.authenticate('local', function(err, user, info) {
+//     if (err) { return next(err); }
+//     if (!user) { return res.redirect('/login'); }
+//     req.logIn(user, function(err) {
+//       if (err) { return next(err); }
+//       return res.redirect('/users/' + user.username);
+//     });
+//   })(req, res, next);
+// });
+
 module.exports = function (router) {
-  //login here we get the email and password and check if they're conrrect
-  router.post('/user/login', passport.authenticate('local', {
-    failureRedirect: '/#/?msg=2'
-  }), function (req, res) {
-    findById(req.session.passport.user, function (err, user) {
-      if(user.activated) {
-        req.session.idu = user.id;
-        req.session.name = user.name;
-        res.send({login: true });
-      } else {
+  router.post('/user/login', function(req, res, next) {
+    passport.authenticate('local', function(err, user) {
+      if (err) { return next(err); }
+      if (!user) { return res.send({login: 2 }); }
+      if(!user.activated){
         req.session.destroy();
         res.send({login:3});
       }
-    });
+      req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        res.send({login: true });
+      });
+    })(req, res, next);
   });
+  //login here we get the email and password and check if they're conrrect
+  // router.post('/user/login', passport.authenticate('local', {
+  //   failureRedirect: '/?msg=2'
+  // }), function (req, res) {
+  //   findById(req.session.passport.user, function (err, user) {
+  //     if(user.activated) {
+  //       req.session.idu = user.id;
+  //       req.session.name = user.name;
+  //       res.send({login: true });
+  //     } else {
+  //       req.session.destroy();
+  //       res.send({login:3});
+  //     }
+  //   });
+  // });
   // here if a user wants to logout of the app
   router.get('/user/logout', ensureAuthenticated, function (req, res) {
     req.session.destroy();
