@@ -2,11 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <link rel='stylesheet' href='/css/style.css' />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/bootstrap-rtl.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Error 404</title>
 </head>
 <body>
-  <h1><%= message %></h1>
-  <h2><%= error.status %></h2>
-  <pre><%= error.stack %></pre>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="error-template">
+          <h1>
+            خطأ!
+          </h1>
+          <h2>
+            404 لم يتم العثور
+          </h2>
+          <div class="error-details">
+            عذرا، حدث خطأ، الصفحة المطلوبة غير موجودة!
+          </div>
+          <div class="error-actions">
+            <a href="/" class="btn btn-primary btn-lg">
+              <span class="glyphicon glyphicon-home"></span>
+              تسجيل الدخول 
+            </a>
+            <a href="http://www.naga.ly" target="_blank" class="btn btn-default btn-lg">
+              <span class="glyphicon glyphicon-envelope"></span> 
+              اتصل بنا
+            </a>
+          </div>
+          <pre><%= error.stack %></pre>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

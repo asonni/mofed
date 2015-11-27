@@ -5,11 +5,11 @@
         <fieldset>
           <h3>الرجاء تسجيل الدخول</h3>
           <hr class="colorgraph">
-          <div class="form-group" ng-class="{ 'has-error' : loginForm.email.$invalid && !loginForm.email.$pristine }">
-            <input type="email" name="email" ng-model="email" class="form-control" placeholder="البريد الالكتروني" style="line-height: 30px;">
-            <p ng-show="loginForm.email.$invalid && !loginForm.email.$pristine" class="help-block">Email is required.</p>
+          <div class="form-group" ng-class="{ 'has-error' : loginForm.email.$error.emails }">
+            <input type="email" ng-model="username" class="form-control" placeholder="البريد الالكتروني" style="line-height: 30px;">
+            <span ng-show="loginForm.email.$error.emails" style="position:absolute;color:red;">الرجاء ادخال البريد الالكتروني</span>
           </div>
-          <div class="form-group">
+          <div class="form-group" style="margin-top: 22px;">
             <input type="password" name="password" ng-model="password" class="form-control" placeholder="كلمة المرور" style="line-height: 30px;" required>
           </div>
           <a href="/#/restore" class="btn btn-link pull-left">إستعادة كلمة المرور ؟</a>
