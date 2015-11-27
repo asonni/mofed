@@ -44,7 +44,7 @@ passport.deserializeUser(function (id, done) {
 module.exports = function (router) {
   //login here we get the email and password and check if they're conrrect
   router.post('/user/login', passport.authenticate('local', {
-    failureRedirect: '/?msg=2'
+    failureRedirect: '/#/?msg=2'
   }), function (req, res) {
     findById(req.session.passport.user, function (err, user) {
       if(user.activated) {
