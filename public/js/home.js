@@ -29,32 +29,25 @@ app.service('checkService', function(){
 
 });
 
-app.controller('HomeCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('HomeCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
   $http.post('/user/verify',{
-  })
-  .success(function (results){
-    console.log(results);
+  }).success(function (results){
+    $scope.verify = 1;
+    if (results.verify == 1) {
+      $scope.verify = 24;
+    } else if (results.verify == 2) {
+      $scope.verify = 58.7;
+    }
+    else if (results.verify == 3) {
+      $scope.verify = 100;
+    }
   }).error(function (data, status){
     console.log(data);
   });
-  var value = Math.floor((Math.random() * 100) + 1);
-  // var type;
 
-    if (value < 25) {
-      type = 'success';
-    } else if (value < 50) {
-      type = 'info';
-    } else if (value < 75) {
-      type = 'warning';
-    } else {
-      type = 'danger';
-    }
-
-    $scope.showWarning = (type === 'danger' || type === 'warning');
-
-    $scope.dynamic = value;
-    $scope.type = type;
-  };
+  $scope.check = function(){
+    $location.path("/check");
+  }
 }]);
 
 app.controller('CheckCtrl', ['$scope', '$http', 'Notification', '$location', 'checkService', function($scope, $http, Notification, $location, checkService) {

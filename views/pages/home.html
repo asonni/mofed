@@ -5,13 +5,47 @@
 <br/>
 <br/>
 </br>
-<form name="confirmForm" ng-submit="confirm()">
+<form name="confirmForm" ng-submit="check()">
   <div class="row">
     <div class="col-lg-10 col-lg-offset-1">
-      <uib-progressbar class="progress-striped active" value="33.3333" type="{{type}}">{{type}} <i ng-show="showWarning">!!! Watch out !!!</i></uib-progressbar>
-      <br/>
-      <uib-progressbar class="progress-striped active" value="66.666" type="{{type}}">{{type}} <i ng-show="showWarning">!!! Watch out !!!</i></uib-progressbar>
-      <br/>
-      <uib-progressbar class="progress-striped active" value="100" type="{{type}}">{{type}} <i ng-show="showWarning">!!! Watch out !!!</i></uib-progressbar>
+      <div class="row">
+        <div class="col-lg-2 col-lg-offset-2">
+          <div class="text-center">
+            مرحلة التسجيل
+            <br/>
+            <i class="fa fa-sort-desc"></i>
+          </div>
+        </div>
+        <div class="col-lg-2 col-lg-offset-2">
+          <div class="text-center">
+            مرحلة التأكيد
+            <br/>
+            <i class="fa fa-sort-desc"></i>
+          </div>
+        </div>
+        <div class="col-lg-2 col-lg-offset-2">
+          <div class="text-center">
+            مرحلة التطابق
+            <br/>
+            <i class="fa fa-sort-desc"></i>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+      <uib-progressbar class="progress-striped active" value="verify" type="{{type}}">{{type}} <i ng-show="showWarning">!!! Watch out !!!</i></uib-progressbar>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <div class="row">
+    <div class="col-lg-3 col-lg-offset-4">
+      <input type="submit" class="btn btn-success form-control" value="تأكيد" ng-hide="verify == 58.7"/>
+    </div>
+  </div>
+</form>
