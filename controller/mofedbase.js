@@ -7,7 +7,7 @@ module.exports = {
       if (!err) {
         cb(person);
       } else {
-        //TODO: return page with errors
+        // return page with errors
         console.log(err)
         cb(null);
       }

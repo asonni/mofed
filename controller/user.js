@@ -58,7 +58,7 @@ module.exports = {
       }
     });
   },
-  /* here we check if activated */
+  /* here we check if registered */
   isRegistered: function (email, cb) {
     User.findOne({email : email}, function(err, user){
       if (!err) {
@@ -74,31 +74,50 @@ module.exports = {
       }
     });
   },
+  /* user verifies*/
+  userVerified: function (id, cb) {
+    User.findOne({_id : id}, function(err, user){
+      if(!err && user != null){
+        user.verified = 2;
+        user.save(function(err,result){
+          if (!err) {
+            cb(result);
+          } else {
+            //return page with errors
+            console.log(err)
+            cb(null);
+          }
+        });
+      } else {
+        cb(null);
+      }
+    });
+  },
+  /* get  */
+  verify: function (id, cb) {
+    User.findOne({_id : id}, function(err, user){
+      if(!err && user != null){
+        cb(user.verified);
+      } else {
+        cb(null);
+      }
+    });
+  },
+  /* here get all students */
+  getAllStudents: function (cb) {
+    User.find({admin : false, verified : {$gte:2} }, function(err, users){
+      if (!err) {
+        // Map the docs into an array of just the _ids
+        var ids = users.map(function(doc) { return doc._id; });
+        cb(students);
+      } else {
+        // return page with errors
+        console.log(err)
+        cb(null);
+      }
+    });
+  }
 }
 
-// var us= {
-//   name: "احمد الفيتوري",
-//   password: "pss", 
-//   salt: "String",
-//   email: "String",
-//   status: true,
-//   verified: 1
-// }
-// this.addUser(us,function(result){
-//   console.log(result)
-// })
 
-// driver = new DriversModel({
-//    firstName:req.body.firstname,
-//    lastName:req.body.lastname,
-//  });
-  
-//  driver.save(function (err) {
-//    if (!err) {
-//      return console.log("created");
-//    } else {
-//      //TODO: return page with errors
-//      return console.log(err);
-//    }
-//  });
 
