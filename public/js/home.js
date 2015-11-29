@@ -93,4 +93,14 @@ app.controller('ConfirmCtrl', ['$scope', '$http', 'checkService', function($scop
     console.log(data);
   });
   $scope.selectName = false;
+  $scope.confirm = function(){
+    $http.post('/user/confirm',{
+        'nid': $scope.person.person.nid,
+        'sid': $scope.sid
+      }).success(function (results){
+        console.log(results);
+      }).error(function (data, status){
+      console.log(data);
+    });
+  }
 }]);

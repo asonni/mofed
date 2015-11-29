@@ -1,7 +1,7 @@
 <br/>
 <br/>
 <br/>
-<form name="confirm">
+<form name="confirmForm" ng-submit="confirm()">
   <div class="row">
     <div class="col-lg-6">
       <div class="panel panel-primary">
@@ -76,7 +76,7 @@
       <input type="submit" class="btn btn-success form-control" value="تأكيد" ng-disabled="!selectName"/>
     </div>
     <div class="col-lg-3">
-      <input type="submit" class="btn btn-primary form-control" value="البيانات غير صحيحة"/>
+      <input type="botton" class="btn btn-primary form-control" value="البيانات غير صحيحة"/>
     </div>
   </div>
 </form>
