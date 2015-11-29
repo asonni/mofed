@@ -92,7 +92,7 @@ app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', '
     'nid': $scope.nid,
     'regnum': $scope.regnum,
     'lawnum': $scope.lawnum
-  }).success(function (person, students){
+  }).success(function (person){
     $scope.person = person;
   }).error(function (data, status){
     console.log(data);
