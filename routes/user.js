@@ -76,6 +76,7 @@ router.post('/check', function(req, res, next) {
 });
 
 router.post('/confirm', function(req, res, next) {
+  //console.log(req.user._id);
   console.log(req.body);
 });
 
