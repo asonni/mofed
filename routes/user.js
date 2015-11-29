@@ -94,7 +94,7 @@ router.post('/confirm', function (req, res, next) {
 router.post('/verify', function (req, res, next) {
   user.verify(req.user._id,function (result){
     if(result) {
-      req.send({verify : result});
+      res.send({verify : result});
     } else {
       res.send({verify : null});
     }
