@@ -40,6 +40,22 @@ app.controller('AdminCtrl', ['$scope', '$http', '$location', function($scope, $h
 }]);
 
 app.controller('StudentsCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+  
+  $http.post('/admin/students',{
+  }).success(function (results){
+    console.log(results);
+    $scope.students = results;
+  }).error(function (data, status){
+    console.log(data);
+  });
 
+  $scope.verify = function (id){
+    $http.post('/admin/verify',{
+      'id': id
+    }).success(function (results){
+    }).error(function (data, status){
+      console.log(data);
+    });
+  }
 }]);
 // Angular Controllers End

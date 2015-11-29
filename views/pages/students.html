@@ -6,7 +6,7 @@
       <a href="#/students" class="btn btn-info btn-block">عرض الطلبة</a>
     </div>
     <div class="col-lg-3">
-      <a href="#/not-matching" class="btn btn-danger btn-block">الطلبة الغير متاطابقين</a>
+      <a href="#/not-matching" class="btn btn-danger btn-block">الطلبة الغير مؤكدين</a>
     </div>
     <div class="col-lg-2">
       <a href="#/matching" class="btn btn-success btn-block">الطلبة المتاطابقين</a>
@@ -22,39 +22,27 @@
         <table class="table table-striped table-condensed">
           <thead>
             <tr>
-              <th class="text-center">#</th>
               <th class="text-center">الرقم الوطني</th>
-              <th class="text-center">الاسم الرباعي</th>
+              <th class="text-center">الاسم من الرقم الوطني</th>
+              <th class="text-center">الاسم من ادارة البعثات</th>
               <th class="text-center">حالة التطابق</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr ng-repeat="student in students">
               <td class="text-center">
-                1
+                {{student.mofednid.nid}}
               </td>
               <td class="text-center">
-                1199104455032
+                {{student.mofednid.name}}
               </td>
               <td class="text-center">
-                علاء الدين احمد الطاهر السني
+                {{student.mofedbase.name}}
               </td>
               <td class="text-center">
-                مطابق
-              </td>
-            </tr>
-            <tr>
-              <td class="text-center">
-                2
-              </td>
-              <td class="text-center">
-                1198404454502
-              </td>
-              <td class="text-center">
-                احمد مفتاح الفيتوري
-              </td>
-              <td class="text-center">
-                غير مطابق
+                <span class="label label-warning" ng-show="student.user.verified == 2">غير مؤكدة</span>
+                <input class="btn btn-info btn-sm" ng-show="student.user.verified == 2" type="button" value="تأكيد" ng-click="verify(student._id)">
+                <span class="label label-success" ng-show="student.user.verified == 3">مطابق</span>
               </td>
             </tr>
           </tbody>
