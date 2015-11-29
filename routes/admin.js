@@ -12,4 +12,11 @@ router.get('/',function(req, res, next) {
   res.render('admin', { title: 'الرئيسية' });
 });
 
+/* GET students listing. */
+router.post('/students',function(req, res, next) {
+  confirm.getConfirmations(function (students){
+    res.send(students);
+  });
+});
+
 module.exports = router;

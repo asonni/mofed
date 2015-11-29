@@ -19,5 +19,14 @@ module.exports = {
         cb(null);
       }
     });
+  },
+  getConfirmations: function(cb) {
+    Confirm.find({
+    },'createdAt user mofednid mofedbase').populate('user', 'email _id verified')
+      .populate('mofednid', 'nid _id name')
+      .populate('mofedbase', 'sid _id name')
+     .exec(function(err, students){
+        cb(students);
+     });
   }
 }

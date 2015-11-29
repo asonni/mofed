@@ -103,6 +103,20 @@ module.exports = {
       }
     });
   },
+  /* here get all students */
+  getAllStudents: function (cb) {
+    User.find({admin : false, verified : {$gte:2} }, function(err, users){
+      if (!err) {
+        // Map the docs into an array of just the _ids
+        var ids = users.map(function(doc) { return doc._id; });
+        cb(students);
+      } else {
+        // return page with errors
+        console.log(err)
+        cb(null);
+      }
+    });
+  }
 }
 
 
