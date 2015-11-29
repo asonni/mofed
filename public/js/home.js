@@ -49,11 +49,15 @@ app.controller('HomeCtrl', ['$scope', '$http', '$location', function($scope, $ht
     $scope.verify = 1;
     if (results.verify == 1) {
       $scope.verify = 24;
+      $scope.type = 'warning';
     } else if (results.verify == 2) {
       $scope.verify = 58.7;
+      $scope.type = 'info';
+      $scope.statusName = 'اكتمال مرحلة التأكيد';
     }
     else if (results.verify == 3) {
       $scope.verify = 100;
+      $scope.type = 'success';
     }
   }).error(function (data, status){
     console.log(data);

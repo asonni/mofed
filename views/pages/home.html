@@ -1,51 +1,54 @@
 <!-- <h2>الرئيسية</h2>
 <h4>مرحبا بك</h4> -->
 <br/>
-<br/>
-<br/>
-<br/>
 </br>
 <form name="confirmForm" ng-submit="check()">
   <div class="row">
     <div class="col-lg-10 col-lg-offset-1">
       <div class="row">
         <div class="col-lg-2 col-lg-offset-2">
-          <div class="text-center">
-            مرحلة التسجيل
+          <h4 class="text-center">
+            <span class="label label-warning">مرحلة التسجيل</span>
             <br/>
             <i class="fa fa-sort-desc"></i>
-          </div>
+          </h4>
         </div>
         <div class="col-lg-2 col-lg-offset-2">
-          <div class="text-center">
-            مرحلة التأكيد
+          <h4 class="text-center">
+            <span class="label label-info">مرحلة التأكيد</span>
             <br/>
             <i class="fa fa-sort-desc"></i>
-          </div>
+          </h4>
         </div>
         <div class="col-lg-2 col-lg-offset-2">
-          <div class="text-center">
-            مرحلة التطابق
+          <h4 class="text-center">
+            <span class="label label-success">مرحلة التطابق</span>
             <br/>
             <i class="fa fa-sort-desc"></i>
-          </div>
+          </h4>
         </div>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-lg-10 col-lg-offset-1">
-      <uib-progressbar class="progress-striped active" value="verify" type="{{type}}">{{type}} <i ng-show="showWarning">!!! Watch out !!!</i></uib-progressbar>
+      <uib-progressbar class="progress-striped active" value="verify" type="{{type}}">{{statusName}}</uib-progressbar>
     </div>
   </div>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
   <br/>
   <div class="row">
     <div class="col-lg-3 col-lg-offset-4">
-      <input type="submit" class="btn btn-success form-control" value="تأكيد" ng-hide="verify == 58.7"/>
+      <input type="submit" class="btn btn-success form-control" value="تأكيد البيانات" ng-hide="verify == 58.7"/>
     </div>
   </div>
+  <br/>
+  <br/>
+  <div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+      <ul class="bg-primary">
+        <li style="padding-top: 15px;"><h4><strong>مرحلة التسجيل</strong>: </h4>هي المرحلة الاولى في المنظومة والتي تتم فيها عملية تسجيل الموفد .</li>
+        <li style="padding-top: 1px;"><h4><strong>مرحلة التـــأكيد</strong>: </h4>هي المرحلة الثانية في المنظومة والتي تتم فيها تأكيد بيانات الطالب بواسطة الرقم الوطني والبيانات المسجلة في هيئة الموفدين بالخارج .</li>
+        <li style="padding-top: 1px;padding-bottom: 15px;"><h4><strong>مرحلة التـطابق</strong>: </h4>هي المرحلة الأخيرة في المنظومة والتي يقوم فيها موظفو الهيئة بالتدقيق والمطابقة النهائية .</li>
+      </ul>
+    </div>
 </form>
