@@ -53,9 +53,18 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', function($scope,
     $http.post('/admin/verify',{
       'id': id
     }).success(function (results){
+      console.log(results);
     }).error(function (data, status){
       console.log(data);
     });
   }
+}]);
+
+app.controller('MatchingCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+
+}]);
+
+app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+
 }]);
 // Angular Controllers End

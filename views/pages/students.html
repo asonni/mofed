@@ -1,14 +1,14 @@
 <br/>
 <br/>
-<form ng-submit="">
+<form>
   <div class="row">
-    <div class="col-lg-2">
+    <div class="col-xs-3 col-lg-2">
       <a href="#/students" class="btn btn-info btn-block">عرض الطلبة</a>
     </div>
-    <div class="col-lg-3">
+    <div class="col-xs-5 col-lg-3">
       <a href="#/not-matching" class="btn btn-danger btn-block">الطلبة الغير مؤكدين</a>
     </div>
-    <div class="col-lg-2">
+    <div class="col-xs-4 col-lg-2">
       <a href="#/matching" class="btn btn-success btn-block">الطلبة المتاطابقين</a>
     </div>
   </div>
@@ -40,8 +40,11 @@
                 {{student.mofedbase.name}}
               </td>
               <td class="text-center">
-                <span class="label label-warning" ng-show="student.user.verified == 2">غير مؤكدة</span>
-                <input class="btn btn-info btn-sm" ng-show="student.user.verified == 2" type="button" value="تأكيد" ng-click="verify(student._id)">
+                <span class="label label-warning" ng-show="student.user.verified == 2" style="font-size:10px;padding:10px;">غير مؤكدة</span>
+                <button type="button" class="btn btn-info btn-sm" ng-show="student.user.verified == 2" data-toggle="modal" data-target="#verify">
+                  تأكيد
+                </button>
+                <!-- <input class="btn btn-info btn-sm" ng-show="student.user.verified == 2" type="button" value="تأكيد" ng-click="verify(student._id)"> -->
                 <span class="label label-success" ng-show="student.user.verified == 3">مطابق</span>
               </td>
             </tr>
@@ -50,4 +53,21 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="verify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h3 class="modal-title">رسالة تحذير</h3>
+        </div>
+        <div class="modal-body">
+          <h4>هل تريد فلا التاكيد علي هذه البيانات ؟</h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">لا</button>
+          <button type="button" class="btn btn-info" ng-click="verify(student._id)">نعم</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 </form>
