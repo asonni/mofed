@@ -21,10 +21,13 @@ router.post('/students',function(req, res, next) {
 
 /* GET students listing. */
 router.post('/verify',function(req, res, next) {
-  console.log(verify);
-  // confirm.getConfirmations(function (students){
-  //   res.send(students);
-  // });
+  confirm.verify(req.body.id, function(result){
+    if(result){
+      res.send({verify : true});
+    } else {
+      res.send({verify : false});
+    }
+  })
 });
 
 module.exports = router;

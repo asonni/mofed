@@ -1,4 +1,5 @@
-var Confirm = require("../models/confirm");
+var Confirm = require("../models/confirm"),
+    User = require("../models/user");
 
 
 module.exports = {
@@ -28,5 +29,38 @@ module.exports = {
      .exec(function(err, students){
         cb(students);
      });
+  },
+  verify: function(id, cb){
+    Confirm.findOne({_id : id}, function(err, confirmation){
+      if(!err && confirmation != null){
+        confirmation.verified = 2;
+        confirmation.save(function(err,result){
+          if (!err) {
+            User.findOne({_id : confirmation.user}, function(err, user){
+              if(!err && user != null){
+                user.verified = 3;
+                user.save(function(err,result){
+                  if (!err) {
+                    cb(result);
+                  } else {
+                    //TODO: return page with errors
+                    console.log(err)
+                    cb(null);
+                  }
+                });
+              } else {
+                cb(null);
+              }
+            });
+          } else {
+            //TODO: return page with errors
+            console.log(err)
+            cb(null);
+          }
+        });
+      } else {
+        cb(null);
+      }
+    });
   }
 }
