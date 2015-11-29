@@ -2,14 +2,15 @@ var express = require('express');
 var router = express.Router();
 var user = require("../controller/user"),
     mofednid = require('../controller/mofednid'),
-    mofedbase = require('../controller/mofedbase');
-var helpers = require('../controller/userHelpers'),
+    mofedbase = require('../controller/mofedbase'),
+    confirm = require('../controller/confirm'),
+    helpers = require('../controller/userHelpers'),
     mailer = require('../controller/mailer');
 
 
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', helpers.isLogin,function(req, res, next) {
   res.render('home', { title: 'الرئيسية' });
 });
 
@@ -39,8 +40,8 @@ router.post('/register', function(req, res, next) {
 });
 
 /* activate new user. */
-router.get('/activate/:token', function(req, res, next) {
-  user.activate(req.params.token,function(result){
+router.get('/activate/:token', function (req, res, next) {
+  user.activate(req.params.token,function (result){
     if(result){
       //send email with activation link
       res.redirect('/?msg=4');
@@ -52,8 +53,8 @@ router.get('/activate/:token', function(req, res, next) {
 });
 
 /* check if Registered. */
-router.get('/isRegistered', function(req, res, next) {
-  user.isRegistered(req.query.value,function(result){
+router.get('/isRegistered', function (req, res, next){
+  user.isRegistered(req.query.value,function (result){
     if(result){
       //send true if we find a match
       res.send({isValid: false, value: result.email});
@@ -64,16 +65,43 @@ router.get('/isRegistered', function(req, res, next) {
   });
 });
 
-
 router.post('/check', function(req, res, next) {
-  mofedbase.getStudents(req.body.lawnum, function(students){
-    mofednid.getPerson(req.body.nid,req.body.regnum, function(person){
+  mofedbase.getStudents(req.body.lawnum, function (students){
+    mofednid.getPerson(req.body.nid,req.body.regnum, function (person){
       // res.render('confirm', {students: students,person: person});
       res.send({person, students});
     })
     // res.send({check:true});
   });
 });
+
+router.post('/confirm', function (req, res, next) {
+  confirm.addConfirmation(req.body,req.user,function (result){
+    if(result) {
+      user.userVerified(req.user._id, function (verified){
+        if(verified) {
+          res.send({verify : true});
+        } else {
+          res.send({verify : 2});
+        }
+      });
+    } else {
+      res.send({verify : 2});
+    }
+  });
+});
+
+router.post('/verify', function (req, res, next) {
+  user.verify(req.user._id,function (result){
+    if(result) {
+      req.send({verify : result});
+    } else {
+      res.send({verify : null});
+    }
+  });
+});
+
+
 
 router.get('/confirm', function(req, res, next) {
   res.render('confirm', { title: 'مطابقة البيانات' });
