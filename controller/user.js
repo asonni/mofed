@@ -83,7 +83,7 @@ module.exports = {
           if (!err) {
             cb(result);
           } else {
-            return page with errors
+            //return page with errors
             console.log(err)
             cb(null);
           }
