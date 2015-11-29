@@ -11,7 +11,9 @@ var User = new Schema({
   	email: {type: String, unique : true, required : true},
   	status: Boolean,
   	activated : {type: Boolean, default:false},
+    admin : {type: Boolean, default:false},
   	verified: { type: Number, min: 1, max: 10, default:1 },
+
   	studentId: { type : Date, default: Date.now }
 });
 User.plugin(timestamps);
