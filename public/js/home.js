@@ -91,14 +91,10 @@ app.controller('ConfirmCtrl', ['$scope', '$http', 'checkService', function($scop
   });
   $scope.selectName = false;
   $scope.confirmName = false;
-  $scope.enabled = true;
-  if ($scope.confirmName && $scope.confirmName){
-    $scope.enabled = false;
-  };
   $scope.confirm = function(){
     $http.post('/user/confirm',{
-        'nid': $scope.person.person.nid,
-        'sid': $scope.sid.sid
+        'nid': $scope.person.person._id,
+        'sid': $scope.sid._id
       }).success(function (results){
         console.log(results);
       }).error(function (data, status){
