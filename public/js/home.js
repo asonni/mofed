@@ -85,18 +85,20 @@ app.controller('ConfirmCtrl', ['$scope', '$http', 'checkService', function($scop
     'regnum': $scope.regnum,
     'lawnum': $scope.lawnum
   }).success(function (person, students){
-    // $scope.students = students;
     $scope.person = person;
-    // $scope.students = students;
-    console.log($scope.person);
   }).error(function (data, status){
     console.log(data);
   });
   $scope.selectName = false;
+  $scope.confirmName = false;
+  $scope.enabled = true;
+  if ($scope.confirmName && $scope.confirmName){
+    $scope.enabled = false;
+  };
   $scope.confirm = function(){
     $http.post('/user/confirm',{
         'nid': $scope.person.person.nid,
-        'sid': $scope.sid
+        'sid': $scope.sid.sid
       }).success(function (results){
         console.log(results);
       }).error(function (data, status){
