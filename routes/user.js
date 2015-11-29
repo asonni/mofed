@@ -75,6 +75,10 @@ router.post('/check', function(req, res, next) {
   });
 });
 
+router.post('/confirm', function(req, res, next) {
+  console.log(req.body);
+});
+
 router.get('/confirm', function(req, res, next) {
   res.render('confirm', { title: 'مطابقة البيانات' });
 });
