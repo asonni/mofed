@@ -92,5 +92,5 @@ app.controller('ConfirmCtrl', ['$scope', '$http', 'checkService', function($scop
   }).error(function (data, status){
     console.log(data);
   });
-  $scope.selectName = true;
+  $scope.selectName = false;
 }]);
