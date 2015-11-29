@@ -59,7 +59,6 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', function($scope,
       'id': $scope.id
     }).success(function (results){
       $scope.init();
-      console.log(results);
     }).error(function (data, status){
       console.log(data);
     });

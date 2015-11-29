@@ -37,9 +37,9 @@ app.config(function(NotificationProvider) {
 // Angular Notification Configuration End
 // Angular Custom Service Start
 app.service('checkService', function(){
-  this.nid = "119861412541";
-  this.regnum = "12345";
-  this.lawnum = "393";
+  this.nid = "";
+  this.regnum = "";
+  this.lawnum = "";
 });
 // Angular Custom Service End
 // Angular Controllers Start
