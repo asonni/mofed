@@ -50,6 +50,7 @@ app.controller('HomeCtrl', ['$scope', '$http', '$location', function($scope, $ht
     if (results.verify == 1) {
       $scope.verify = 24;
       $scope.type = 'warning';
+      $scope.statusName = 'اكتمال مرحلة التسجيل';
     } else if (results.verify == 2) {
       $scope.verify = 58.7;
       $scope.type = 'info';
@@ -58,6 +59,7 @@ app.controller('HomeCtrl', ['$scope', '$http', '$location', function($scope, $ht
     else if (results.verify == 3) {
       $scope.verify = 100;
       $scope.type = 'success';
+      $scope.statusName = 'اكتمال مرحلة التطابق';
     }
   }).error(function (data, status){
     console.log(data);
@@ -72,7 +74,7 @@ app.controller('CheckCtrl', ['$scope', '$http', 'Notification', '$location', 'ch
   $scope.nid = checkService.nid;
   $scope.regnum = checkService.regnum;
   $scope.lawnum = checkService.lawnum;
-  $scope.$watch('nid','regnum','lawnum', function(){
+  $scope.$watchGroup(['nid', 'regnum', 'lawnum'], function(){
     checkService.nid = $scope.nid;
     checkService.regnum = $scope.regnum;
     checkService.lawnum = $scope.lawnum;
