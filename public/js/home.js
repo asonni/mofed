@@ -21,14 +21,28 @@ app.config(['$routeProvider', '$locationProvider' , function($routeProvider, $lo
   // });
 }]);
 
+// Angular Notification Configuration Start
+app.config(function(NotificationProvider) {
+  NotificationProvider.setOptions({
+    delay: 10000,
+    right:10,
+    startTop: 20,
+    startRight: 10,
+    verticalSpacing: 20,
+    horizontalSpacing: 20,
+    positionX: 'center',
+    positionY: 'top'
+  });
+});
+// Angular Notification Configuration End
+// Angular Custom Service Start
 app.service('checkService', function(){
-  
   this.nid = "119861412541";
   this.regnum = "12345";
   this.lawnum = "393";
-
 });
-
+// Angular Custom Service End
+// Angular Controllers Start
 app.controller('HomeCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
   $http.post('/user/verify',{
   }).success(function (results){
@@ -54,19 +68,17 @@ app.controller('CheckCtrl', ['$scope', '$http', 'Notification', '$location', 'ch
   $scope.nid = checkService.nid;
   $scope.regnum = checkService.regnum;
   $scope.lawnum = checkService.lawnum;
-
   $scope.$watch('nid','regnum','lawnum', function(){
     checkService.nid = $scope.nid;
     checkService.regnum = $scope.regnum;
     checkService.lawnum = $scope.lawnum;
   });
-
   $scope.check = function(){
     $location.path("/confirm");
   };
 }]);
 
-app.controller('ConfirmCtrl', ['$scope', '$http', 'checkService', function($scope, $http, checkService) {
+app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', 'Notification', function($scope, $http, $location, checkService, Notification) {
   $scope.nid = checkService.nid;
   $scope.regnum = checkService.regnum;
   $scope.lawnum = checkService.lawnum;
@@ -86,9 +98,17 @@ app.controller('ConfirmCtrl', ['$scope', '$http', 'checkService', function($scop
         'nid': $scope.person.person._id,
         'sid': $scope.sid._id
       }).success(function (results){
-        console.log(results);
+        if (results.verify==true){
+          Notification.info({message: 'تم تسجيل بياناتك الرجاء متابعة البريد الالكتروني', title: '<div class="text-right">نجح</div>'});
+          $location.path("/");
+        } else if (results.verify==2){
+           Notification.error({message: 'حدث خطأ الرجاء إعادة المحاولة لاحقا', title: '<div class="text-right">فشل</div>'});
+          $location.path("/");
+        }
+        console.log(results.verify);
       }).error(function (data, status){
       console.log(data);
     });
   }
 }]);
+// Angular Controllers End
