@@ -19,4 +19,12 @@ router.post('/students',function(req, res, next) {
   });
 });
 
+/* GET students listing. */
+router.post('/verify',function(req, res, next) {
+  console.log(verify);
+  // confirm.getConfirmations(function (students){
+  //   res.send(students);
+  // });
+});
+
 module.exports = router;
