@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('mofed', ['ngRoute', 'ngMessages', 'ui-notification', 'toggle-switch', 'nya.bootstrap.select']);
+var app = angular.module('mofed', ['ngRoute', 'ngMessages', 'ui-notification', 'toggle-switch', 'nya.bootstrap.select', 'ui.bootstrap']);
 
 app.config(['$routeProvider', '$locationProvider' , function($routeProvider, $locationProvider) {
   $routeProvider.when('/', {
@@ -29,8 +29,32 @@ app.service('checkService', function(){
 
 });
 
-app.controller('HomeCtrl', ['$scope', function($scope) {
+app.controller('HomeCtrl', ['$scope', '$http', function($scope, $http) {
+  $http.post('/user/verify',{
+  })
+  .success(function (results){
+    console.log(results);
+  }).error(function (data, status){
+    console.log(data);
+  });
+  var value = Math.floor((Math.random() * 100) + 1);
+  // var type;
 
+    if (value < 25) {
+      type = 'success';
+    } else if (value < 50) {
+      type = 'info';
+    } else if (value < 75) {
+      type = 'warning';
+    } else {
+      type = 'danger';
+    }
+
+    $scope.showWarning = (type === 'danger' || type === 'warning');
+
+    $scope.dynamic = value;
+    $scope.type = type;
+  };
 }]);
 
 app.controller('CheckCtrl', ['$scope', '$http', 'Notification', '$location', 'checkService', function($scope, $http, Notification, $location, checkService) {
@@ -47,33 +71,6 @@ app.controller('CheckCtrl', ['$scope', '$http', 'Notification', '$location', 'ch
   $scope.check = function(){
     $location.path("/confirm");
   };
-
-
-  // $scope.check = function(){
-  //   $http.post('/user/check',{
-  //     'nid': $scope.nid,
-  //     'regnum': $scope.regnum,
-  //     'lawnum': $scope.lawnum
-  //   }).success(function (result){
-  //     console.log(result);
-  //     $scope.name = result.name;
-  //     $location.path('/results');
-  //     // if (result.check == true) {
-  //     //   // $scope.nid='';
-  //     //   // $scope.regnum='';
-  //     //   // $scope.lawnum='';
-  //     //   $location.path('/results');
-  //     //   // window.location.replace('/user#/results');
-  //     // } else {
-  //     //   $scope.nid='';
-  //     //   $scope.regnum='';
-  //     //   $scope.lawnum='';
-  //     //   Notification.error({message: 'الرجاء التأكد من البيانات المدخلة', title: '<div class="text-right">خطأ</div>'});
-  //     // }
-  //   }).error(function (data, status){
-  //     console.log(data);
-  //   });
-  // };
 }]);
 
 app.controller('ConfirmCtrl', ['$scope', '$http', 'checkService', function($scope, $http, checkService) {
