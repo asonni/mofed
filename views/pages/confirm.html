@@ -12,7 +12,7 @@
           <thead>
             <tr>
               <th class="text-center">الرجاء اختيار الاسم</th>
-              <th class="text-center">حالة الاسم</th>
+              <th class="text-center">هل الاسم موجود ؟</th>
             </tr>
           </thead>
           <tbody>
@@ -28,7 +28,7 @@
                 </ol>
               </td>
               <td class="text-center">
-                <toggle-switch ng-model="selectName" class="switch-info" knob-label="الاسم" style="direction:ltr;" on-label="موجود" off-label="غير موجود"><toggle-switch>
+                <toggle-switch ng-model="selectName" class="switch-info" style="direction:ltr;" on-label="نعم" off-label="لا"><toggle-switch>
               </td>
             </tr>
           </tbody>
@@ -52,22 +52,17 @@
             <tr>
               <th class="text-center">الرقم الوطني</th>
               <th class="text-center">الاسم رباعي</th>
+              <th class="text-center">هل الاسم مطابق ؟</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="text-center">{{person.person.nid}}</td>
               <td class="text-center">{{person.person.name}}</td>
+              <td class="text-center"><toggle-switch ng-model="confirmName" class="switch-success" style="direction:ltr;" on-label="نعم" off-label="لا"><toggle-switch></td>
             </tr>
           </tbody>
         </table>
-        <br/>
-        <div class="row">
-          <div class="text-center">
-            <toggle-switch ng-model="confirmName" class="switch-success" knob-label="الاسم" style="direction:ltr;" on-label="مطابق" off-label="غير مطابق"><toggle-switch>
-          </div>
-        </div>
-        <br/>
       </div>
     </div>
   </div>
