@@ -137,3 +137,7 @@ app.controller('RegisterCtrl', ['$scope', '$location', '$http', 'Notification', 
 app.controller('RestoreCtrl', ['$scope', function($scope) {
 
 }]);
+
+app.controller('TestCtrl', ['$scope', function($scope) {
+
+}]);
