@@ -1,4 +1,4 @@
-<form accept-charset="utf-8" role="form" ng-submit="check()">
+<form accept-charset="utf-8" name="checkForm" role="form" ng-submit="check()">
   <div class="row">
     <div class="col-lg-6 col-lg-offset-3">
       <br/>
@@ -10,7 +10,8 @@
     <div class="col-lg-6 col-lg-offset-3">
       <div class="form-group">
         <label class="control-label">الرقم الوطني</label>
-        <input class="form-control" ng-model="nid" type="text" placeholder="الرقم الوطني">
+        <input class="form-control" name="nid" ng-model="nid" type="text" placeholder="الرقم الوطني" ng-maxlength="12" ng-minlength="12" required>
+        <span ng-show="checkForm.nid.$error.maxlength" style="position:absolute;color:red;">الرقم الوطني غير صحيح, الرجاء إعادة الادخال</span>
       </div>
     </div>
   </div>
@@ -19,7 +20,7 @@
     <div class="col-lg-6 col-lg-offset-3">
       <div class="form-group">
         <label class="control-label">رقم القيد</label>
-        <input class="form-control" ng-model="regnum" type="text" placeholder="رقم القيد">
+        <input class="form-control" ng-model="regnum" type="text" placeholder="رقم القيد" required>
       </div>
     </div>
   </div>
@@ -28,7 +29,7 @@
     <div class="col-lg-6 col-lg-offset-3">
       <div class="form-group">
         <label class="control-label">رقم القرار</label>
-        <input class="form-control" ng-model="lawnum" type="text" placeholder="رقم القرار">
+        <input class="form-control" ng-model="lawnum" type="text" placeholder="رقم القرار" required>
       </div>
     </div>
   </div>
@@ -36,7 +37,7 @@
   <br/>
   <div class="row">
     <div class="col-lg-6 col-lg-offset-3">
-      <input type="submit" class="btn btn-primary form-control" value="تحقق"/>
+      <input type="submit" class="btn btn-primary form-control" value="تحقق" ng-disabled="checkForm.$invalid"/>
     </div>
   </div>
 <form>

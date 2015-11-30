@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('mofed', ['ngRoute', 'ngMessages', 'ui-notification', 'toggle-switch', 'nya.bootstrap.select', 'ui.bootstrap']);
+var app = angular.module('mofed', ['ngRoute', 'ui-notification', 'toggle-switch', 'nya.bootstrap.select', 'ui.bootstrap', 'blockUI']);
 
 app.config(['$routeProvider', '$locationProvider' , function($routeProvider, $locationProvider) {
   $routeProvider.when('/', {
@@ -37,26 +37,30 @@ app.config(function(NotificationProvider) {
 // Angular Notification Configuration End
 // Angular Custom Service Start
 app.service('checkService', function(){
-  this.nid = "";
-  this.regnum = "";
-  this.lawnum = "";
+  this.nid = "119861412632";
+  this.regnum = "12436";
+  this.lawnum = "469";
 });
 // Angular Custom Service End
 // Angular Controllers Start
-app.controller('HomeCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller('HomeCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
+  blockUI.start("تحميل...");
+  $scope.verify = 1;
   $http.post('/user/verify',{
   }).success(function (results){
-    $scope.verify = 1;
     if (results.verify == 1) {
+      blockUI.stop();
       $scope.verify = 24;
       $scope.type = 'warning';
       $scope.statusName = 'اكتمال مرحلة التسجيل';
     } else if (results.verify == 2) {
+      blockUI.stop();
       $scope.verify = 58.7;
       $scope.type = 'info';
       $scope.statusName = 'اكتمال مرحلة التأكيد';
     }
     else if (results.verify == 3) {
+      blockUI.stop();
       $scope.verify = 100;
       $scope.type = 'success';
       $scope.statusName = 'اكتمال مرحلة التطابق';
@@ -64,7 +68,6 @@ app.controller('HomeCtrl', ['$scope', '$http', '$location', function($scope, $ht
   }).error(function (data, status){
     console.log(data);
   });
-
   $scope.check = function(){
     $location.path("/check");
   }
@@ -84,7 +87,8 @@ app.controller('CheckCtrl', ['$scope', '$http', 'Notification', '$location', 'ch
   };
 }]);
 
-app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', 'Notification', function($scope, $http, $location, checkService, Notification) {
+app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', 'Notification', 'blockUI', function($scope, $http, $location, checkService, Notification, blockUI) {
+  blockUI.start("تحميل...");
   $scope.nid = checkService.nid;
   $scope.regnum = checkService.regnum;
   $scope.lawnum = checkService.lawnum;
@@ -93,26 +97,35 @@ app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', '
     'regnum': $scope.regnum,
     'lawnum': $scope.lawnum
   }).success(function (person, students){
+    blockUI.stop();
     $scope.person = person;
   }).error(function (data, status){
     console.log(data);
   });
   $scope.selectName = false;
   $scope.confirmName = false;
+  $scope.sid = '';
+  $scope.$watch('sid', function(){
+    if($scope.sid){
+      $scope.selectName = true;
+    }
+  });
   $scope.confirm = function(){
+    blockUI.start("تحميل...");
     $http.post('/user/confirm',{
-        'nid': $scope.person.person._id,
-        'sid': $scope.sid._id
-      }).success(function (results){
-        if (results.verify==true){
-          Notification.info({message: 'تم تسجيل بياناتك الرجاء متابعة البريد الالكتروني', title: '<div class="text-right">نجح</div>'});
-          $location.path("/");
-        } else if (results.verify==2){
-           Notification.error({message: 'حدث خطأ الرجاء إعادة المحاولة لاحقا', title: '<div class="text-right">فشل</div>'});
-          $location.path("/");
-        }
-        console.log(results.verify);
-      }).error(function (data, status){
+      'nid': $scope.person.person._id,
+      'sid': $scope.sid._id
+    }).success(function (results){
+      if (results.verify==true){
+        blockUI.stop();
+        Notification.info({message: 'تم تسجيل بياناتك الرجاء متابعة البريد الالكتروني', title: '<div class="text-right">نجح</div>'});
+        $location.path("/");
+      } else if (results.verify==2){
+        blockUI.stop();
+        Notification.error({message: 'حدث خطأ الرجاء إعادة المحاولة لاحقا', title: '<div class="text-right">فشل</div>'});
+        $location.path("/");
+      }
+    }).error(function (data, status){
       console.log(data);
     });
   }

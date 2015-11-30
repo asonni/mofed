@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('mofed', ['ngRoute', 'ui-notification', 'remoteValidation', 'validation.match']);
+var app = angular.module('mofed', ['ngRoute', 'ui-notification', 'remoteValidation', 'validation.match', 'blockUI']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider,$locationProvider) {
   $routeProvider.when('/', {
@@ -62,7 +62,7 @@ app.config(function(NotificationProvider) {
 });
 // Angular Notification Configuration End
 
-app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification','$routeParams', function($scope, $http, $location, Notification, $routeParams) {
+app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification','$routeParams', 'blockUI', '$timeout', function($scope, $http, $location, Notification, $routeParams, blockUI, $timeout) {
   if($routeParams.msg==2){
     $location.url($location.path());
     Notification.error({message: 'الرجاء التأكد من البريد الالكتروني وكلمة المرور', title: '<div class="text-right">خطأ</div>'});
@@ -79,27 +79,33 @@ app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification','$ro
   //   }
   //   return ($scope.form[field].$dirty && $scope.form[field].$invalid) || ($scope.submitted && $scope.form[field].$invalid);
   // };
+  // $scope.test = function(){
+  //   blockUI.start("تحميل ....");
+  //   $timeout(function() {
+  //     blockUI.stop();
+  //   }, 5000);
+  // }
   $scope.login = function(){
-    $scope.allowValidation = function () {
-      $scope.$broadcast('kickOffValidations');
-    };
+    blockUI.start("التحقق من صحة الحساب...");
     $http.post('/user/login',{
       'username': $scope.username,
       'password': $scope.password
     }).success(function (result){
       if (result.login == true) {
-        $scope.username='';
-        $scope.password='';
+        blockUI.stop();
         window.location.replace('/user');
       } else if (result.login == 2) {
+        blockUI.stop();
         $scope.username='';
         $scope.password='';
         Notification.warning({message: ' خطأ في كلمة المرور او البريد الالكتروني', title: '<div class="text-right">فشل</div>'});
       } else if (result.login == 3) {
+        blockUI.stop();
         $scope.username='';
         $scope.password='';
         Notification.warning({message: 'حسابك غير مفعل الرجاء زيار بريدك الالكتروني', title: '<div class="text-right">فشل</div>'});
       } else if (result.login == 'admin') {
+        blockUI.stop();
         $scope.username='';
         $scope.password='';
         window.location.replace('/admin');
@@ -112,10 +118,12 @@ app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification','$ro
 
 app.controller('RegisterCtrl', ['$scope', '$location', '$http', 'Notification', function($scope, $location, $http, Notification) {
   $scope.register = function(){
+    blockUI.start("تحميل...");
     $http.post('/user/register',{
       'email': $scope.email,
       'password': $scope.password
     }).success(function (result){
+      blockUI.stop();
       $scope.email='';
       $scope.password='';
       $location.path("/");
