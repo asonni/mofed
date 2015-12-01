@@ -69,7 +69,7 @@ router.post('/check', function(req, res, next) {
   mofedbase.getStudents(req.body.lawnum, function (students){
     mofednid.getPerson(req.body.nid,req.body.regnum, function (person){
       // res.render('confirm', {students: students,person: person});
-      res.send({person:person, students:students});
+      res.send({person, students});
     })
     // res.send({check:true});
   });
@@ -101,8 +101,8 @@ router.post('/verify', function (req, res, next) {
   });
 });
 
-router.get('/forgotPassword/:email', function (req, res, next) {
-  user.hasEmail(req.params.email,function (result){
+router.post('/forgotPassword', function (req, res, next) {
+  user.hasEmail(req.body.email,function (result){
     if(result){
       user.changePassword(result.id, function(password){
         if(password){
@@ -111,9 +111,9 @@ router.get('/forgotPassword/:email', function (req, res, next) {
             template : "forgotpassword",
             subject : "Mofed app new password request",
             locals : {
-              email : req.params.email,
+              email : req.body.email,
               user : {
-                email : req.params.email,
+                email : req.body.email,
                 password : password
               }
             }
