@@ -17,10 +17,9 @@
           </thead>
           <tbody>
             <tr>
-              <td class="text-center">
-                <ol class="nya-bs-select" ng-model="sid" data-live-search="true">
+              <td class="text-center" width="65%">
+                <ol class="nya-bs-select form-control" ng-model="sid" data-live-search="true">
                   <li nya-bs-option="students in person.students">
-                    <!-- the text content of anchor element will be used for search -->
                     <a ng-model="students.name">
                       {{students.name}}
                     </a>
@@ -61,7 +60,7 @@
   </div>
   <div class="row">
     <div class="col-lg-3 col-lg-offset-3">
-      <input type="submit" class="btn btn-success form-control" value="تأكيد" ng-disabled="(selectName && confirmName) ?  false : true"/>
+      <input type="submit" class="btn btn-success form-control" value="تأكيد" ng-disabled="(selectName && confirmName && sid) ?  false : true"/>
     </div>
     <div class="col-lg-3">
       <input type="botton" class="btn btn-primary form-control" value="البيانات غير صحيحة"/>

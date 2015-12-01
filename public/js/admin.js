@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('mofed', ['ngRoute', 'ngMessages', 'ui-notification', 'toggle-switch', 'nya.bootstrap.select', 'ui.bootstrap']);
+var app = angular.module('mofed', ['ngRoute', 'ngMessages', 'ui-notification', 'toggle-switch', 'nya.bootstrap.select', 'ui.bootstrap', 'blockUI']);
 
 app.config(['$routeProvider', '$locationProvider' , function($routeProvider, $locationProvider) {
   $routeProvider.when('/', {
@@ -39,32 +39,44 @@ app.controller('AdminCtrl', ['$scope', '$http', '$location', function($scope, $h
 
 }]);
 
-app.controller('StudentsCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
-  
-  $http.post('/admin/students',{
-  }).success(function (results){
-    console.log(results);
-    $scope.students = results;
-  }).error(function (data, status){
-    console.log(data);
-  });
-
-  $scope.verify = function (id){
-    $http.post('/admin/verify',{
-      'id': id
+app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$timeout', 'blockUI', function($scope, $http, $location, $timeout, blockUI) {
+  blockUI.start("تحميل, الرجاء الانتظار...");
+  $scope.init = function () {
+    $http.post('/admin/students',{
     }).success(function (results){
-      console.log(results);
+      $timeout(function() {
+        $scope.students = results;
+        blockUI.stop();
+      }, 2000);
+    }).error(function (data, status){
+      console.log(data);
+    });
+  };
+
+  $scope.getVerifyID = function(id){
+    $scope.id = id;
+  };
+
+  $scope.verify = function (){
+    blockUI.start("تحميل, الرجاء الانتظار...");
+    $http.post('/admin/verify',{
+      'id': $scope.id
+    }).success(function (results){
+      $timeout(function() {
+        blockUI.stop();
+        $scope.init();
+      }, 2000);
     }).error(function (data, status){
       console.log(data);
     });
   }
 }]);
 
-app.controller('MatchingCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller('MatchingCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
 
 }]);
 
-app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
 
 }]);
 // Angular Controllers End
