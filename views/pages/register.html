@@ -15,8 +15,8 @@
           </div>
           <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-              <input type="email" name="confirmEmail" ng-model="confirmEmail" ng-pattern="email" class="form-control" placeholder="تأكيد البريد الالكتروني" tabindex="4" style="line-height: 30px;" required>
-              <span ng-show="registerForm.confirmEmail.$error.pattern" style="position:absolute;color:red;">البريد الالكتروني ليس مطابق</span>
+              <input type="email" name="confirmEmail" ng-model="confirmEmail" data-match-verify="email" class="form-control" placeholder="تأكيد البريد الالكتروني" tabindex="4" style="line-height: 30px;" required>
+              <span ng-show="registerForm.confirmEmail.$error.matchVerify" style="position:absolute;color:red;">البريد الالكتروني ليس مطابق</span>
             </div>
           </div>
         </div>
@@ -28,8 +28,8 @@
           </div>
           <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-              <input type="password" name="confirmPassword" ng-model="confirmPassword" ng-pattern="password" class="form-control" placeholder="تأكيد كلمة المرور" tabindex="6" style="line-height: 30px;" required>
-              <span ng-show="registerForm.confirmPassword.$error.pattern" style="position:absolute;color:red;">
+              <input type="password" name="confirmPassword" ng-model="confirmPassword" data-match-verify="password" ng-pattern="password" class="form-control" placeholder="تأكيد كلمة المرور" tabindex="6" style="line-height: 30px;" required>
+              <span ng-show="registerForm.confirmPassword.$error.matchVerify" style="position:absolute;color:red;">
                 عفوا كلمة المرور ليست متطابقة
               </span>
             </div>

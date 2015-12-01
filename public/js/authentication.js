@@ -24,27 +24,36 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider,$loca
   });
 }]);
 
-app.directive('checkEmailOnBlur', function(){
-  var EMAIL_REGX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
-  return {
-    restrict: 'A',
-    require: 'ngModel',
-    link: function(scope, elm, attr, ctrl) {
-      if (attr.type === 'radio' || attr.type === 'checkbox') return;
-      elm.unbind('input').unbind('keydown').unbind('change');
-      elm.bind('blur', function () {
-        scope.$apply(dovalidation);
-      });
-      scope.$on('kickOffValidations', dovalidation)
-      function dovalidation() {
-        if (EMAIL_REGX.test(elm.val())) {
-          ctrl.$setValidity('emails', true);
-        } else {
-          ctrl.$setValidity('emails', false);
-        }
-      }
-    }
-  };
+app.directive("matchVerify", function() {
+   return {
+      require: "ngModel",
+      scope: {
+        matchVerify: '='
+      },
+      link: function(scope, element, attrs, ctrl) {
+        scope.$watch(function() {
+            var combined;
+
+            if (scope.matchVerify || ctrl.$viewValue) {
+               combined = scope.matchVerify + '_' + ctrl.$viewValue; 
+            }                    
+            return combined;
+        }, function(value) {
+            if (value) {
+                ctrl.$parsers.unshift(function(viewValue) {
+                    var origin = scope.matchVerify;
+                    if (origin !== viewValue) {
+                        ctrl.$setValidity("matchVerify", false);
+                        return undefined;
+                    } else {
+                        ctrl.$setValidity("matchVerify", true);
+                        return viewValue;
+                    }
+                });
+            }
+        });
+     }
+   };
 });
 
 // Angular Notification Configuration Start
@@ -124,9 +133,9 @@ app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification','$ro
   };
 }]);
 
-app.controller('RegisterCtrl', ['$scope', '$location', '$http', 'Notification', function($scope, $location, $http, Notification) {
+app.controller('RegisterCtrl', ['$scope', '$location', '$http', '$timeout', 'Notification', 'blockUI', function($scope, $location, $http, $timeout, Notification, blockUI) {
   $scope.register = function(){
-    blockUI.start("تحميل...");
+    blockUI.start("تحميل, الرجاء الانتظار...");
     $http.post('/user/register',{
       'email': $scope.email,
       'password': $scope.password
@@ -144,8 +153,31 @@ app.controller('RegisterCtrl', ['$scope', '$location', '$http', 'Notification', 
   };
 }]);
 
-app.controller('RestoreCtrl', ['$scope', function($scope) {
-
+app.controller('RestoreCtrl', ['$scope', '$http', '$timeout', 'Notification', 'blockUI', function($scope, $http, $timeout, Notification, blockUI) {
+  $scope.restore = function(){
+    blockUI.start("تحميل, الرجاء الانتظار...");
+    $http.post('/user/forgotPassword', {
+      'email': $scope.email
+    }).success(function (result){
+      if (result.restore == true) {
+        $timeout(function() {
+          blockUI.stop();
+          $scope.email='';
+          $location.path("/");
+          Notification.success({message: 'تم ارسال رسالة الي بريدك تحتوي علي كلمة المرور', title: '<div class="text-right">نجاح</div>'});
+        }, 1000);
+      } else {
+        $timeout(function() {
+          blockUI.stop();
+          $scope.email='';
+          $location.path("/");
+          Notification.error({message: 'البريد الذي ادخلته غير موجود', title: '<div class="text-right">خطأ</div>'});
+        }, 2000);
+      }
+    }).error(function (data, status){
+      console.log(data);
+    })
+  }
 }]);
 
 app.controller('TestCtrl', ['$scope', function($scope) {
