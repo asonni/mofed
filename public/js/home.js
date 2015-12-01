@@ -44,33 +44,27 @@ app.service('checkService', function(){
 
 // Angular Custom Service End
 // Angular Controllers Start
-app.controller('HomeCtrl', ['$scope', '$http', '$location', '$timeout', 'blockUI', function($scope, $http, $location, $timeout, blockUI) {
-  blockUI.start("تحميل...");
+app.controller('HomeCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
+  blockUI.start("تحميل, الرجاء الانتظار...");
   $scope.verify = 1;
   $http.post('/user/verify',{
   }).success(function (results){
     if (results.verify == 1) {
-      $timeout(function() {
-        blockUI.stop();
-        $scope.verify = 24;
-        $scope.type = 'warning';
-        $scope.statusName = 'اكتمال مرحلة التسجيل';
-      }, 2000);
+      blockUI.stop();
+      $scope.verify = 24;
+      $scope.type = 'warning';
+      $scope.statusName = 'اكتمال مرحلة التسجيل';
     } else if (results.verify == 2) {
-      $timeout(function() {
-        blockUI.stop();
-        $scope.verify = 58.7;
-        $scope.type = 'info';
-        $scope.statusName = 'اكتمال مرحلة التأكيد';
-      }, 2000);
+      blockUI.stop();
+      $scope.verify = 58.7;
+      $scope.type = 'info';
+      $scope.statusName = 'اكتمال مرحلة التأكيد';
     }
     else if (results.verify == 3) {
-      $timeout(function() {
-        blockUI.stop();
-        $scope.verify = 100;
-        $scope.type = 'success';
-        $scope.statusName = 'اكتمال مرحلة التطابق';
-      }, 2000);
+      blockUI.stop();
+      $scope.verify = 100;
+      $scope.type = 'success';
+      $scope.statusName = 'اكتمال مرحلة التطابق';
     }
   }).error(function (data, status){
     console.log(data);
@@ -94,7 +88,7 @@ app.controller('CheckCtrl', ['$scope', '$http', 'Notification', '$location', 'ch
   };
 }]);
 
-app.controller('ConfirmCtrl', ['$scope', '$http', '$location', '$timeout', 'checkService', 'Notification', 'blockUI', function($scope, $http, $location, $timeout, checkService, Notification, blockUI) {
+app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', 'Notification', 'blockUI', function($scope, $http, $location, checkService, Notification, blockUI) {
   blockUI.start("تحميل...");
   $scope.nid = checkService.nid;
   $scope.regnum = checkService.regnum;
@@ -104,10 +98,8 @@ app.controller('ConfirmCtrl', ['$scope', '$http', '$location', '$timeout', 'chec
     'regnum': $scope.regnum,
     'lawnum': $scope.lawnum
   }).success(function (person){
-    $timeout(function() {
-      blockUI.stop();
-      $scope.person = person;
-    } ,2000);
+    blockUI.stop();
+    $scope.person = person;
   }).error(function (data, status){
     console.log(data);
   });
@@ -126,17 +118,13 @@ app.controller('ConfirmCtrl', ['$scope', '$http', '$location', '$timeout', 'chec
       'sid': $scope.sid._id
     }).success(function (results){
       if (results.verify==true){
-        $timeout(function() {
-          blockUI.stop();
-          Notification.info({message: 'تم تسجيل بياناتك الرجاء متابعة البريد الالكتروني', title: '<div class="text-right">نجح</div>'});
-          $location.path("/");
-        }, 2000);
+        blockUI.stop();
+        Notification.info({message: 'تم تسجيل بياناتك الرجاء متابعة البريد الالكتروني', title: '<div class="text-right">نجح</div>'});
+        $location.path("/");
       } else if (results.verify==2){
-        $timeout(function() {
-          blockUI.stop();
-          Notification.error({message: 'حدث خطأ الرجاء إعادة المحاولة لاحقا', title: '<div class="text-right">فشل</div>'});
-          $location.path("/");
-        }, 2000);
+        blockUI.stop();
+        Notification.error({message: 'حدث خطأ الرجاء إعادة المحاولة لاحقا', title: '<div class="text-right">فشل</div>'});
+        $location.path("/");
       }
     }).error(function (data, status){
       console.log(data);
