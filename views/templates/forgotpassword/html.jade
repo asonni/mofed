@@ -1,0 +1,23 @@
+html
+  head
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    title #{user.title}
+    style(media='all', type='text/css')
+  body
+    table(cellspacing='0', cellpadding='0', border='0', width='100%' dir ="rtl")
+      tr
+        td.navbar.navbar-inverse(align='right')
+          //This setup makes the nav background stretch the whole width of the screen. 
+          a.brand.pull-left(href='mofed.ly')
+            img(src="#")
+      tr
+        td
+          hr
+      tr
+        td(bgcolor='#FFFFFF', align='left') شكراً على طلبك 
+          
+          p كلمة المرور الجديد هي :  #{user.password} 
+      tr
+        td(bgcolor='#FFFFFF', align='center')
+          hr
+          p منظومة موفد

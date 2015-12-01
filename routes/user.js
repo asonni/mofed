@@ -101,6 +101,38 @@ router.post('/verify', function (req, res, next) {
   });
 });
 
+router.get('/forgotPassword/:email', function (req, res, next) {
+  user.hasEmail(req.params.email,function (result){
+    if(result){
+      user.changePassword(result.id, function(password){
+        if(password){
+          console.log(result);
+          var obj = {
+            template : "forgotpassword",
+            subject : "Mofed app new password request",
+            locals : {
+              email : req.params.email,
+              user : {
+                email : req.params.email,
+                password : password
+              }
+            }
+          }
+          mailer.send(obj); // 
+          //send email with activation link
+          res.send({restore:true});
+        } else {
+          //something went wrong
+          res.send({restore:3});
+        }
+        
+      })
+    } else {
+      res.send({restore:2});
+    }
+  });
+});
+
 
 
 router.get('/confirm', function(req, res, next) {

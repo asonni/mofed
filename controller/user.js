@@ -1,4 +1,5 @@
 var User = require("../models/user"),
+    generatePassword = require('password-generator'),
     easyPbkdf2 = require("easy-pbkdf2")(),
     user = null;
 
@@ -116,7 +117,47 @@ module.exports = {
         cb(null);
       }
     });
-  }
+  },
+  /* hasEmail  */
+  hasEmail: function (email, cb) {
+    User.findOne({email : email},'_id', function(err, id){
+      if(!err && id != null){
+        cb(id);
+      } else {
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
+
+  /* here we add a new user to the system */
+  changePassword: function (id, cb) {
+    var salt = easyPbkdf2.generateSalt(), //we generate a new salt for every new user
+        password = generatePassword(10,false); //we generate a new password for every new user
+    easyPbkdf2.secureHash(password, salt, function( err, passwordHash, originalSalt ) {
+      var obj={
+        password : passwordHash,
+        salt : originalSalt,
+      };
+      User.findOne({_id : id}, function(err, user){
+        if(!err && user != null){
+          user.password = passwordHash;
+          user.salt = originalSalt;
+          user.save(function(err,result){
+            if (!err) {
+              cb(password);
+            } else {
+              //return page with errors
+              console.log(err)
+              cb(null);
+            }
+          });
+        } else {
+          cb(null);
+        }
+      });
+    });
+  },
 }
 
 
