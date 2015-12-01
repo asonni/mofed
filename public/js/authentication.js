@@ -166,13 +166,20 @@ app.controller('RestoreCtrl', ['$scope', '$http', '$timeout', 'Notification', 'b
           $location.path("/");
           Notification.success({message: 'تم ارسال رسالة الي بريدك تحتوي علي كلمة المرور', title: '<div class="text-right">نجاح</div>'});
         }, 1000);
-      } else {
+      } else if(result.restore == 2) {
         $timeout(function() {
           blockUI.stop();
           $scope.email='';
           $location.path("/");
           Notification.error({message: 'البريد الذي ادخلته غير موجود', title: '<div class="text-right">خطأ</div>'});
-        }, 2000);
+        }, 1000);
+      } else if (result.restore == 3) {
+        $timeout(function() {
+          blockUI.stop();
+          $scope.email='';
+          $location.path("/");
+          Notification.error({message: 'حدث خطأ الرجاء المجاولة لاحقا', title: '<div class="text-right">فشل</div>'});
+        }, 1000);
       }
     }).error(function (data, status){
       console.log(data);
