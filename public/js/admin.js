@@ -39,15 +39,13 @@ app.controller('AdminCtrl', ['$scope', '$http', '$location', function($scope, $h
 
 }]);
 
-app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$timeout', 'blockUI', function($scope, $http, $location, $timeout, blockUI) {
+app.controller('StudentsCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
   blockUI.start("تحميل, الرجاء الانتظار...");
   $scope.init = function () {
     $http.post('/admin/students',{
     }).success(function (results){
-      $timeout(function() {
-        $scope.students = results;
-        blockUI.stop();
-      }, 2000);
+      $scope.students = results;
+      blockUI.stop();
     }).error(function (data, status){
       console.log(data);
     });
@@ -62,10 +60,8 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$timeout', 'blo
     $http.post('/admin/verify',{
       'id': $scope.id
     }).success(function (results){
-      $timeout(function() {
-        blockUI.stop();
-        $scope.init();
-      }, 2000);
+      blockUI.stop();
+      $scope.init();
     }).error(function (data, status){
       console.log(data);
     });
