@@ -92,23 +92,31 @@ app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification','$ro
       'password': $scope.password
     }).success(function (result){
       if (result.login == true) {
-        blockUI.stop();
-        window.location.replace('/user');
+        $timeout(function() {
+          blockUI.stop();
+          window.location.replace('/user');
+        }, 2000);
       } else if (result.login == 2) {
-        blockUI.stop();
-        $scope.username='';
-        $scope.password='';
-        Notification.warning({message: ' خطأ في كلمة المرور او البريد الالكتروني', title: '<div class="text-right">فشل</div>'});
+        $timeout(function() {
+          blockUI.stop();
+          $scope.username='';
+          $scope.password='';
+          Notification.warning({message: ' خطأ في كلمة المرور او البريد الالكتروني', title: '<div class="text-right">فشل</div>'});
+        }, 2000);
       } else if (result.login == 3) {
-        blockUI.stop();
-        $scope.username='';
-        $scope.password='';
-        Notification.warning({message: 'حسابك غير مفعل الرجاء زيار بريدك الالكتروني', title: '<div class="text-right">فشل</div>'});
+        $timeout(function() {
+          blockUI.stop();
+          $scope.username='';
+          $scope.password='';
+          Notification.warning({message: 'حسابك غير مفعل الرجاء زيار بريدك الالكتروني', title: '<div class="text-right">فشل</div>'});
+        }, 2000);
       } else if (result.login == 'admin') {
-        blockUI.stop();
-        $scope.username='';
-        $scope.password='';
-        window.location.replace('/admin');
+        $timeout(function() {
+          blockUI.stop();
+          window.location.replace('/admin');
+          $scope.username='';
+          $scope.password='';
+        }, 2000);
       }
     }).error(function (data, status){
       console.log(data);
@@ -123,11 +131,13 @@ app.controller('RegisterCtrl', ['$scope', '$location', '$http', 'Notification', 
       'email': $scope.email,
       'password': $scope.password
     }).success(function (result){
-      blockUI.stop();
-      $scope.email='';
-      $scope.password='';
-      $location.path("/");
-      Notification.success({message: 'تم التسجيل بنجاح الرجاء التأكيد علي البريد الالكتروني', title: '<div class="text-right">نجاح</div>'});
+      $timeout(function() {
+        blockUI.stop();
+        $scope.email='';
+        $scope.password='';
+        $location.path("/");
+        Notification.success({message: 'تم التسجيل بنجاح الرجاء التأكيد علي البريد الالكتروني', title: '<div class="text-right">نجاح</div>'});
+      }, 2000);
     }).error(function (data, status){
       console.log(data);
     });
