@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET students listing. */
-router.post('/students',helpers.isAdmin, function(req, res, next) {
+router.post('/students', function(req, res, next) {
   confirm.getConfirmations(function (students){
     res.send(students);
   });

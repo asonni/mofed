@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('mofed', ['ngRoute', 'remoteValidation', 'ui-notification', 'toggle-switch', 'nya.bootstrap.select', 'ui.bootstrap', 'blockUI']);
+var app = angular.module('mofed', ['ngRoute', 'ngAnimate', 'remoteValidation', 'ui-notification', 'toggle-switch', 'nya.bootstrap.select', 'ui.bootstrap', 'blockUI']);
 
 app.config(['$routeProvider', '$locationProvider' , function($routeProvider, $locationProvider) {
   $routeProvider.when('/', {
@@ -15,8 +15,8 @@ app.config(['$routeProvider', '$locationProvider' , function($routeProvider, $lo
     templateUrl: '../matching.html',
     controller: 'MatchingCtrl'
   })
-  .when('/not-matching',{
-    templateUrl: '../notmatching.html',
+  .when('/notMatching',{
+    templateUrl: '../notMatching.html',
     controller: 'NotMatchingCtrl'
   })
   .when('/users',{
@@ -28,6 +28,23 @@ app.config(['$routeProvider', '$locationProvider' , function($routeProvider, $lo
     controller: 'AddUserCtrl'
   });
 }]);
+
+// app.filter('startFrom', function(){
+//   return function(data, start){
+//     start = 0 + start;
+//     return data.slice(start);
+//   }
+// });
+
+app.filter('startFrom', function() {
+  return function(input, start) {
+    if(input) {
+      start = +start; //parse to int
+      return input.slice(start);
+    }
+    return [];
+  }
+});
 // Coustom Directive Start
 app.directive("matchVerify", function() {
   return {
@@ -83,9 +100,12 @@ app.controller('AdminCtrl', ['$scope', '$http', '$location', function($scope, $h
 
 app.controller('StudentsCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
   blockUI.start("تحميل, الرجاء الانتظار...");
+  $scope.pageSize = 5;
+  $scope.currentPage = 1;
   $scope.init = function () {
     $http.post('/admin/students',{
     }).success(function (results){
+      console.log(results);
       $scope.students = results;
       blockUI.stop();
     }).error(function (data, status){
