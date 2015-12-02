@@ -130,11 +130,42 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', 'blockUI', funct
 }]);
 
 app.controller('MatchingCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
-
+  blockUI.start("تحميل, الرجاء الانتظار...");
+  $http.post('/admin/matching',{
+  }).success(function (results){
+    $scope.students = results;
+    blockUI.stop();
+  }).error(function (data, status){
+    console.log(data);
+  });
 }]);
 
 app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
+  blockUI.start("تحميل, الرجاء الانتظار...");
+  $scope.init = function () {
+    $http.post('/admin/notMatching',{
+    }).success(function (results){
+      $scope.students = results;
+      blockUI.stop();
+    }).error(function (data, status){
+      console.log(data);
+    });
+  };
 
+  $scope.getVerifyID = function(id){
+    $scope.id = id;
+  };
+
+  $scope.verify = function (){
+    blockUI.start("تحميل, الرجاء الانتظار...");
+    $http.post('/admin/verify',{
+      'id': $scope.id
+    }).success(function (results){
+      $scope.init();
+    }).error(function (data, status){
+      console.log(data);
+    });
+  }
 }]);
 
 app.controller('UsersCtrl', ['$scope', '$http', 'blockUI', function($scope, $http, blockUI) {

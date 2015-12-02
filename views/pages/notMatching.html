@@ -1,6 +1,6 @@
 <br/>
 <br/>
-<form ng-submit="">
+<form data-ng-init="init()">
   <div class="row">
     <div class="col-lg-2">
       <a href="#/students" class="btn btn-info btn-block">عرض الطلبة</a>
@@ -24,23 +24,30 @@
             <tr>
               <th class="text-center">#</th>
               <th class="text-center">الرقم الوطني</th>
-              <th class="text-center">الاسم الرباعي</th>
+              <th class="text-center">الاسم من الرقم الوطني</th>
+              <th class="text-center">الاسم من ادارة البعثات</th>
               <th class="text-center">حالة التطابق</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr ng-repeat="notMatching in students">
               <td class="text-center">
-                1
+                {{$index + 1}}
               </td>
               <td class="text-center">
-                1198404454502
+                {{notMatching.mofednid.nid}}
               </td>
               <td class="text-center">
-                احمد مفتاح الفيتوري
+                {{notMatching.mofednid.name}}
               </td>
               <td class="text-center">
-                غير مطابق
+                {{notMatching.mofedbase.name}}
+              </td>
+              <td class="text-center">
+                <span class="label label-warning" ng-show="notMatching.user.verified == 2" style="font-size:10px;padding:10px;">غير مؤكدة</span>
+                <button type="button" class="btn btn-info btn-sm" ng-show="notMatching.user.verified == 2" ng-click="getVerifyID(notMatching._id)" data-toggle="modal" data-target="#verify">
+                  تأكيد
+                </button>
               </td>
             </tr>
           </tbody>
@@ -48,4 +55,21 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="verify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h3 class="modal-title">رسالة تحذير</h3>
+        </div>
+        <div class="modal-body">
+          <h4>هل تريد فعلا التاكيد علي هذه البيانات ؟</h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">لا</button>
+          <button type="button" class="btn btn-info" ng-click="verify()" data-dismiss="modal">نعم</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 </form>
