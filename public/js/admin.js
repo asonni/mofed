@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('mofed', ['ngRoute', 'ngMessages', 'ui-notification', 'toggle-switch', 'nya.bootstrap.select', 'ui.bootstrap', 'blockUI']);
+var app = angular.module('mofed', ['ngRoute', 'remoteValidation', 'ui-notification', 'toggle-switch', 'nya.bootstrap.select', 'ui.bootstrap', 'blockUI']);
 
 app.config(['$routeProvider', '$locationProvider' , function($routeProvider, $locationProvider) {
   $routeProvider.when('/', {
@@ -22,8 +22,44 @@ app.config(['$routeProvider', '$locationProvider' , function($routeProvider, $lo
   .when('/users',{
     templateUrl: '../users.html',
     controller: 'UsersCtrl'
+  })
+  .when('/addUser',{
+    templateUrl: '../addUser.html',
+    controller: 'AddUserCtrl'
   });
 }]);
+// Coustom Directive Start
+app.directive("matchVerify", function() {
+  return {
+    require: "ngModel",
+    scope: {
+      matchVerify: '='
+    },
+    link: function(scope, element, attrs, ctrl) {
+      scope.$watch(function() {
+        var combined;
+        if (scope.matchVerify || ctrl.$viewValue) {
+          combined = scope.matchVerify + '_' + ctrl.$viewValue; 
+        }                    
+        return combined;
+      }, function(value) {
+        if (value) {
+          ctrl.$parsers.unshift(function(viewValue) {
+            var origin = scope.matchVerify;
+            if (origin !== viewValue) {
+              ctrl.$setValidity("matchVerify", false);
+              return undefined;
+            } else {
+              ctrl.$setValidity("matchVerify", true);
+              return viewValue;
+            }
+          });
+        }
+      });
+    }
+  };
+});
+// Coustom Directive End
 // Angular Notification Configuration Start
 app.config(function(NotificationProvider) {
   NotificationProvider.setOptions({
@@ -38,6 +74,8 @@ app.config(function(NotificationProvider) {
   });
 });
 // Angular Notification Configuration End
+
+
 // Angular Controllers Start
 app.controller('AdminCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
 
@@ -81,6 +119,10 @@ app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', 'blockUI', fu
 }]);
 
 app.controller('UsersCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
+
+}]);
+
+app.controller('AddUserCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
 
 }]);
 // Angular Controllers End
