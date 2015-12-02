@@ -118,8 +118,15 @@ app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', 'blockUI', fu
 
 }]);
 
-app.controller('UsersCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
-
+app.controller('UsersCtrl', ['$scope', '$http', 'blockUI', function($scope, $http, blockUI) {
+  blockUI.start("تحميل, الرجاء الانتظار...");
+  $http.post('admin/users',{
+  }).success(function (results){
+    $scope.admins = results;
+    blockUI.stop();
+  }).error(function (data, status){
+    console.log(data);
+  })
 }]);
 
 app.controller('AddUserCtrl', ['$scope', '$http', '$location', 'blockUI', 'Notification', function($scope, $http, $location, blockUI, Notification) {
@@ -139,11 +146,11 @@ app.controller('AddUserCtrl', ['$scope', '$http', '$location', 'blockUI', 'Notif
         $scope.confirmPassword='';
       if (result.addUser == true){
         blockUI.stop();
-        $location.path("/");
+        $location.path("/users");
         Notification.success({message: 'تم إضافة مستخدم جديد بنجاح', title: '<div class="text-right">نجاح</div>'});
       } else if(result.addUser == false) {
         blockUI.stop();
-        $location.path("/");
+        $location.path("/users");
         Notification.error({message: 'حدث خطأ الرجاء المحاولة لاحقا', title: '<div class="text-right">فشل</div>'});
       }
     }).error(function (data, status){

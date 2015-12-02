@@ -15,22 +15,26 @@
               <th class="text-center">#</th>
               <th class="text-center">الاسم</th>
               <th class="text-center">البريد الالكتروني</th>
+              <th class="text-center">رقم الهاتف</th>
               <th class="text-center">حذف</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr ng-repeat="admin in admins">
               <td class="text-center">
-                1
+                {{$index + 1}}
               </td>
               <td class="text-center">
-                علاء الدين
+                {{admin.name}}
               </td>
               <td class="text-center">
-                alaaden3000@gmail.com
+                {{admin.email}}
               </td>
               <td class="text-center">
-                <button value="" data-title="Delete" data-toggle="modal" data-target="#deleteUser" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
+                {{admin.phone}}
+              </td>
+              <td class="text-center">
+                <button ng-click="sendID(admin._id)" value="{{admin._id}}" data-title="Delete" data-toggle="modal" data-target="#deleteUser" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
               </td>
             </tr>
           </tbody>
