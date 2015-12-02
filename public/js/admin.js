@@ -122,7 +122,33 @@ app.controller('UsersCtrl', ['$scope', '$http', '$location', 'blockUI', function
 
 }]);
 
-app.controller('AddUserCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
-
+app.controller('AddUserCtrl', ['$scope', '$http', '$location', 'blockUI', 'Notification', function($scope, $http, $location, blockUI, Notification) {
+  $scope.addUser = function(){
+    blockUI.start("تحميل, الرجاء الانتظار...");
+    $http.post('/admin/addUser',{
+      'name': $scope.name,
+      'phone': $scope.phone,
+      'email': $scope.email,
+      'password': $scope.password
+    }).success(function (result){
+        $scope.name='';
+        $scope.phone='';
+        $scope.email='';
+        $scope.confirmEmail='';
+        $scope.password='';
+        $scope.confirmPassword='';
+      if (result.addUser == true){
+        blockUI.stop();
+        $location.path("/");
+        Notification.success({message: 'تم إضافة مستخدم جديد بنجاح', title: '<div class="text-right">نجاح</div>'});
+      } else if(result.addUser == false) {
+        blockUI.stop();
+        $location.path("/");
+        Notification.error({message: 'حدث خطأ الرجاء المحاولة لاحقا', title: '<div class="text-right">فشل</div>'});
+      }
+    }).error(function (data, status){
+      console.log(data);
+    });
+  };
 }]);
 // Angular Controllers End
