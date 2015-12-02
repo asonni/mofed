@@ -37,6 +37,7 @@ app.config(function(NotificationProvider) {
 // Angular Notification Configuration End
 // Angular Custom Service Start
 app.service('checkService', function(){
+  this.name = "";
   this.nid = "";
   this.regnum = "";
   this.lawnum = "";
@@ -75,10 +76,12 @@ app.controller('HomeCtrl', ['$scope', '$http', '$location', 'blockUI', function(
 }]);
 
 app.controller('CheckCtrl', ['$scope', '$http', 'Notification', '$location', 'checkService', function($scope, $http, Notification, $location, checkService) {
+  $scope.name = checkService.name;
   $scope.nid = checkService.nid;
   $scope.regnum = checkService.regnum;
   $scope.lawnum = checkService.lawnum;
-  $scope.$watchGroup(['nid', 'regnum', 'lawnum'], function(){
+  $scope.$watchGroup(['name','nid', 'regnum', 'lawnum'], function(){
+    checkService.name = $scope.name;
     checkService.nid = $scope.nid;
     checkService.regnum = $scope.regnum;
     checkService.lawnum = $scope.lawnum;
@@ -90,10 +93,12 @@ app.controller('CheckCtrl', ['$scope', '$http', 'Notification', '$location', 'ch
 
 app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', 'Notification', 'blockUI', function($scope, $http, $location, checkService, Notification, blockUI) {
   blockUI.start("تحميل...");
+  $scope.name = checkService.name;
   $scope.nid = checkService.nid;
   $scope.regnum = checkService.regnum;
   $scope.lawnum = checkService.lawnum;
   $http.post('/user/check',{
+    'name': $scope.name,
     'nid': $scope.nid,
     'regnum': $scope.regnum,
     'lawnum': $scope.lawnum
