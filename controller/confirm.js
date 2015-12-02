@@ -23,12 +23,35 @@ module.exports = {
   },
   getConfirmations: function(cb) {
     Confirm.find({
-    },'createdAt user mofednid mofedbase').populate('user', 'email _id verified')
+    },'createdAt user mofednid mofedbase')
+      .populate('user', 'email _id verified')
       .populate('mofednid', 'nid _id name')
       .populate('mofedbase', 'sid _id name')
-     .exec(function(err, students){
+      .exec(function(err, students){
         cb(students);
-     });
+      });
+  },
+  getMatchConfirmations: function(cb) {
+    Confirm.find({
+      verified:2
+    },'createdAt user mofednid mofedbase')
+      .populate('user', 'email _id verified')
+      .populate('mofednid', 'nid _id name')
+      .populate('mofedbase', 'sid _id name')
+      .exec(function(err, students){
+        cb(students);
+      });
+  },
+  getUnMatchConfirmations: function(cb) {
+    Confirm.find({
+      verified:1
+    },'createdAt user mofednid mofedbase')
+      .populate('user', 'email _id verified')
+      .populate('mofednid', 'nid _id name')
+      .populate('mofedbase', 'sid _id name')
+      .exec(function(err, students){
+        cb(students);
+      });
   },
   verify: function(id, cb){
     Confirm.findOne({_id : id}, function(err, confirmation){
