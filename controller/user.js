@@ -183,6 +183,19 @@ module.exports = {
       }
     });
   },
+
+  /* here get all students */
+  removeAdmin: function (id,cb) {
+    User.remove({_id : id}, '_id name email phone createdAt activated', function(err, admins){
+      if (!err) {
+        cb(true);
+      } else {
+        // return page with errors
+        console.log(err)
+        cb(null);
+      }
+    });
+  },
 }
 
 

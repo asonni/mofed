@@ -90,4 +90,15 @@ router.post('/addUser', function(req, res, next) {
   });
 });
 
+/* GET admins listing. */
+router.post('/remove', function(req, res, next) {
+  user.removeAdmin(function (result){
+    if(result){
+      res.send({remove: true});
+    } else {
+      res.send({remove: false});  
+    }
+  });
+});
+
 module.exports = router;
