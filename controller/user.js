@@ -173,7 +173,7 @@ module.exports = {
   },
   /* here get all students */
   getAllAdmins: function (cb) {
-    User.find({admin : true}, '_id name email phone createdAt', function(err, admins){
+    User.find({admin : true}, '_id name email phone createdAt activated', function(err, admins){
       if (!err) {
         cb(admins);
       } else {

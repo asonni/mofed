@@ -6,21 +6,22 @@ var user = require("../controller/user"),
     confirm = require('../controller/confirm'),
     helpers = require('../controller/userHelpers'),
     mailer = require('../controller/mailer');
+    config = require('../config'); // get our config file
 
 /* GET admins listing. */
-router.get('/',function(req, res, next) {
+router.get('/',helpers.isAdmin, function(req, res, next) {
   res.render('admin', { title: 'الرئيسية' });
 });
 
 /* GET students listing. */
-router.post('/students',function(req, res, next) {
+router.post('/students',helpers.isAdmin, function(req, res, next) {
   confirm.getConfirmations(function (students){
     res.send(students);
   });
 });
 
 /* GET students listing. */
-router.post('/verify',function(req, res, next) {
+router.post('/verify',helpers.isAdmin, function(req, res, next) {
   confirm.verify(req.body.id, function(result){
     if(result){
       res.send({verify : true});
@@ -30,8 +31,21 @@ router.post('/verify',function(req, res, next) {
   })
 });
 
+/* activate new user. */
+router.get('/activate/:token', function (req, res, next) {
+  user.activate(req.params.token,function (result){
+    if(result){
+      //send email with activation link
+      res.redirect('/?msg=4');
+    } else {
+      //something went wrong
+      res.redirect('/?msg=5');
+    }
+  });
+});
+
 /* check if Registered. */
-router.get('/isRegistered', function (req, res, next){
+router.get('/isRegistered',helpers.isAdmin,  function (req, res, next){
   user.isRegistered(req.query.value,function (result){
     if(result){
       //send true if we find a match
@@ -44,14 +58,14 @@ router.get('/isRegistered', function (req, res, next){
 });
 
 /* GET admins listing. */
-router.post('/users',function(req, res, next) {
+router.post('/users',helpers.isAdmin, function(req, res, next) {
   user.getAllAdmins(function (admins){
     res.send(admins);
   });
 });
 
 /* add new admin. */
-router.post('/addUser', function(req, res, next) {
+router.post('/addUser',helpers.isAdmin, function(req, res, next) {
   user.addAdmin(req.body,function(result){
     if(result){
       var obj = {
@@ -59,6 +73,7 @@ router.post('/addUser', function(req, res, next) {
         subject : "Mofed app administration",
         locals : {
           email : result.email,
+          host: config.host,
           user : {
             email : result.email,
             token : result._id

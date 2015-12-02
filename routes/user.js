@@ -5,7 +5,8 @@ var user = require("../controller/user"),
     mofedbase = require('../controller/mofedbase'),
     confirm = require('../controller/confirm'),
     helpers = require('../controller/userHelpers'),
-    mailer = require('../controller/mailer');
+    mailer = require('../controller/mailer'),
+    config = require('../config'); // get our config file
 
 
 
@@ -23,9 +24,10 @@ router.post('/register', function(req, res, next) {
         subject : "Mofed app registration",
         locals : {
           email : result.email,
+          host: config.host,
           user : {
             email : result.email,
-            token : result._id
+            token : result._id,
           }
         }
       }
@@ -112,6 +114,7 @@ router.post('/forgotPassword', function (req, res, next) {
             subject : "Mofed app new password request",
             locals : {
               email : req.body.email,
+              host: config.host,
               user : {
                 email : req.body.email,
                 password : password
