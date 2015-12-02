@@ -18,6 +18,10 @@ app.config(['$routeProvider', '$locationProvider' , function($routeProvider, $lo
   .when('/not-matching',{
     templateUrl: '../notmatching.html',
     controller: 'NotMatchingCtrl'
+  })
+  .when('/users',{
+    templateUrl: '../users.html',
+    controller: 'UsersCtrl'
   });
 }]);
 // Angular Notification Configuration Start
@@ -73,6 +77,10 @@ app.controller('MatchingCtrl', ['$scope', '$http', '$location', 'blockUI', funct
 }]);
 
 app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
+
+}]);
+
+app.controller('UsersCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
 
 }]);
 // Angular Controllers End

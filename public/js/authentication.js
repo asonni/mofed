@@ -101,7 +101,7 @@ app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification','$ro
         $scope.username='';
         $scope.password='';
         Notification.warning({message: 'حسابك غير مفعل الرجاء زيار بريدك الالكتروني', title: '<div class="text-right">فشل</div>'});
-      } else if (result.login == 'admin') {
+      } else if (result.login == 99) {
         blockUI.stop();
         window.location.replace('/admin');
         $scope.username='';
