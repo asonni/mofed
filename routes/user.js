@@ -69,7 +69,7 @@ router.post('/check', function(req, res, next) {
   mofedbase.getStudents(req.body.lawnum, function (students){
     mofednid.getPerson(req.body.nid,req.body.regnum, function (person){
       // res.render('confirm', {students: students,person: person});
-      res.send({person:person, students:students});
+      res.send({person, students});
     })
     // res.send({check:true});
   });
@@ -97,6 +97,38 @@ router.post('/verify', function (req, res, next) {
       res.send({verify : result});
     } else {
       res.send({verify : null});
+    }
+  });
+});
+
+router.post('/forgotPassword', function (req, res, next) {
+  user.hasEmail(req.body.email,function (result){
+    if(result){
+      user.changePassword(result.id, function(password){
+        if(password){
+          console.log(result);
+          var obj = {
+            template : "forgotpassword",
+            subject : "Mofed app new password request",
+            locals : {
+              email : req.body.email,
+              user : {
+                email : req.body.email,
+                password : password
+              }
+            }
+          }
+          mailer.send(obj); // 
+          //send email with activation link
+          res.send({restore:true});
+        } else {
+          //something went wrong
+          res.send({restore:3});
+        }
+        
+      })
+    } else {
+      res.send({restore:2});
     }
   });
 });

@@ -3,7 +3,9 @@ var Mofedbase = require("../models/mofedbase");
 module.exports = {
   /* here we add a new user to the system */
   getStudents: function (lawnum, cb) {
+    console.log(lawnum);
     Mofedbase.find({lawnum : lawnum}, function(err, person){
+      console.log(person);
       if (!err) {
         cb(person);
       } else {
