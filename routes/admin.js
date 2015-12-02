@@ -43,6 +43,13 @@ router.get('/isRegistered', function (req, res, next){
   });
 });
 
+/* GET admins listing. */
+router.post('/users',function(req, res, next) {
+  user.getAllAdmins(function (admins){
+    res.send(admins);
+  });
+});
+
 /* add new admin. */
 router.post('/addUser', function(req, res, next) {
   user.addAdmin(req.body,function(result){
