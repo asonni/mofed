@@ -9,7 +9,7 @@ var user = require("../controller/user"),
     config = require('../config'); // get our config file
 
 /* GET admins listing. */
-router.get('/',helpers.isAdmin, function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.render('admin', { title: 'الرئيسية' });
 });
 
@@ -21,7 +21,7 @@ router.post('/students',helpers.isAdmin, function(req, res, next) {
 });
 
 /* GET students listing. */
-router.post('/verify',helpers.isAdmin, function(req, res, next) {
+router.post('/verify', function(req, res, next) {
   confirm.verify(req.body.id, function(result){
     if(result){
       res.send({verify : true});
@@ -45,7 +45,7 @@ router.get('/activate/:token', function (req, res, next) {
 });
 
 /* check if Registered. */
-router.get('/isRegistered',helpers.isAdmin,  function (req, res, next){
+router.get('/isRegistered',  function (req, res, next){
   user.isRegistered(req.query.value,function (result){
     if(result){
       //send true if we find a match
@@ -58,14 +58,14 @@ router.get('/isRegistered',helpers.isAdmin,  function (req, res, next){
 });
 
 /* GET admins listing. */
-router.post('/users',helpers.isAdmin, function(req, res, next) {
+router.post('/users', function(req, res, next) {
   user.getAllAdmins(function (admins){
     res.send(admins);
   });
 });
 
 /* add new admin. */
-router.post('/addUser',helpers.isAdmin, function(req, res, next) {
+router.post('/addUser', function(req, res, next) {
   user.addAdmin(req.body,function(result){
     if(result){
       var obj = {
