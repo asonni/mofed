@@ -60,10 +60,10 @@ router.post('/addUser', function(req, res, next) {
       }
       mailer.send(obj); // 
       //send email with activation link
-      res.render('index', { title: 'الرئيسية', msg: 1 });
+      res.send({addUser:true});
     } else {
       //something went wrong
-      res.render('index', { title: 'الرئيسية', msg: 2 });
+      res.send({addUser:false}));
     }
   });
 });
