@@ -30,4 +30,42 @@ router.post('/verify',function(req, res, next) {
   })
 });
 
+/* check if Registered. */
+router.get('/isRegistered', function (req, res, next){
+  user.isRegistered(req.query.value,function (result){
+    if(result){
+      //send true if we find a match
+      res.send({isValid: false, value: result.email});
+    } else {
+      //send false if we didn't find a match
+      res.send({isValid: true, value: result.email});
+    }
+  });
+});
+
+/* add new admin. */
+router.post('/addUser', function(req, res, next) {
+  user.addAdmin(req.body,function(result){
+    if(result){
+      var obj = {
+        template : "newadmin",
+        subject : "Mofed app administration",
+        locals : {
+          email : result.email,
+          user : {
+            email : result.email,
+            token : result._id
+          }
+        }
+      }
+      mailer.send(obj); // 
+      //send email with activation link
+      res.render('index', { title: 'الرئيسية', msg: 1 });
+    } else {
+      //something went wrong
+      res.render('index', { title: 'الرئيسية', msg: 2 });
+    }
+  });
+});
+
 module.exports = router;
