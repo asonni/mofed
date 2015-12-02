@@ -63,7 +63,7 @@ router.post('/addUser', function(req, res, next) {
       res.send({addUser:true});
     } else {
       //something went wrong
-      res.send({addUser:false}));
+      res.send({addUser:false});
     }
   });
 });
