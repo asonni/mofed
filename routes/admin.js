@@ -14,12 +14,25 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET students listing. */
-router.post('/students',helpers.isAdmin, function(req, res, next) {
+router.post('/students', function(req, res, next) {
   confirm.getConfirmations(function (students){
     res.send(students);
   });
 });
 
+/* GET students with confirmations. */
+router.post('/matching', function(req, res, next) {
+  confirm.getMatchConfirmations(function (students){
+    res.send(students);
+  });
+});
+
+/* GET students with no confirmations. */
+router.post('/notMatching', function(req, res, next) {
+  confirm.getUnMatchConfirmations(function (students){
+    res.send(students);
+  });
+});
 /* GET students listing. */
 router.post('/verify', function(req, res, next) {
   confirm.verify(req.body.id, function(result){
