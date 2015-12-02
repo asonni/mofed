@@ -16,7 +16,7 @@ module.exports = {
         cb(result);
       } else {
         // return page with errors
-        console.log(err)
+        console.log(err);
         cb(null);
       }
     });

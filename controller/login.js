@@ -48,6 +48,7 @@ module.exports = function (router) {
       }
       req.logIn(user, function(err) {
         if (err) { return next(err); }
+        if(user.admin){ res.send({login:99});};
         res.send({login: true });
       });
     })(req, res, next);

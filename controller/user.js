@@ -104,20 +104,7 @@ module.exports = {
       }
     });
   },
-  /* here get all students */
-  getAllStudents: function (cb) {
-    User.find({admin : false, verified : {$gte:2} }, function(err, users){
-      if (!err) {
-        // Map the docs into an array of just the _ids
-        var ids = users.map(function(doc) { return doc._id; });
-        cb(students);
-      } else {
-        // return page with errors
-        console.log(err)
-        cb(null);
-      }
-    });
-  },
+  
   /* hasEmail  */
   hasEmail: function (email, cb) {
     User.findOne({email : email},'_id', function(err, id){
@@ -156,6 +143,44 @@ module.exports = {
           cb(null);
         }
       });
+    });
+  },
+
+  /*add Admin*/
+  /* here we add a new user to the system */
+  addAdmin: function (body, cb) {
+    var salt = easyPbkdf2.generateSalt(); //we generate a new salt for every new user
+    easyPbkdf2.secureHash( body.password, salt, function( err, passwordHash, originalSalt ) {
+      var obj={
+        name: body.name,
+        admin: true,
+        email : body.email,
+        phone: body.phone,
+        password : passwordHash,
+        salt : originalSalt,
+      };
+      user = new User(obj);
+      user.save(function(err,result){
+        if (!err) {
+          cb(result);
+        } else {
+          //TODO: return page with errors
+          console.log(err)
+          cb(null);
+        }
+      });
+    });
+  },
+  /* here get all students */
+  getAllAdmins: function (cb) {
+    User.find({admin : true, verified : {$gte:2} }, '_id name email phone createdAt', function(err, admins){
+      if (!err) {
+        cb(admins);
+      } else {
+        // return page with errors
+        console.log(err)
+        cb(null);
+      }
     });
   },
 }
