@@ -8,7 +8,7 @@ var Mofedbase = new Schema({
     sid: Number,
     name: {type: String, index: true},
     degree: String,
-    lawnum: Number,
+    lawnum: {type: String, index: true},
     begfinance: {type: String},
     endfinance:{type: String},
     socialstatus : {type: String},
@@ -21,4 +21,5 @@ var Mofedbase = new Schema({
     currency: String,
     totalinlyd: Number,
 });
+Mofedbase.index({ name: 'text'});
 module.exports = mongoose.model('Mofedbase', Mofedbase);
