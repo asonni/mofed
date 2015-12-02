@@ -102,7 +102,6 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', 'blockUI', funct
     $http.post('/admin/verify',{
       'id': $scope.id
     }).success(function (results){
-      blockUI.stop();
       $scope.init();
     }).error(function (data, status){
       console.log(data);
@@ -120,13 +119,35 @@ app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', 'blockUI', fu
 
 app.controller('UsersCtrl', ['$scope', '$http', 'blockUI', function($scope, $http, blockUI) {
   blockUI.start("تحميل, الرجاء الانتظار...");
-  $http.post('admin/users',{
-  }).success(function (results){
-    $scope.admins = results;
-    blockUI.stop();
-  }).error(function (data, status){
-    console.log(data);
-  })
+  $scope.init = function () {
+    $http.post('/admin/users',{
+    }).success(function (results){
+      $scope.admins = results;
+      blockUI.stop();
+    }).error(function (data, status){
+      console.log(data);
+    });
+  };
+
+  $scope.sendID = function(id){
+    $scope.id = id;
+  };
+
+  $scope.removeUser = function(){
+    blockUI.start("تحميل, الرجاء الانتظار...");
+    $http.post('/admin/remove',{
+      'id': $scope.id
+    }).success(function (results){
+      if (results.remove == true){
+        $scope.init();
+      } else {
+        $scope.init();
+      }
+    }).error(function (data, status){
+      console.log(data);
+    });
+  };
+
 }]);
 
 app.controller('AddUserCtrl', ['$scope', '$http', '$location', 'blockUI', 'Notification', function($scope, $http, $location, blockUI, Notification) {

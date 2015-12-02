@@ -186,7 +186,7 @@ module.exports = {
 
   /* here get all students */
   removeAdmin: function (id,cb) {
-    User.remove({_id : id}, '_id name email phone createdAt activated', function(err, admins){
+    User.remove({_id : id}, function(err, admins){
       if (!err) {
         cb(true);
       } else {
