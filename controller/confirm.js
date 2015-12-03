@@ -25,7 +25,7 @@ module.exports = {
     Confirm.find({
     },'createdAt user mofedbase')
       .populate('user', 'email _id name nid regnum lawnum country verified')
-      .populate('mofedbase', 'sid _id name')
+      .populate('mofedbase', 'sid _id name country lawnum')
       .populate('admin', '_id name')
       .exec(function(err, students){
         cb(students);
@@ -36,7 +36,7 @@ module.exports = {
       verified:2
     },'createdAt user  mofedbase')
       .populate('user', 'email _id name nid regnum lawnum country verified')
-      .populate('mofedbase', 'sid _id name')
+      .populate('mofedbase', 'sid _id name country lawnum')
       .populate('admin', '_id name')
       .exec(function(err, students){
         cb(students);
@@ -47,7 +47,7 @@ module.exports = {
       verified:1
     },'createdAt user mofednid mofedbase')
       .populate('user', 'email _id name nid regnum lawnum country verified')
-      .populate('mofedbase', 'sid _id name')
+      .populate('mofedbase', 'sid _id name country lawnum')
       .exec(function(err, students){
         cb(students);
       });
