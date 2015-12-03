@@ -69,8 +69,8 @@ router.get('/isRegistered', function (req, res, next){
 
 router.post('/check', function(req, res, next) {
   mofedbase.getStudents(req.body.name,req.body.lawnum, function (students){
-    user.enteredData(req.user.id,req.body,function(data){
-      res.send({data, students});
+    user.enteredData(req.user.id,req.body,function(person){
+      res.send({person, students});
     })
     // res.send({check:true});
   });
@@ -79,7 +79,7 @@ router.post('/check', function(req, res, next) {
 router.post('/confirm', function (req, res, next) {
   confirm.addConfirmation(req.body,req.user,function (result){
     if(result) {
-      user.userVerified(req.user._id, function (verified){
+      user.userVerified(req.user._id, req.body.country, function (verified){
         if(verified) {
           res.send({verify : true});
         } else {
