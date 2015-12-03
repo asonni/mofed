@@ -23,9 +23,8 @@ module.exports = {
   },
   getConfirmations: function(cb) {
     Confirm.find({
-    },'createdAt user mofednid mofedbase')
-      .populate('user', 'email _id verified')
-      .populate('mofednid', 'nid _id name')
+    },'createdAt user mofedbase')
+      .populate('user', 'email _id name nid regnum lawnum country verified')
       .populate('mofedbase', 'sid _id name')
       .exec(function(err, students){
         cb(students);
@@ -34,9 +33,8 @@ module.exports = {
   getMatchConfirmations: function(cb) {
     Confirm.find({
       verified:2
-    },'createdAt user mofednid mofedbase')
-      .populate('user', 'email _id verified')
-      .populate('mofednid', 'nid _id name')
+    },'createdAt user  mofedbase')
+      .populate('user', 'email _id name nid regnum lawnum country verified')
       .populate('mofedbase', 'sid _id name')
       .exec(function(err, students){
         cb(students);
@@ -46,8 +44,7 @@ module.exports = {
     Confirm.find({
       verified:1
     },'createdAt user mofednid mofedbase')
-      .populate('user', 'email _id verified')
-      .populate('mofednid', 'nid _id name')
+      .populate('user', 'email _id name nid regnum lawnum country verified')
       .populate('mofedbase', 'sid _id name')
       .exec(function(err, students){
         cb(students);
