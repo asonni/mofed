@@ -41,6 +41,10 @@ app.service('checkService', function(){
   this.nid = 119861412627;
   this.regnum = 12431;
   this.lawnum = 393;
+  // this.name = "";
+  // this.nid = "";
+  // this.regnum = "";
+  // this.lawnum = "";
 });
 
 // Angular Custom Service End
@@ -139,7 +143,8 @@ app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', '
   }
 
   $scope.unconfirm = function(){
-    
+    $location.path("/check");
+    Notification.info({message: 'الرجاء التحقق من البيانات المدخلة او مراجعة إدارة البعثات', title: '<div class="text-right">رسالة تحقق</div>'});
   }
 }]);
 // Angular Controllers End
