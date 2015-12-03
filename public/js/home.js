@@ -37,10 +37,10 @@ app.config(function(NotificationProvider) {
 // Angular Notification Configuration End
 // Angular Custom Service Start
 app.service('checkService', function(){
-  this.name = "";
-  this.nid = "";
-  this.regnum = "";
-  this.lawnum = "";
+  this.name = "احمد فتح الله عبدالقادر اسماعيل";
+  this.nid = 119861412627;
+  this.regnum = 12431;
+  this.lawnum = 393;
 });
 
 // Angular Custom Service End
@@ -115,12 +115,14 @@ app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', '
     if($scope.sid){
       $scope.selectName = true;
     }
+    $scope.country = $scope.sid.country;
   });
   $scope.confirm = function(){
     blockUI.start("تحميل...");
     $http.post('/user/confirm',{
       'nid': $scope.person.person._id,
-      'sid': $scope.sid._id
+      'sid': $scope.sid._id,
+      'country': $scope.country
     }).success(function (results){
       if (results.verify==true){
         blockUI.stop();
