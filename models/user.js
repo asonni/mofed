@@ -11,6 +11,7 @@ var User = new Schema({
   	email: {type: String, unique : true, required : true},
     phone: {type: String, default:"NULL"},
     lawnum: {type: String, index: true},
+    country: {type: String},
     nid: {type: String, index: true},
     regnum: {type: String, index: true},
   	status: Boolean,
