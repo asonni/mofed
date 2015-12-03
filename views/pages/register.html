@@ -7,7 +7,7 @@
         <div class="row">
           <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-              <input type="email" name="email" ng-model="email" ng-remote-validate="/user/isRegistered/" ng-remote-throttle="800" ng-remote-method="GET" class="form-control" placeholder="البريد الالكتروني" tabindex="3" style="line-height: 30px;">
+              <input type="email" name="email" ng-model="email" ng-remote-validate="/user/isRegistered/" ng-remote-throttle="800" ng-remote-method="GET" class="form-control" placeholder="البريد الالكتروني" tabindex="3" style="line-height: 30px;" autofocus>
               <i style="position:absolute; margin:-32px;" class="fa fa-spinner fa-pulse fa-2x" ng-show="registerForm.email.$pending"></i>
               <span ng-show="registerForm.email.$error.ngRemoteValidate" style="position:absolute;color:red;">هذا البريد موجود مسبقا!</span>
               <span ng-show="registerForm.email.$error.email" style="position:absolute;color:red;">الرجاء ادخال بريد الكتروني صالح</span>
