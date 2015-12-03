@@ -84,10 +84,11 @@ module.exports = {
     });
   },
   /* user verifies*/
-  userVerified: function (id, cb) {
+  userVerified: function (id,country, cb) {
     User.findOne({_id : id}, function(err, user){
       if(!err && user != null){
         user.verified = 2;
+        user.country = country;
         user.save(function(err,result){
           if (!err) {
             delete result.password;

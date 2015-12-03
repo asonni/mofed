@@ -6,9 +6,9 @@ module.exports = {
     Mofedbase.find({lawnum : { "$regex": lawnum, "$options": "i" }, $text : {$search: name}}, {score: {$meta: "textScore"}})
     .sort({score : {$meta: 'textScore'}})
     .limit(20)
-    .exec(function(err, person){
+    .exec(function(err, students){
       if (!err) {
-        cb(person);
+        cb(students);
       } else {
         // return page with errors
         console.log(err)
