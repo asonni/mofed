@@ -23,7 +23,7 @@ module.exports = {
   },
   getConfirmations: function(cb) {
     Confirm.find({
-    },'createdAt user mofedbase')
+    },'createdAt user mofedbase admin')
       .populate('user', 'email _id name nid regnum lawnum country verified')
       .populate('mofedbase', 'sid _id name country lawnum')
       .populate('admin', '_id name')
@@ -34,7 +34,7 @@ module.exports = {
   getMatchConfirmations: function(cb) {
     Confirm.find({
       verified:2
-    },'createdAt user  mofedbase')
+    },'createdAt user  mofedbase admin')
       .populate('user', 'email _id name nid regnum lawnum country verified')
       .populate('mofedbase', 'sid _id name country lawnum')
       .populate('admin', '_id name')
