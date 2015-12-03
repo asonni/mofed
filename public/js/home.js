@@ -37,14 +37,14 @@ app.config(function(NotificationProvider) {
 // Angular Notification Configuration End
 // Angular Custom Service Start
 app.service('checkService', function(){
-  this.name = "احمد فتح الله عبدالقادر اسماعيل";
-  this.nid = 119861412627;
-  this.regnum = 12431;
-  this.lawnum = 393;
-  // this.name = "";
-  // this.nid = "";
-  // this.regnum = "";
-  // this.lawnum = "";
+  // this.name = "احمد فتح الله عبدالقادر اسماعيل";
+  // this.nid = 119861412627;
+  // this.regnum = 12431;
+  // this.lawnum = 393;
+  this.name = "";
+  this.nid = "";
+  this.regnum = "";
+  this.lawnum = "";
 });
 
 // Angular Custom Service End
