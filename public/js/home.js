@@ -137,5 +137,9 @@ app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', '
       console.log(data);
     });
   }
+
+  $scope.unconfirm = function(){
+    
+  }
 }]);
 // Angular Controllers End
