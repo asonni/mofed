@@ -38,7 +38,6 @@ passport.deserializeUser(function (id, done) {
 
 module.exports = function (router) {
   router.post('/user/login', function(req, res, next) {
-    console.log(req.body);
     passport.authenticate('local', function(err, user) {
       if (err) { return next(err); }
       if (!user) { return res.send({login: 2 }); }

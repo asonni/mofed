@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 // set up a mongoose model
 var Mofednid = new Schema({
-    nid: Number,
+    nid: String,
     name: {type: String, index: true},
     regnum: Number,
     dob: String,

@@ -17,6 +17,10 @@ module.exports = {
       user = new User(obj);
       user.save(function(err,result){
         if (!err) {
+          delete result.password;
+          delete result.salt;
+          delete result.admin;
+          delete result.password;
           cb(result);
         } else {
           //TODO: return page with errors
@@ -34,6 +38,10 @@ module.exports = {
         user.activated = true;
         user.save(function(err,result){
           if (!err) {
+            delete result.password;
+            delete result.salt;
+            delete result.admin;
+            delete result.password;
             cb(result);
           } else {
             //TODO: return page with errors
@@ -82,6 +90,10 @@ module.exports = {
         user.verified = 2;
         user.save(function(err,result){
           if (!err) {
+            delete result.password;
+            delete result.salt;
+            delete result.admin;
+            delete result.password;
             cb(result);
           } else {
             //return page with errors
@@ -116,6 +128,33 @@ module.exports = {
       }
     });
   },
+  /* user verifies*/
+  enteredData: function (id,body, cb) {
+    User.findOne({_id : id}, function(err, user){
+      if(!err && user != null){
+        user.lawnum = body.lawnum;
+        user.name = body.name;
+        user.nid= body.nid;
+        user.regnum = body.regnum;
+        user.save(function(err,result){
+          if (!err) {
+            delete result.password;
+            delete result.salt;
+            delete result.admin;
+            delete result.password;
+            console.log(result);
+            cb(result);
+          } else {
+            //return page with errors
+            console.log(err)
+            cb(null);
+          }
+        });
+      } else {
+        cb(null);
+      }
+    });
+  },
 
   /* here we add a new user to the system */
   changePassword: function (id, cb) {
@@ -132,6 +171,10 @@ module.exports = {
           user.salt = originalSalt;
           user.save(function(err,result){
             if (!err) {
+              delete result.password;
+              delete result.salt;
+              delete result.admin;
+              delete result.password;
               cb(password);
             } else {
               //return page with errors
@@ -162,6 +205,10 @@ module.exports = {
       user = new User(obj);
       user.save(function(err,result){
         if (!err) {
+          delete result.password;
+          delete result.salt;
+          delete result.admin;
+          delete result.password;
           cb(result);
         } else {
           //TODO: return page with errors
