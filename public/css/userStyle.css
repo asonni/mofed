@@ -52,5 +52,20 @@ nav.navbar-findcond span.badge.new { background: rgba(255, 0, 0, 0.8); color: #f
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
 .container .text-muted {
-  margin: 20px 0;
+  margin: 10px 0;
+}
+/*Style Logo Start*/
+.naga-logo{
+  width:100px;
+  margin-top:-20px;
+}
+.spider-logo{
+  width:170px;
+  margin-top:-15px;
+  padding-left:15px;
+}
+/*Style Logo End*/
+.start-important{
+  padding-top:5px;
+  color:red;
 }

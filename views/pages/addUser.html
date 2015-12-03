@@ -1,20 +1,28 @@
 <form accept-charset="utf-8" name="addUserForm" role="form" autocomplete="off" ng-submit="addUser()">
   <div class="row">
-    <div class="col-lg-6 col-lg-offset-2">
+    <div class="col-lg-4 col-lg-offset-2">
       <br/>
       <h3 class="title">إضافة مستخدم جديد</h3>
       <br/>
+    </div>
+    <div class="col-lg-4 text-left start-important">
+      <br/>
+      <br/>
+      <i class="fa fa-star-o"></i>
+      <span> حقول اجبارية</span>
     </div>
   </div>
   <div class="row">
     <div class="col-lg-4 col-lg-offset-2">
       <div class="form-group">
+        <i class="fa fa-star-o"></i>
         <label class="control-label">الاسم</label>
         <input class="form-control" name="name" ng-model="name" type="text" placeholder="الاسم" required>
       </div>
     </div>
     <div class="col-lg-4">
       <div class="form-group">
+        <i class="fa fa-star-o"></i>
         <label class="control-label">رقم الهاتف</label>
         <input class="form-control" name="phone" ng-model="phone" dir="ltr" type="text" placeholder="رقم الهاتف" style="text-align:right;" required>
       </div>
@@ -24,6 +32,7 @@
   <div class="row">
     <div class="col-lg-4 col-lg-offset-2">
       <div class="form-group">
+        <i class="fa fa-star-o"></i>
         <label class="control-label">البريد الالكتروني</label>
         <input class="form-control" name="email" ng-model="email" ng-remote-validate="/admin/isRegistered/" ng-remote-throttle="800" ng-remote-method="GET" type="email" placeholder="البريد الالكتروني" required>
         <i style="position:absolute; margin:-32px;" class="fa fa-spinner fa-pulse fa-2x" ng-show="addUserForm.email.$pending"></i>
@@ -33,6 +42,7 @@
     </div>
     <div class="col-lg-4">
       <div class="form-group">
+        <i class="fa fa-star-o"></i>
         <label class="control-label">تأكيد البريد الالكتروني</label>
         <input class="form-control" name="confirmEmail" ng-model="confirmEmail" data-match-verify="email" type="email" placeholder="تأكيد البريد الالكتروني" required>
         <span ng-show="addUserForm.confirmEmail.$error.matchVerify && !addUserForm.email.$error.email && addUserForm.email.$error.ngRemoteValidate && email.length" style="position:absolute;color:red;">البريد الالكتروني ليس مطابق</span>
@@ -43,6 +53,7 @@
   <div class="row">
     <div class="col-lg-4 col-lg-offset-2">
       <div class="form-group">
+        <i class="fa fa-star-o"></i>
         <label class="control-label">كلمة المرور</label>
         <input class="form-control" name="password" ng-model="password" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" ng-minlength="8" ng-maxlength="20" type="password" placeholder="كلمة المرور" required>
         <span ng-show="addUserForm.password.$error.pattern" style="position:absolute;color:red;font-size:11.5px;">يجب ان تحتوي كلمة المرور علي حروف كبيرة وصغيرة وارقام</span>
@@ -51,6 +62,7 @@
     </div>
     <div class="col-lg-4">
       <div class="form-group">
+        <i class="fa fa-star-o"></i>
         <label class="control-label">تأكيد كلمة المرور</label>
         <input class="form-control" name="confirmPassword" ng-model="confirmPassword" data-match-verify="password" type="password" placeholder="تأكيد كلمة المرور" required>
         <span ng-show="addUserForm.confirmPassword.$error.matchVerify && password.length" style="position:absolute;color:red;">عفوا كلمة المرور ليست متطابقة</span>
