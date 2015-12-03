@@ -26,6 +26,7 @@ module.exports = {
     },'createdAt user mofedbase')
       .populate('user', 'email _id name nid regnum lawnum country verified')
       .populate('mofedbase', 'sid _id name')
+      .populate('admin', '_id name')
       .exec(function(err, students){
         cb(students);
       });
@@ -36,6 +37,7 @@ module.exports = {
     },'createdAt user  mofedbase')
       .populate('user', 'email _id name nid regnum lawnum country verified')
       .populate('mofedbase', 'sid _id name')
+      .populate('admin', '_id name')
       .exec(function(err, students){
         cb(students);
       });
@@ -50,10 +52,11 @@ module.exports = {
         cb(students);
       });
   },
-  verify: function(id, cb){
+  verify: function(id,admin, cb){
     Confirm.findOne({_id : id}, function(err, confirmation){
       if(!err && confirmation != null){
         confirmation.verified = 2;
+        confirmation.admin=admin;
         confirmation.save(function(err,result){
           if (!err) {
             User.findOne({_id : confirmation.user}, function(err, user){

@@ -35,7 +35,7 @@ router.post('/notMatching', function(req, res, next) {
 });
 /* GET students listing. */
 router.post('/verify', function(req, res, next) {
-  confirm.verify(req.body.id, function(result){
+  confirm.verify(req.body.id,req.user.id, function(result){
     if(result){
       res.send({verify : true});
     } else {

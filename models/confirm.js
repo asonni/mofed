@@ -8,7 +8,8 @@ var Confirm = new Schema({
     user: {type: Schema.Types.ObjectId , ref: 'User'},
     mofednid: {type: Schema.Types.ObjectId , ref: 'Mofednid'},
     mofedbase: {type: Schema.Types.ObjectId , ref: 'Mofedbase'},
-    verified: { type: Number, min: 1, max: 10, default:1 }
+    verified: { type: Number, min: 1, max: 10, default:1 },
+    admin: {type: Schema.Types.ObjectId , ref: 'User'}
 });
 Confirm.plugin(timestamps);
 
