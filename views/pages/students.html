@@ -42,7 +42,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="student in students | startFrom:(currentPage - 1) * pageSize | limitTo: pageSize">
+            <tr ng-repeat="student in students">
               <td class="text-center">
                 {{$index + 1}}
               </td>
@@ -79,7 +79,7 @@
           </tbody>
         </table>
       </div>
-      <uib-pagination total-items="students.length" ng-model="currentPage" items-per-page="pageSize" previous-text="السابق" next-text="التالي"></uib-pagination>
+      <uib-pagination total-items="total" ng-model="currentPage" items-per-page="pageSize" previous-text="السابق" next-text="التالي" ng-click="init()"></uib-pagination>
     </div>
   </div>
   <div class="modal fade" id="verify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

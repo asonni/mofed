@@ -100,13 +100,16 @@ app.controller('AdminCtrl', ['$scope', '$http', '$location', function($scope, $h
 
 app.controller('StudentsCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
   blockUI.start("تحميل, الرجاء الانتظار...");
-  $scope.pageSize = 5;
+  $scope.pageSize = 10;
   $scope.currentPage = 1;
+  $scope.total = 0;
   $scope.init = function () {
-    $http.post('/admin/students',{
+    $http.get('/admin/students/'+$scope.currentPage,{
     }).success(function (results){
       console.log(results);
-      $scope.students = results;
+      $scope.students = results.students;
+      $scope.total = results.count;
+      console.log($scope.students);
       blockUI.stop();
     }).error(function (data, status){
       console.log(data);

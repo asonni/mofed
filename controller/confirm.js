@@ -22,9 +22,10 @@ module.exports = {
     });
   },
   getConfirmations: function(page,cb) {
+    page-=1;
     Confirm.count({},function(err,count){
       Confirm.find({
-    },'createdAt user mofedbase admin').limit(10).skip(page)
+    },'createdAt user mofedbase admin').limit(10).skip(page*10)
       .populate('user', 'email _id name nid regnum lawnum country verified')
       .populate('mofedbase', 'sid _id name country lawnum')
       .populate('admin', '_id name')
