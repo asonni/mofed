@@ -21,11 +21,11 @@ module.exports = {
       }
     });
   },
-  getConfirmations: function(page,cb) {
+  getConfirmations: function(limit,page,cb) {
     page-=1;
     Confirm.count({},function(err,count){
       Confirm.find({
-    },'createdAt user mofedbase admin').limit(10).skip(page*10)
+    },'createdAt user mofedbase admin').limit(limit).skip(page*10)
       .populate('user', 'email _id name nid regnum lawnum country verified')
       .populate('mofedbase', 'sid _id name country lawnum')
       .populate('admin', '_id name')
@@ -33,28 +33,33 @@ module.exports = {
         cb({students:students, count:count});
       });
     });
-    
   },
-  getMatchConfirmations: function(cb) {
-    Confirm.find({
+  getMatchConfirmations: function(limit,page,cb) {
+    page-=1;
+    Confirm.count({},function(err,count){
+      Confirm.find({
       verified:2
-    },'createdAt user  mofedbase admin')
+    },'createdAt user  mofedbase admin').limit(limit).skip(page*10)
       .populate('user', 'email _id name nid regnum lawnum country verified')
       .populate('mofedbase', 'sid _id name country lawnum')
       .populate('admin', '_id name')
       .exec(function(err, students){
-        cb(students);
+        cb({students:students, count:count});
       });
+    });
   },
-  getUnMatchConfirmations: function(cb) {
-    Confirm.find({
+  getUnMatchConfirmations: function(limit,page,cb) {
+    page-=1;
+    Confirm.count({},function(err,count){
+      Confirm.find({
       verified:1
-    },'createdAt user mofednid mofedbase')
+    },'createdAt user mofednid mofedbase').limit(limit).skip(page*10)
       .populate('user', 'email _id name nid regnum lawnum country verified')
       .populate('mofedbase', 'sid _id name country lawnum')
       .exec(function(err, students){
-        cb(students);
+        cb({students:students, count:count});
       });
+    });
   },
   verify: function(id,admin, cb){
     Confirm.findOne({_id : id}, function(err, confirmation){

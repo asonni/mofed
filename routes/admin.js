@@ -14,23 +14,23 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET students listing. */
-router.get('/students/:page', function(req, res, next) {
-  confirm.getConfirmations(req.params.page, function (results){
+router.get('/students/:limit/:page', function(req, res, next) {
+  confirm.getConfirmations(req.params.limit,req.params.page, function (results){
     res.send(results);
   });
 });
 
 /* GET students with confirmations. */
-router.post('/matching', function(req, res, next) {
-  confirm.getMatchConfirmations(function (students){
-    res.send(students);
+router.post('/matching/:limit/:page', function(req, res, next) {
+  confirm.getMatchConfirmations(req.params.limit,req.params.page, function (results){
+    res.send(results);
   });
 });
 
 /* GET students with no confirmations. */
-router.post('/notMatching', function(req, res, next) {
-  confirm.getUnMatchConfirmations(function (students){
-    res.send(students);
+router.post('/notMatching/:limit/:page', function(req, res, next) {
+  confirm.getUnMatchConfirmations(req.params.limit,req.params.page, function (results){
+    res.send(results);
   });
 });
 /* GET students listing. */
