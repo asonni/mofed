@@ -33,26 +33,26 @@ nav.navbar-findcond ul.dropdown-menu > li > a:hover { background: #337ab7; color
 nav.navbar-findcond span.badge { background: #337ab7; font-weight: normal; font-size: 11px; margin: 0 4px; }
 nav.navbar-findcond span.badge.new { background: rgba(255, 0, 0, 0.8); color: #fff; }
 
-
 /* Sticky footer styles
 -------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 60px;
-  background: #fff;
-  border-color: #ccc;
-  /*box-shadow: 0 0 0 1px #ccc;*/
-  /*border-width: 1px 0 0;*/
-  border-top: 1px solid transparent;
+  /*height: 60px;*/
+  background-color: #ffffff;
 }
-/* Custom page CSS
--------------------------------------------------- */
-/* Not required for template or sticky footer method. */
 .container .text-muted {
-  margin: 10px 0;
+  margin: 20px 0;
 }
 /*Style Logo Start*/
 .naga-logo{

@@ -29,22 +29,6 @@ app.config(['$routeProvider', '$locationProvider' , function($routeProvider, $lo
   });
 }]);
 
-// app.filter('startFrom', function(){
-//   return function(data, start){
-//     start = 0 + start;
-//     return data.slice(start);
-//   }
-// });
-
-app.filter('startFrom', function() {
-  return function(input, start) {
-    if(input) {
-      start = +start; //parse to int
-      return input.slice(start);
-    }
-    return [];
-  }
-});
 // Coustom Directive Start
 app.directive("matchVerify", function() {
   return {
@@ -91,8 +75,6 @@ app.config(function(NotificationProvider) {
   });
 });
 // Angular Notification Configuration End
-
-
 // Angular Controllers Start
 app.controller('AdminCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
 
@@ -104,7 +86,7 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', 'blockUI', funct
   $scope.currentPage = 1;
   $scope.total = 0;
   $scope.init = function () {
-    $http.get('/admin/students/'+$scope.currentPage,{
+    $http.get('/admin/students/'+$scope.pageSize+'/'+$scope.currentPage,{
     }).success(function (results){
       console.log(results);
       $scope.students = results.students;
@@ -134,21 +116,31 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', 'blockUI', funct
 
 app.controller('MatchingCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
   blockUI.start("تحميل, الرجاء الانتظار...");
-  $http.post('/admin/matching',{
-  }).success(function (results){
-    $scope.students = results;
-    blockUI.stop();
-  }).error(function (data, status){
-    console.log(data);
-  });
+  $scope.pageSize = 10;
+  $scope.currentPage = 1;
+  $scope.total = 0;
+  $scope.init = function () {
+    $http.post('/admin/matching/'+$scope.pageSize+'/'+$scope.currentPage,{
+    }).success(function (results){
+      $scope.students = results.students;
+      $scope.total = results.count;
+      blockUI.stop();
+    }).error(function (data, status){
+      console.log(data);
+    });
+  }
 }]);
 
 app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
   blockUI.start("تحميل, الرجاء الانتظار...");
+  $scope.pageSize = 10;
+  $scope.currentPage = 1;
+  $scope.total = 0;
   $scope.init = function () {
-    $http.post('/admin/notMatching',{
+    $http.post('/admin/notMatching/'+$scope.pageSize+'/'+$scope.currentPage,{
     }).success(function (results){
-      $scope.students = results;
+      $scope.students = results.students;
+      $scope.total = results.count;
       blockUI.stop();
     }).error(function (data, status){
       console.log(data);

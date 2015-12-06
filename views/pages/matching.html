@@ -1,6 +1,4 @@
-<br/>
-<br/>
-<form ng-submit="">
+<form data-ng-init="init()">
   <div class="row">
     <div class="col-lg-2">
       <a href="#/students" class="btn btn-info btn-block">عرض الطلبة</a>
@@ -43,7 +41,7 @@
           </thead>
           <tbody>
             <tr>
-              <td class="text-center" colspan="5" ng-show="!students.length">
+              <td class="text-center" colspan="9" ng-show="!students.length">
                 <h4>
                   <strong>لاتوجد بيانات</strong>
                 </h4>
@@ -82,6 +80,7 @@
           </tbody>
         </table>
       </div>
+      <uib-pagination total-items="total" ng-model="currentPage" items-per-page="pageSize" previous-text="السابق" next-text="التالي" ng-click="init()"></uib-pagination>
     </div>
   </div>
 </form>
