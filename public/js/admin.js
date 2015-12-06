@@ -165,10 +165,14 @@ app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', 'blockUI', fu
 
 app.controller('UsersCtrl', ['$scope', '$http', 'blockUI', function($scope, $http, blockUI) {
   blockUI.start("تحميل, الرجاء الانتظار...");
+  $scope.pageSize = 10;
+  $scope.currentPage = 1;
+  $scope.total = 0;
   $scope.init = function () {
-    $http.post('/admin/users',{
+    $http.get('/admin/users/'+$scope.pageSize+'/'+$scope.currentPage,{
     }).success(function (results){
-      $scope.admins = results;
+      $scope.admins = results.admins;
+      $scope.total = results.count;
       blockUI.stop();
     }).error(function (data, status){
       console.log(data);

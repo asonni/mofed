@@ -71,9 +71,9 @@ router.get('/isRegistered',  function (req, res, next){
 });
 
 /* GET admins listing. */
-router.post('/users', function(req, res, next) {
-  user.getAllAdmins(function (admins){
-    res.send(admins);
+router.get('/users/:limit/:page', function (req, res, next) {
+  user.getAllAdmins(req.params.limit,req.params.page, function (results){
+    res.send(results);
   });
 });
 
