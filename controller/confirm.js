@@ -21,15 +21,18 @@ module.exports = {
       }
     });
   },
-  getConfirmations: function(cb) {
-    Confirm.find({
-    },'createdAt user mofedbase admin')
+  getConfirmations: function(page,cb) {
+    Confirm.count({},function(err,count){
+      Confirm.find({
+    },'createdAt user mofedbase admin').limit(10).skip(page)
       .populate('user', 'email _id name nid regnum lawnum country verified')
       .populate('mofedbase', 'sid _id name country lawnum')
       .populate('admin', '_id name')
       .exec(function(err, students){
-        cb(students);
+        cb({students:students, count:count});
       });
+    });
+    
   },
   getMatchConfirmations: function(cb) {
     Confirm.find({

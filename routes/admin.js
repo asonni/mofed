@@ -14,9 +14,9 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET students listing. */
-router.post('/students', function(req, res, next) {
-  confirm.getConfirmations(function (students){
-    res.send(students);
+router.post('/students/:page', function(req, res, next) {
+  confirm.getConfirmations(req.body.page, function (results){
+    res.send(results);
   });
 });
 
