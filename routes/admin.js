@@ -35,8 +35,20 @@ router.post('/notMatching/:limit/:page', helpers.isAdmin, function(req, res, nex
 });
 /* GET students listing. */
 router.post('/verify', helpers.isAdmin, function(req, res, next) {
-  confirm.verify(req.body.id,req.user.id, function(result){
-    if(result){
+  confirm.verify(req.body.id,req.user.id, function(email){
+    if(email){
+      var obj = {
+        template : "verified",
+        subject : "Mofed app Verification",
+        locals : {
+          email : email,
+          host: config.host,
+          user : {
+            email : email,
+          }
+        }
+      }
+      mailer.send(obj); // 
       res.send({verify : true});
     } else {
       res.send({verify : false});

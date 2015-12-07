@@ -73,7 +73,7 @@ module.exports = {
                 user.verified = 3;
                 user.save(function(err,result){
                   if (!err) {
-                    cb(result);
+                    cb(user.email);
                   } else {
                     //TODO: return page with errors
                     console.log(err)
