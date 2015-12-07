@@ -50,6 +50,7 @@ body {
   /* Set the fixed height of the footer here */
   /*height: 60px;*/
   background-color: #ffffff;
+  box-shadow: 0 0 20px 0 #ccc;
 }
 .container .text-muted {
   margin: 20px 0;
