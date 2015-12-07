@@ -1,24 +1,29 @@
+doctype html
 html
   head
-    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
-    title #{user.title}
-    style(media='all', type='text/css')
-  body
-    table(cellspacing='0', cellpadding='0', border='0', width='100%' dir ="rtl")
+    meta(name="viewport", content="width=device-width")
+    meta(http-equiv="Content-Type", content="text/html; charset=UTF-8")
+    link(rel='stylesheet', href='style.css')
+  body(bgcolor="#f6f6f6")
+    // body
+    table.body-wrap(bgcolor="#f6f6f6")
       tr
-        td.navbar.navbar-inverse(align='right')
-          //This setup makes the nav background stretch the whole width of the screen. 
-          a.brand.pull-left(href='mofed.ly')
-            img(src="#")
-      tr
-        td
-          hr
-      tr
-        td(bgcolor='#FFFFFF', align='left') لقد تم اضافتك كمدير في منظومة موفد ، الرجاء تفعيل حسابك بزيارة الرابط بالأسفل وشكراً
-          p
-            a(href='#{host}/admin/activate/#{user.token}') اضغط هنا لتفعيل حسابك
-          p بريد المستخدم : #{user.email} 
-      tr
-        td(bgcolor='#FFFFFF', align='center')
-          hr
-          p منظومة موفد
+        td.container(bgcolor="#FFFFFF")
+          // content
+          .content
+            table
+              tr
+                td
+                  h1(align="right") برحبا بك, في منظومة الموفد
+                  p(align="right") لقد تم اضافتك كمدير في منظومة الموفد ، الرجاء تفعيل الحسابك وشكراً
+                  // button
+                  table.btn-primary(border="0")
+                    tr
+                      td
+                        a(href="#{host}/admin/activate/#{user.token}") لتفعيل حسابك الرجاء الضغط هنا
+                  p(align="right") #{user.email} : البريد الالكتروني
+
+                  p(align="right") 
+                    | للمزيد من المعلومات الرجاء الضغط 
+                    a(href="http://naga.ly") هنا
+                    | , شكرا لك

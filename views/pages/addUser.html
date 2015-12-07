@@ -45,7 +45,7 @@
         <i class="fa fa-star-o"></i>
         <label class="control-label">تأكيد البريد الالكتروني</label>
         <input class="form-control" name="confirmEmail" ng-model="confirmEmail" data-match-verify="email" type="email" placeholder="تأكيد البريد الالكتروني" required>
-        <span ng-show="addUserForm.confirmEmail.$error.matchVerify && !addUserForm.email.$error.email && addUserForm.email.$error.ngRemoteValidate && email.length" style="position:absolute;color:red;">البريد الالكتروني ليس مطابق</span>
+        <span ng-show="addUserForm.confirmEmail.$error.matchVerify && !addUserForm.email.$error.email && !addUserForm.email.$error.ngRemoteValidate" style="position:absolute;color:red;">البريد الالكتروني ليس مطابق</span>
       </div>
     </div>
   </div>
