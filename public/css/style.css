@@ -10,7 +10,7 @@
 
 body{
   font-family: 'JFFlat', sans-serif;
-  padding-top: 100px;
+  padding-top: 60px;
 }
 
 /* Credit to bootsnipp.com for the css for the color graph */
@@ -30,3 +30,28 @@ body{
 .error-actions {margin-top:15px;margin-bottom:15px;}
 .error-actions .btn { margin-right:10px; }
 /*404 style end*/
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #ffffff;
+}
+.container .text-muted {
+  margin: 20px 0;
+}
+/*Style Logo Start*/
+.naga-logo{
+  width:100px;
+}
+.spider-logo{
+  width:170px;
+  padding-left:15px;
+}
+/*Style Logo End*/

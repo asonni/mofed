@@ -5,7 +5,7 @@
         <h3>الرجاء التسجيل</h3>
         <hr class="colorgraph">
         <div class="row">
-          <div class="col-xs-12 col-sm-6 col-md-6">
+          <div class="col-xs-6 col-md-6">
             <div class="form-group">
               <input type="email" name="email" ng-model="email" ng-remote-validate="/user/isRegistered/" ng-remote-throttle="800" ng-remote-method="GET" class="form-control" placeholder="البريد الالكتروني" tabindex="3" style="line-height: 30px;" autofocus>
               <i style="position:absolute; margin:-32px;" class="fa fa-spinner fa-pulse fa-2x" ng-show="registerForm.email.$pending"></i>
@@ -13,7 +13,7 @@
               <span ng-show="registerForm.email.$error.email" style="position:absolute;color:red;">الرجاء ادخال بريد الكتروني صالح</span>
             </div>
           </div>
-          <div class="col-xs-12 col-sm-6 col-md-6">
+          <div class="col-xs-6 col-md-6">
             <div class="form-group">
               <input type="email" name="confirmEmail" ng-model="confirmEmail" data-match-verify="email" class="form-control" placeholder="تأكيد البريد الالكتروني" tabindex="4" style="line-height: 30px;" required>
               <span ng-show="registerForm.confirmEmail.$error.matchVerify" style="position:absolute;color:red;">البريد الالكتروني ليس مطابق</span>
@@ -21,14 +21,14 @@
           </div>
         </div>
         <div class="row" style="margin-top: 10px;">
-          <div class="col-xs-12 col-sm-6 col-md-6">
+          <div class="col-xs-6 col-md-6">
             <div class="form-group">
               <input type="password" name="newPassword" ng-model="password" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" ng-minlength="8" ng-maxlength="20" class="form-control" placeholder="كلمة المرور" tabindex="5" style="line-height: 30px;" required>
               <span ng-show="registerForm.newPassword.$error.pattern" style="position:absolute;color:red;font-size:11.5px;">يجب ان تحتوي كلمة المرور علي حروف كبيرة وصغيرة وارقام</span>
               <span ng-show="(registerForm.newPassword.$error.minlength || registerForm.newPassword.$error.maxlength) && !registerForm.newPassword.$error.pattern" style="position:absolute;color:red;">يجب أن تكون كلمة المرور بين 8 و 20 حرفا</span>
             </div>
           </div>
-          <div class="col-xs-12 col-sm-6 col-md-6">
+          <div class="col-xs-6 col-md-6">
             <div class="form-group">
               <input type="password" name="confirmPassword" ng-model="confirmPassword" data-match-verify="password" class="form-control" placeholder="تأكيد كلمة المرور" tabindex="6" style="line-height: 30px;" required>
               <span ng-show="registerForm.confirmPassword.$error.matchVerify" style="position:absolute;color:red;">
@@ -39,8 +39,8 @@
         </div>
         <hr class="colorgraph">
         <div class="row">
-          <div class="col-xs-12 col-md-6"><input type="submit" value="تسجيل" ng-disabled="registerForm.$invalid || registerForm.$pending" class="btn btn-primary btn-block" tabindex="7"></div>
-          <div class="col-xs-12 col-md-6"><a href="/#/" class="btn btn-success btn-block">دخول</a></div>
+          <div class="col-xs-6 col-md-6"><input type="submit" value="تسجيل" ng-disabled="registerForm.$invalid || registerForm.$pending" class="btn btn-primary btn-block" tabindex="7"></div>
+          <div class="col-xs-6 col-md-6"><a href="/#/" class="btn btn-success btn-block">دخول</a></div>
         </div>
       </form>
     </div>
