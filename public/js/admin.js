@@ -108,6 +108,7 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', 'blockUI', funct
     $http.get('/admin/all2csv',{
     }).success(function (results){
       $scope.download = results;
+      console.log(results);
       blockUI.stop();
     }).error(function (data, status){
       console.log(data);

@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var csv = require('express-csv');
+var json2csv = require('json2csv');
+
 var user = require("../controller/user"),
     mofednid = require('../controller/mofednid'),
     mofedbase = require('../controller/mofedbase'),
@@ -33,6 +36,22 @@ router.post('/notMatching/:limit/:page', helpers.isAdmin, function(req, res, nex
     res.send(results);
   });
 });
+
+
+/* GET all students csv. */
+router.get('/all2csv', helpers.isAdmin, function(req, res, next) {
+  var fields = ['admin.name', 'user.name','user.email', 'user.email' ,'mofedbase.name', 'mofedbase.sid'];
+  confirm.getAllStudents(function (results){
+    json2csv({ data: results, fields: fields }, function(err, csv) {
+      if (err) console.log(err);
+      res.attachment('data.csv');
+      res.send(csv);
+    });
+  });
+});
+
+
+
 /* GET students listing. */
 router.post('/verify', helpers.isAdmin, function(req, res, next) {
   confirm.verify(req.body.id,req.user.id, function(email){
