@@ -80,10 +80,8 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', 'blockUI', funct
   $scope.init = function () {
     $http.get('/admin/students/'+$scope.pageSize+'/'+$scope.currentPage,{
     }).success(function (results){
-      console.log(results);
       $scope.students = results.students;
       $scope.total = results.count;
-      console.log($scope.students);
       blockUI.stop();
     }).error(function (data, status){
       console.log(data);
@@ -104,6 +102,17 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', 'blockUI', funct
       console.log(data);
     });
   }
+
+  $scope.downloadCsv = function(){
+    blockUI.start("تحميل, الرجاء الانتظار...");
+    $http.get('/admin/all2csv',{
+    }).success(function (results){
+      $scope.download = results;
+      blockUI.stop();
+    }).error(function (data, status){
+      console.log(data);
+    });
+  }
 }]);
 
 app.controller('MatchingCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
@@ -116,6 +125,17 @@ app.controller('MatchingCtrl', ['$scope', '$http', '$location', 'blockUI', funct
     }).success(function (results){
       $scope.students = results.students;
       $scope.total = results.count;
+      blockUI.stop();
+    }).error(function (data, status){
+      console.log(data);
+    });
+  }
+
+  $scope.downloadCsv = function(){
+    blockUI.start("تحميل, الرجاء الانتظار...");
+    $http.get('/admin/matching2csv',{
+    }).success(function (results){
+      $scope.download = results;
       blockUI.stop();
     }).error(function (data, status){
       console.log(data);
@@ -149,6 +169,17 @@ app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', 'blockUI', fu
       'id': $scope.id
     }).success(function (results){
       $scope.init();
+    }).error(function (data, status){
+      console.log(data);
+    });
+  }
+
+  $scope.downloadCsv = function(){
+    blockUI.start("تحميل, الرجاء الانتظار...");
+    $http.get('/admin/notMatching2csv',{
+    }).success(function (results){
+      $scope.download = results;
+      blockUI.stop();
     }).error(function (data, status){
       console.log(data);
     });
