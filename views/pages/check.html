@@ -24,7 +24,9 @@
       <div class="form-group">
         <i class="fa fa-star-o"></i>
         <label class="control-label">الرقم الوطني</label>
-        <input class="form-control" name="nid" ng-model="nid" type="text" placeholder="الرقم الوطني" ng-maxlength="12" ng-minlength="12" required>
+        <input class="form-control" name="nid" ng-model="nid" ng-remote-validate="/user/hasNid/" ng-remote-throttle="800" ng-remote-method="GET" type="text" placeholder="الرقم الوطني" ng-maxlength="12" ng-minlength="12" required>
+        <i style="position:absolute; margin:-32px;" class="fa fa-spinner fa-pulse fa-2x" ng-show="checkForm.nid.$pending"></i>
+        <span ng-show="checkForm.nid.$error.ngRemoteValidate" style="position:absolute;color:red;">هذا الرقم الوطني موجود مسبقا!</span>
         <span ng-show="checkForm.nid.$error.maxlength" style="position:absolute;color:red;">الرقم الوطني غير صحيح, الرجاء إعادة الادخال</span>
       </div>
     </div>

@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('mofed', ['ngRoute', 'ui-notification', 'toggle-switch', 'nya.bootstrap.select', 'ui.bootstrap', 'blockUI']);
+var app = angular.module('mofed', ['ngRoute', 'remoteValidation', 'ui-notification', 'toggle-switch', 'nya.bootstrap.select', 'ui.bootstrap', 'blockUI']);
 
 app.config(['$routeProvider', '$locationProvider' , function($routeProvider, $locationProvider) {
   $routeProvider.when('/', {
