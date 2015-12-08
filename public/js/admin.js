@@ -28,38 +28,30 @@ app.config(['$routeProvider', '$locationProvider' , function($routeProvider, $lo
     controller: 'AddUserCtrl'
   });
 }]);
-
 // Coustom Directive Start
-app.directive("matchVerify", function() {
+app.directive('autoActive', ['$location', function ($location) {
   return {
-    require: "ngModel",
-    scope: {
-      matchVerify: '='
-    },
-    link: function(scope, element, attrs, ctrl) {
-      scope.$watch(function() {
-        var combined;
-        if (scope.matchVerify || ctrl.$viewValue) {
-          combined = scope.matchVerify + '_' + ctrl.$viewValue; 
-        }                    
-        return combined;
-      }, function(value) {
-        if (value) {
-          ctrl.$parsers.unshift(function(viewValue) {
-            var origin = scope.matchVerify;
-            if (origin !== viewValue) {
-              ctrl.$setValidity("matchVerify", false);
-              return undefined;
+    restrict: 'A',
+    scope: false,
+    link: function (scope, element) {
+      function setActive() {
+        var path = $location.path();
+        if (path) {
+          angular.forEach(element.find('li'), function (li) {
+            var anchor = li.querySelector('a');
+            if (anchor.href.match('#' + path + '(?=\\?|$)')) {
+              angular.element(li).addClass('active');
             } else {
-              ctrl.$setValidity("matchVerify", true);
-              return viewValue;
+              angular.element(li).removeClass('active');
             }
           });
         }
-      });
+      }
+      setActive();
+      scope.$on('$locationChangeSuccess', setActive);
     }
-  };
-});
+  }
+}]);
 // Coustom Directive End
 // Angular Notification Configuration Start
 app.config(function(NotificationProvider) {
@@ -76,8 +68,8 @@ app.config(function(NotificationProvider) {
 });
 // Angular Notification Configuration End
 // Angular Controllers Start
-app.controller('AdminCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
-
+app.controller('AdminCtrl', ['$scope', '$http', '$location', '$route', function($scope, $http, $location, $route) {
+  $scope.$route = $route;
 }]);
 
 app.controller('StudentsCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
