@@ -42,6 +42,11 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  background: url(/img/higherLogo.png) no-repeat center center fixed; 
+  -webkit-background-size: auto;
+  -moz-background-size: auto;
+  -o-background-size: auto;
+  background-size: auto;
 }
 .footer {
   position: absolute;
