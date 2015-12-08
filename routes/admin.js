@@ -9,34 +9,46 @@ var user = require("../controller/user"),
     config = require('../config'); // get our config file
 
 /* GET admins listing. */
-router.get('/', function(req, res, next) {
+router.get('/', helpers.isAdmin, function(req, res, next) {
   res.render('admin', { title: 'الرئيسية' });
 });
 
 /* GET students listing. */
-router.get('/students/:limit/:page', function(req, res, next) {
+router.get('/students/:limit/:page', helpers.isAdmin, function(req, res, next) {
   confirm.getConfirmations(req.params.limit,req.params.page, function (results){
     res.send(results);
   });
 });
 
 /* GET students with confirmations. */
-router.post('/matching/:limit/:page', function(req, res, next) {
+router.post('/matching/:limit/:page', helpers.isAdmin, function(req, res, next) {
   confirm.getMatchConfirmations(req.params.limit,req.params.page, function (results){
     res.send(results);
   });
 });
 
 /* GET students with no confirmations. */
-router.post('/notMatching/:limit/:page', function(req, res, next) {
+router.post('/notMatching/:limit/:page', helpers.isAdmin, function(req, res, next) {
   confirm.getUnMatchConfirmations(req.params.limit,req.params.page, function (results){
     res.send(results);
   });
 });
 /* GET students listing. */
-router.post('/verify', function(req, res, next) {
-  confirm.verify(req.body.id,req.user.id, function(result){
-    if(result){
+router.post('/verify', helpers.isAdmin, function(req, res, next) {
+  confirm.verify(req.body.id,req.user.id, function(email){
+    if(email){
+      var obj = {
+        template : "verified",
+        subject : "Mofed app Verification",
+        locals : {
+          email : email,
+          host: config.host,
+          user : {
+            email : email,
+          }
+        }
+      }
+      mailer.send(obj); // 
       res.send({verify : true});
     } else {
       res.send({verify : false});
@@ -58,7 +70,7 @@ router.get('/activate/:token', function (req, res, next) {
 });
 
 /* check if Registered. */
-router.get('/isRegistered',  function (req, res, next){
+router.get('/isRegistered', helpers.isAdmin,  function (req, res, next){
   user.isRegistered(req.query.value,function (result){
     if(result){
       //send true if we find a match
@@ -71,14 +83,14 @@ router.get('/isRegistered',  function (req, res, next){
 });
 
 /* GET admins listing. */
-router.get('/users/:limit/:page', function (req, res, next) {
+router.get('/users/:limit/:page', helpers.isAdmin, function (req, res, next) {
   user.getAllAdmins(req.params.limit,req.params.page, function (results){
     res.send(results);
   });
 });
 
 /* add new admin. */
-router.post('/addUser', function(req, res, next) {
+router.post('/addUser', helpers.isAdmin, function(req, res, next) {
   user.addAdmin(req.body,function(result){
     if(result){
       var obj = {
@@ -104,7 +116,7 @@ router.post('/addUser', function(req, res, next) {
 });
 
 /* GET admins listing. */
-router.post('/remove', function(req, res, next) {
+router.post('/remove', helpers.isAdmin, function(req, res, next) {
   user.removeAdmin(req.body.id, function (result){
     if(result){
       res.send({remove: true});
