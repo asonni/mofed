@@ -83,6 +83,22 @@ module.exports = {
       }
     });
   },
+  /* here we check if nid is used */
+  hasNid: function (nid, cb) {
+    User.findOne({nid : nid}, function(err, user){
+      if (!err) {
+        if(user){
+          cb(true);
+        } else {
+          cb(false);
+        }
+      } else {
+        //TODO: return page with errors
+        console.log(err)
+        cb(null);
+      }
+    });
+  },
   /* user verifies*/
   userVerified: function (id,country, cb) {
     User.findOne({_id : id}, function(err, user){
