@@ -94,5 +94,35 @@ module.exports = {
         cb(null);
       }
     });
+  },
+
+  getAllStudents: function(cb) {
+    Confirm.find({},'createdAt user mofedbase admin')
+    .populate('user', 'email  name nid regnum lawnum country verified')
+    .populate('mofedbase', 'sid name country lawnum')
+    .populate('admin', '_id name')
+    .exec(function(err, students){
+      cb(students);
+    });
+  },
+
+  getAllMatch: function(cb) {
+    Confirm.find({verified:2},'createdAt user mofedbase admin')
+    .populate('user', 'email  name nid regnum lawnum country verified')
+    .populate('mofedbase', 'sid name country lawnum')
+    .populate('admin', '_id name')
+    .exec(function(err, students){
+      cb(students);
+    });
+  },
+
+  getAllNotMatch: function(cb) {
+    Confirm.find({verified:1},'createdAt user mofedbase admin')
+    .populate('user', 'email  name nid regnum lawnum country verified')
+    .populate('mofedbase', 'sid name country lawnum')
+    .populate('admin', '_id name')
+    .exec(function(err, students){
+      cb(students);
+    });
   }
 }

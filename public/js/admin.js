@@ -72,7 +72,7 @@ app.controller('AdminCtrl', ['$scope', '$http', '$location', '$route', function(
   $scope.$route = $route;
 }]);
 
-app.controller('StudentsCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
+app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$window', 'blockUI', function($scope, $http, $location, $window, blockUI) {
   blockUI.start("تحميل, الرجاء الانتظار...");
   $scope.pageSize = 10;
   $scope.currentPage = 1;
@@ -105,17 +105,20 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', 'blockUI', funct
 
   $scope.downloadCsv = function(){
     blockUI.start("تحميل, الرجاء الانتظار...");
-    $http.get('/admin/all2csv',{
-    }).success(function (results){
-      $scope.download = results;
-      blockUI.stop();
-    }).error(function (data, status){
-      console.log(data);
-    });
+    $window.location.href = '/admin/all2csv';
+    blockUI.stop();
+    // $http.get('/admin/all2csv',{
+    // }).success(function (results){
+    //   $scope.download = results;
+    //   console.log(results);
+    //   blockUI.stop();
+    // }).error(function (data, status){
+    //   console.log(data);
+    // });
   }
 }]);
 
-app.controller('MatchingCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
+app.controller('MatchingCtrl', ['$scope', '$http', '$location', '$window', 'blockUI', function($scope, $http, $location, $window, blockUI) {
   blockUI.start("تحميل, الرجاء الانتظار...");
   $scope.pageSize = 10;
   $scope.currentPage = 1;
@@ -133,17 +136,19 @@ app.controller('MatchingCtrl', ['$scope', '$http', '$location', 'blockUI', funct
 
   $scope.downloadCsv = function(){
     blockUI.start("تحميل, الرجاء الانتظار...");
-    $http.get('/admin/matching2csv',{
-    }).success(function (results){
-      $scope.download = results;
-      blockUI.stop();
-    }).error(function (data, status){
-      console.log(data);
-    });
+    $window.location.href = '/admin/match2csv';
+    blockUI.stop();
+    // $http.get('/admin/matching2csv',{
+    // }).success(function (results){
+    //   $scope.download = results;
+    //   blockUI.stop();
+    // }).error(function (data, status){
+    //   console.log(data);
+    // });
   }
 }]);
 
-app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
+app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', '$window', 'blockUI', function($scope, $http, $location, $window, blockUI) {
   blockUI.start("تحميل, الرجاء الانتظار...");
   $scope.pageSize = 10;
   $scope.currentPage = 1;
@@ -176,13 +181,15 @@ app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', 'blockUI', fu
 
   $scope.downloadCsv = function(){
     blockUI.start("تحميل, الرجاء الانتظار...");
-    $http.get('/admin/notMatching2csv',{
-    }).success(function (results){
-      $scope.download = results;
-      blockUI.stop();
-    }).error(function (data, status){
-      console.log(data);
-    });
+    $window.location.href = '/admin/notMatch2csv';
+    blockUI.stop();
+    // $http.get('/admin/notMatching2csv',{
+    // }).success(function (results){
+    //   $scope.download = results;
+    //   blockUI.stop();
+    // }).error(function (data, status){
+    //   console.log(data);
+    // });
   }
 }]);
 
