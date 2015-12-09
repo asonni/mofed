@@ -40,9 +40,9 @@ router.post('/notMatching/:limit/:page', helpers.isAdmin, function(req, res, nex
 
 /* GET all students csv. */
 router.get('/all2csv', helpers.isAdmin, function(req, res, next) {
-  var fields = ['admin.name', 'user.name','user.email', 'user.email' ,'mofedbase.name', 'mofedbase.sid'];
+var fieldsInfo = helpers.getFields();
   confirm.getAllStudents(function (results){
-    json2csv({ data: results, fields: fields }, function(err, csv) {
+    json2csv({ data: results, fields: fieldsInfo.fields, fieldNames : fieldsInfo.fieldNames }, function(err, csv) {
       if (err) console.log(err);
       res.attachment('data.csv');
       res.send(csv);
@@ -51,6 +51,29 @@ router.get('/all2csv', helpers.isAdmin, function(req, res, next) {
 });
 
 
+/* GET all matching students csv. */
+router.get('/match2csv', helpers.isAdmin, function(req, res, next) {
+var fieldsInfo = helpers.getFields();
+  confirm.getAllMatch(function (results){
+    json2csv({ data: results, fields: fieldsInfo.fields, fieldNames : fieldsInfo.fieldNames }, function(err, csv) {
+      if (err) console.log(err);
+      res.attachment('data.csv');
+      res.send(csv);
+    });
+  });
+});
+
+/* GET all not matching students csv. */
+router.get('/notMatch2csv', helpers.isAdmin, function(req, res, next) {
+var fieldsInfo = helpers.getFields();
+  confirm.getAllNotMatch(function (results){
+    json2csv({ data: results, fields: fieldsInfo.fields, fieldNames : fieldsInfo.fieldNames }, function(err, csv) {
+      if (err) console.log(err);
+      res.attachment('data.csv');
+      res.send(csv);
+    });
+  });
+});
 
 /* GET students listing. */
 router.post('/verify', helpers.isAdmin, function(req, res, next) {
