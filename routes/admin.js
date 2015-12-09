@@ -10,7 +10,7 @@ var user = require("../controller/user"),
 
 /* GET admins listing. */
 router.get('/', helpers.isAdmin, function(req, res, next) {
-  res.render('admin', { title: 'الرئيسية' });
+  res.render('admin', { title: 'الرئيسية', name: req.user.name });
 });
 
 /* GET students listing. */

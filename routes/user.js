@@ -12,7 +12,7 @@ var user = require("../controller/user"),
 
 /* GET users listing. */
 router.get('/', helpers.isLogin,function(req, res, next) {
-  res.render('home', { title: 'الرئيسية' });
+  res.render('home', { title: 'الرئيسية', name: req.user.name });
 });
 
 /* Register new user. */
@@ -146,12 +146,6 @@ router.post('/forgotPassword', function (req, res, next) {
       res.send({restore:2});
     }
   });
-});
-
-
-
-router.get('/confirm', function(req, res, next) {
-  res.render('confirm', { title: 'مطابقة البيانات' });
 });
 
 module.exports = router;
