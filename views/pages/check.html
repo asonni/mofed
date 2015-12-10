@@ -17,7 +17,8 @@
       <div class="form-group">
         <i class="fa fa-star-o"></i>
         <label class="control-label">الاسم رباعي</label>
-        <input class="form-control" name="name" ng-model="name" type="text" placeholder="الاسم رباعي" required>
+        <input class="form-control" name="fname" ng-model="name" type="text" placeholder="الاسم رباعي" ng-pattern="/[ا-ي])+/" required>
+        <span ng-show="checkForm.fname.$error.pattern" style="position:absolute;color:red;">الرجاء ادخال حروف عربية فقط!</span>
       </div>
     </div>
     <div class="col-lg-4">

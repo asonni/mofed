@@ -61,10 +61,6 @@ app.directive('autoActive', ['$location', function ($location) {
 // Coustom Directive Start End
 // Angular Custom Service Start
 app.service('checkService', function(){
-  // this.name = "احمد فتح الله عبدالقادر اسماعيل";
-  // this.nid = 119861412627;
-  // this.regnum = 12431;
-  // this.lawnum = 393;
   this.name = "";
   this.nid = "";
   this.regnum = "";
@@ -131,8 +127,14 @@ app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', '
     'regnum': $scope.regnum,
     'lawnum': $scope.lawnum
   }).success(function (person){
-    blockUI.stop();
-    $scope.person = person;
+    if(!person){
+      console.log(person)
+      blockUI.stop();
+      Notification.error({message: 'حدث خطأ الرجاء التأكد من البيانات المدخلة أو إعادة المحاولة لاحقا', title: '<div class="text-right">فشل</div>'});
+    } else {
+      blockUI.stop();
+      $scope.person = person;
+    }
   }).error(function (data, status){
     console.log(data);
   });
@@ -160,6 +162,9 @@ app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', '
         blockUI.stop();
         Notification.error({message: 'حدث خطأ الرجاء إعادة المحاولة لاحقا', title: '<div class="text-right">فشل</div>'});
         $location.path("/");
+      } else if (results.verify==3){
+        blockUI.stop();
+        Notification.error({message: 'حدث خطأ الرجاء إعادة المحاولة لاحقا', title: '<div class="text-right">فشل</div>'});
       }
     }).error(function (data, status){
       console.log(data);

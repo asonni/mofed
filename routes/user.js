@@ -81,6 +81,7 @@ router.get('/hasNid', helpers.isLogin, function (req, res, next){
 });
 
 router.post('/check', function(req, res, next) {
+  console.log(req.body);
   if(req.body.name && req.body.lawnum && req.body.nid && req.body.regnum){
     mofedbase.getStudents(req.body.name,req.body.lawnum, function (students){
       user.enteredData(req.user.id,req.body,function(person){
@@ -89,7 +90,7 @@ router.post('/check', function(req, res, next) {
       // res.send({check:true});
     });
   } else {
-    res.send({check : false});
+    res.send(null);
   }
 });
 
