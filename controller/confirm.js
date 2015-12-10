@@ -104,7 +104,15 @@ module.exports = {
               user.verified = 1;
               user.save(function(err,result){
                 if (!err) {
-                  cb(user.email);
+                  confirmation.remove(function(err, result){
+                    if (!err) {
+                      cb(user.email);
+                    }  else {
+                      //TODO: return page with errors
+                      console.log(err)
+                      cb(null);
+                    }
+                  })
                 } else {
                   //TODO: return page with errors
                   console.log(err)

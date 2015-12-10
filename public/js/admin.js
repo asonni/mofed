@@ -101,21 +101,18 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$window', 'bloc
     }).error(function (data, status){
       console.log(data);
     });
-  }
+  };
 
-  $scope.downloadCsv = function(){
+  $scope.unVerify = function(){
     blockUI.start("تحميل, الرجاء الانتظار...");
-    $window.location.href = '/admin/all2csv';
-    blockUI.stop();
-    // $http.get('/admin/all2csv',{
-    // }).success(function (results){
-    //   $scope.download = results;
-    //   console.log(results);
-    //   blockUI.stop();
-    // }).error(function (data, status){
-    //   console.log(data);
-    // });
-  }
+    $http.post('/admin/unVerify',{
+      'id': $scope.id
+    }).success(function (results){
+      $scope.init();
+    }).error(function (data, status){
+      console.log(data);
+    });
+  };
 }]);
 
 app.controller('MatchingCtrl', ['$scope', '$http', '$location', '$window', 'blockUI', function($scope, $http, $location, $window, blockUI) {
@@ -132,20 +129,22 @@ app.controller('MatchingCtrl', ['$scope', '$http', '$location', '$window', 'bloc
     }).error(function (data, status){
       console.log(data);
     });
-  }
+  };
 
-  $scope.downloadCsv = function(){
+  $scope.getUnVerifyID = function(id){
+    $scope.id = id;
+  };
+
+  $scope.unVerify = function(){
     blockUI.start("تحميل, الرجاء الانتظار...");
-    $window.location.href = '/admin/match2csv';
-    blockUI.stop();
-    // $http.get('/admin/matching2csv',{
-    // }).success(function (results){
-    //   $scope.download = results;
-    //   blockUI.stop();
-    // }).error(function (data, status){
-    //   console.log(data);
-    // });
-  }
+    $http.post('/admin/unVerify',{
+      'id': $scope.id
+    }).success(function (results){
+      $scope.init();
+    }).error(function (data, status){
+      console.log(data);
+    });
+  };
 }]);
 
 app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', '$window', 'blockUI', function($scope, $http, $location, $window, blockUI) {
@@ -177,20 +176,18 @@ app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', '$window', 'b
     }).error(function (data, status){
       console.log(data);
     });
-  }
+  };
 
-  $scope.downloadCsv = function(){
+  $scope.unVerify = function(){
     blockUI.start("تحميل, الرجاء الانتظار...");
-    $window.location.href = '/admin/notMatch2csv';
-    blockUI.stop();
-    // $http.get('/admin/notMatching2csv',{
-    // }).success(function (results){
-    //   $scope.download = results;
-    //   blockUI.stop();
-    // }).error(function (data, status){
-    //   console.log(data);
-    // });
-  }
+    $http.post('/admin/unVerify',{
+      'id': $scope.id
+    }).success(function (results){
+      $scope.init();
+    }).error(function (data, status){
+      console.log(data);
+    });
+  };
 }]);
 
 app.controller('UsersCtrl', ['$scope', '$http', 'blockUI', function($scope, $http, blockUI) {
