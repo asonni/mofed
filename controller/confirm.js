@@ -36,7 +36,7 @@ module.exports = {
   },
   getMatchConfirmations: function(limit,page,cb) {
     page-=1;
-    Confirm.count({},function(err,count){
+    Confirm.count({verified:2},function(err,count){
       Confirm.find({
       verified:2
     },'createdAt user  mofedbase admin').limit(limit).skip(page*10)
@@ -50,7 +50,7 @@ module.exports = {
   },
   getUnMatchConfirmations: function(limit,page,cb) {
     page-=1;
-    Confirm.count({},function(err,count){
+    Confirm.count({verified:1},function(err,count){
       Confirm.find({
       verified:1
     },'createdAt user mofednid mofedbase').limit(limit).skip(page*10)
@@ -91,6 +91,33 @@ module.exports = {
           }
         });
       } else {
+        cb(null);
+      }
+    });
+  },
+  unVerify: function(id,admin, cb){
+    Confirm.findOne({_id : id}, function(err, confirmation){
+      if(!err && confirmation != null){
+        var userId = confirmation.user;
+          User.findOne({_id : confirmation.user}, function(err, user){
+            if(!err && user != null){
+              user.verified = 1;
+              user.save(function(err,result){
+                if (!err) {
+                  cb(user.email);
+                } else {
+                  //TODO: return page with errors
+                  console.log(err)
+                  cb(null);
+                }
+              });
+            } else {
+              cb(null);
+            }
+          });
+      } else {
+        //TODO: return page with errors
+        console.log(err)
         cb(null);
       }
     });

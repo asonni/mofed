@@ -98,6 +98,29 @@ router.post('/verify', helpers.isAdmin, function(req, res, next) {
   })
 });
 
+/* GET students listing. */
+router.post('/unVerify', helpers.isAdmin, function(req, res, next) {
+  confirm.unVerify(req.body.id,req.user.id, function(email){
+    if(email){
+      var obj = {
+        template : "unverified",
+        subject : "Mofed app Verification",
+        locals : {
+          email : email,
+          host: config.host,
+          user : {
+            email : email,
+          }
+        }
+      }
+      mailer.send(obj); // 
+      res.send({verify : true});
+    } else {
+      res.send({verify : false});
+    }
+  })
+});
+
 /* activate new user. */
 router.get('/activate/:token', function (req, res, next) {
   user.activate(req.params.token,function (result){

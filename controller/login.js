@@ -38,17 +38,6 @@ passport.deserializeUser(function (id, done) {
 });
 
 module.exports = function (router) {
-//   router.post('/user/login', function(req, res, next) {
-//   passport.authenticate('local', function(err, user, info) {
-//     if (err) { return next(err); }
-//     if (!user) { return res.status(200).send({login: 2 });}
-//     req.logIn(user, function(err) {
-//       if (err) { return next(err); }
-//       if(user.admin){return res.status(200).send({login:99});};
-//       return res.status(200).send({login: true });
-//     });
-//   })(req, res, next);
-// });
   router.post('/user/login', function(req, res, next) {
     passport.authenticate('local', function(err, user) {
       if (err) { return next(err); }
