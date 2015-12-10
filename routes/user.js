@@ -81,28 +81,36 @@ router.get('/hasNid', helpers.isLogin, function (req, res, next){
 });
 
 router.post('/check', function(req, res, next) {
-  mofedbase.getStudents(req.body.name,req.body.lawnum, function (students){
-    user.enteredData(req.user.id,req.body,function(person){
-      res.send({person, students});
-    })
-    // res.send({check:true});
-  });
+  if(req.body.name && req.body.lawnum && req.body.nid && req.body.regnum){
+    mofedbase.getStudents(req.body.name,req.body.lawnum, function (students){
+      user.enteredData(req.user.id,req.body,function(person){
+        res.send({person, students});
+      })
+      // res.send({check:true});
+    });
+  } else {
+    res.send({check : false});
+  }
 });
 
 router.post('/confirm', function (req, res, next) {
-  confirm.addConfirmation(req.body,req.user,function (result){
-    if(result) {
-      user.userVerified(req.user._id, req.body.country, function (verified){
-        if(verified) {
-          res.send({verify : true});
-        } else {
-          res.send({verify : 2});
-        }
-      });
-    } else {
-      res.send({verify : 2});
-    }
-  });
+  if(req.body.sid){
+    confirm.addConfirmation(req.body,req.user,function (result){
+      if(result) {
+        user.userVerified(req.user._id, req.body.country, function (verified){
+          if(verified) {
+            res.send({verify : true});
+          } else {
+            res.send({verify : 2});
+          }
+        });
+      } else {
+        res.send({verify : 2});
+      }
+    });
+  } else {
+    res.send({verify : 3});
+  }
 });
 
 router.post('/verify', function (req, res, next) {
