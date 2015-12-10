@@ -238,7 +238,7 @@ module.exports = {
   /* here get all students */
   getAllAdmins: function (limit,page,cb) {
     page-=1;
-    User.count({},function(err,count){
+    User.count({admin: true},function(err,count){
       User.find({admin : true}, '_id name email phone createdAt activated', function(err, admins){
         if (!err) {
           cb({admins:admins, count:count});

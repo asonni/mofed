@@ -26,6 +26,7 @@ passport.use(new LocalStrategy(
 
 //read the passport api docs if you wanna know what this does
 passport.serializeUser(function (user, done) {
+  console.log(user);
   done(null, user.id);
 });
 
@@ -37,18 +38,29 @@ passport.deserializeUser(function (id, done) {
 });
 
 module.exports = function (router) {
+//   router.post('/user/login', function(req, res, next) {
+//   passport.authenticate('local', function(err, user, info) {
+//     if (err) { return next(err); }
+//     if (!user) { return res.status(200).send({login: 2 });}
+//     req.logIn(user, function(err) {
+//       if (err) { return next(err); }
+//       if(user.admin){return res.status(200).send({login:99});};
+//       return res.status(200).send({login: true });
+//     });
+//   })(req, res, next);
+// });
   router.post('/user/login', function(req, res, next) {
     passport.authenticate('local', function(err, user) {
       if (err) { return next(err); }
       if (!user) { return res.send({login: 2 }); }
       if(!user.activated){
         req.session.destroy();
-        res.send({login:3});
+        return res.send({login:3});
       }
       req.logIn(user, function(err) {
         if (err) { return next(err); }
-        if(user.admin){ res.send({login:99});};
-        res.send({login: true });
+        if(user.admin){ return res.send({login:99});};
+        return res.send({login: true });
       });
     })(req, res, next);
   });
