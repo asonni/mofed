@@ -32,7 +32,6 @@
               </th>
             </tr>
             <tr>
-              <th class="text-center">#</th>
               <th class="text-center">الرقم الوطني</th>
               <th class="text-center">رقم القيد</th>
               <th class="text-center">الاسم</th>
@@ -52,9 +51,6 @@
               </td>
             </tr>
             <tr ng-repeat="notMatching in students">
-              <td class="text-center">
-                {{$index + 1}}
-              </td>
               <td class="text-center">
                 {{notMatching.user.nid}}
               </td>
