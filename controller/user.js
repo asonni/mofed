@@ -159,7 +159,6 @@ module.exports = {
             delete result.salt;
             delete result.admin;
             delete result.password;
-            console.log(result);
             cb(result);
           } else {
             //return page with errors

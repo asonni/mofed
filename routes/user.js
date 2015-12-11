@@ -81,7 +81,6 @@ router.get('/hasNid', helpers.isLogin, function (req, res, next){
 });
 
 router.post('/check', function(req, res, next) {
-  console.log(req.body);
   if(req.body.name && req.body.lawnum && req.body.nid && req.body.regnum){
     mofedbase.getStudents(req.body.name,req.body.lawnum, function (students){
       user.enteredData(req.user.id,req.body,function(person){
@@ -129,7 +128,6 @@ router.post('/forgotPassword', function (req, res, next) {
     if(result){
       user.changePassword(result.id, function(password){
         if(password){
-          console.log(result);
           var obj = {
             template : "forgotpassword",
             subject : "Mofed app new password request",

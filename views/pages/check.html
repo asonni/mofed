@@ -25,10 +25,11 @@
       <div class="form-group">
         <i class="fa fa-star-o"></i>
         <label class="control-label">الرقم الوطني</label>
-        <input class="form-control" name="nid" ng-model="nid" ng-remote-validate="/user/hasNid/" ng-remote-throttle="800" ng-remote-method="GET" type="text" placeholder="الرقم الوطني" ng-maxlength="12" ng-minlength="12" required>
+        <input class="form-control" name="nid" ng-model="nid" ng-remote-validate="/user/hasNid/" ng-remote-throttle="800" ng-remote-method="GET" type="text" placeholder="الرقم الوطني" ng-maxlength="12" ng-minlength="12" ng-pattern="/[0-9]/" required>
         <i style="position:absolute; margin:-32px;" class="fa fa-spinner fa-pulse fa-2x" ng-show="checkForm.nid.$pending"></i>
         <span ng-show="checkForm.nid.$error.ngRemoteValidate" style="position:absolute;color:red;">الرقم الوطني موجود مسبقا!</span>
-        <span ng-show="checkForm.nid.$error.maxlength || checkForm.nid.$error.minlength" style="position:absolute;color:red;">الرقم الوطني غير صحيح, الرجاء إعادة الادخال</span>
+        <span ng-show="(checkForm.nid.$error.maxlength || checkForm.nid.$error.minlength) && !checkForm.nid.$error.pattern" style="position:absolute;color:red;">الرقم الوطني غير صحيح, الرجاء إعادة الادخال</span>
+        <span ng-show="checkForm.nid.$error.pattern" style="position:absolute;color:red;">الرجاء ادخال ارقام صحيحة فقط!</span>
       </div>
     </div>
   </div>
@@ -37,15 +38,17 @@
     <div class="col-lg-4 col-lg-offset-2">
       <div class="form-group">
         <i class="fa fa-star-o"></i>
-        <label class="control-label">رقم القيد</label>
-        <input class="form-control" ng-model="regnum" type="text" placeholder="رقم القيد" required>
+        <label class="control-label">رقم القيد (كتيب العائلة)</label>
+        <input class="form-control" name="regnum" ng-model="regnum" type="text" placeholder="رقم القيد (كتيب العائلة)" ng-pattern="/[0-9]/" required>
+        <span ng-show="checkForm.regnum.$error.pattern" style="position:absolute;color:red;">الرجاء ادخال ارقام صحيحة فقط!</span>
       </div>
     </div>
     <div class="col-lg-4">
       <div class="form-group">
         <i class="fa fa-star-o"></i>
         <label class="control-label">رقم القرار او سنة القرار</label>
-        <input class="form-control" ng-model="lawnum" type="text" placeholder="رقم القرار او سنة القرار" required>
+        <input class="form-control" name="lawnum" ng-model="lawnum" type="text" placeholder="رقم القرار او سنة القرار" ng-pattern="/[0-9]/" required>
+        <span ng-show="checkForm.lawnum.$error.pattern" style="position:absolute;color:red;">الرجاء ادخال ارقام صحيحة فقط!</span>
       </div>
     </div>
   </div>
@@ -57,3 +60,4 @@
     </div>
   </div>
 <form>
+<br/><br/><br/><br/>
