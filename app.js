@@ -46,7 +46,7 @@ app.use(express.static(path.join(__dirname, 'views/pages')));
 app.use(session({store: new RedisStore({
   client: client,
   host:'127.0.0.1',
-  port:6380,
+  port:6379,
   prefix:'sess'
 }), secret: 'SEKR37' }));
 app.use(passport.initialize());

@@ -79,7 +79,7 @@
                   تأكيد
                 </button>
               </td>
-              <td>
+              <td class="text-center">
                 <button type="button" class="btn btn-danger btn-xs" ng-click="getVerifyID(student._id)" data-toggle="modal" data-target="#unVerify">
                   إلغاء التطابق
                 </button>
@@ -88,7 +88,7 @@
           </tbody>
         </table>
       </div>
-      <uib-pagination total-items="total" ng-model="currentPage" items-per-page="pageSize" previous-text="السابق" next-text="التالي" ng-click="init()"></uib-pagination>
+      <uib-pagination first-text="الاول" last-text="الاخير"  boundary-links="true" rotate="false" max-size="10" total-items="total" ng-model="currentPage" items-per-page="pageSize" previous-text="السابق" next-text="التالي" ng-click="init()"></uib-pagination>
     </div>
   </div>
   <div class="modal fade" id="verify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

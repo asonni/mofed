@@ -102,6 +102,7 @@ module.exports = {
           User.findOne({_id : confirmation.user}, function(err, user){
             if(!err && user != null){
               user.verified = 1;
+	      user.nid='';
               user.save(function(err,result){
                 if (!err) {
                   confirmation.remove(function(err, result){

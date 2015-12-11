@@ -85,10 +85,10 @@ module.exports = {
   },
   /* here we check if nid is used */
   hasNid: function (nid, cb) {
-    User.findOne({nid : nid}, function(err, user){
+    User.findOne({nid : nid, verified:2}, function(err, user){
       if (!err) {
         if(user){
-          cb(true);
+          cb(false);
         } else {
           cb(false);
         }
