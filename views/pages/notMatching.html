@@ -75,13 +75,13 @@
                   {{notMatching.mofedbase.country}}
                 </td>
                 <td class="text-center">
-                  <span class="label label-warning" ng-show="notMatching.user.verified == 2" style="font-size:10px;padding:10px;">غير مؤكدة</span>
+                  <span class="label label-warning" ng-show="notMatching.user.verified == 2" style="font-size:10px;padding:6.5px;">غير مؤكدة</span>
                   <button type="button" class="btn btn-info btn-sm" ng-show="notMatching.user.verified == 2" ng-click="getVerifyID(notMatching._id)" data-toggle="modal" data-target="#verify">
                     تأكيد
                   </button>
                 </td>
                 <td class="text-center">
-                  <button type="button" class="btn btn-danger btn-xs" ng-click="getVerifyID(student._id)" data-toggle="modal" data-target="#unVerify">
+                  <button type="button" class="btn btn-danger btn-sm" ng-click="getVerifyID(student._id)" data-toggle="modal" data-target="#unVerify">
                     إلغاء التطابق
                   </button>
                 </td>
