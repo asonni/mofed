@@ -130,13 +130,13 @@
                   </a>
                 </li>
               </ol>
-              <span class="text-danger" ng-show="studentForm.selectError.$invalid && showSelectError" style="position:absolute;color:red;">الرجاء اختيار نوع الخطأ!</span>
+              <span ng-show="studentForm.selectError.$invalid && showSelectError" style="position:absolute;color:red;">الرجاء اختيار نوع الخطأ!</span>
             </div>
           </div>
         </div>
         <br/>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">لا</button>
+          <button type="button" class="btn btn-danger" ng-click="resetSelect()" data-dismiss="modal">لا</button>
           <button type="button" class="btn btn-info" ng-click="unVerify()" data-dismiss="{{modal}}">نعم</button>
         </div>
       </div><!-- /.modal-content -->

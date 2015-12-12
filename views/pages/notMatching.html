@@ -1,4 +1,4 @@
-<form data-ng-init="init()">
+<form data-ng-init="init()" name="notMatchingForm">
   <div class="row">
     <div class="col-lg-2">
       <a href="#/students" class="btn btn-info btn-block">عرض الطلبة</a>
@@ -118,11 +118,24 @@
           <h3 class="modal-title">رسالة تحذير</h3>
         </div>
         <div class="modal-body">
-          <h4>هل انت متأكد من إلغاء هذا التطابق ؟</h4>
+          <div class="row">
+            <div class="col-lg-6 col-lg-offset-3">
+              <h4>الرجاء اختيار نوع الخطأ</h4>
+              <ol name="selectError" class="nya-bs-select form-control" ng-model="error" required>
+                <li nya-bs-option="error in errors">
+                  <a>
+                    {{error.errorName}}
+                  </a>
+                </li>
+              </ol>
+              <span ng-show="notMatchingForm.selectError.$invalid && showSelectError" style="position:absolute;color:red;">الرجاء اختيار نوع الخطأ!</span>
+            </div>
+          </div>
         </div>
+        <br/>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">لا</button>
-          <button type="button" class="btn btn-info" ng-click="unVerify()" data-dismiss="modal">نعم</button>
+          <button type="button" class="btn btn-danger" ng-click="resetSelect()" data-dismiss="modal">لا</button>
+          <button type="button" class="btn btn-info" ng-click="unVerify()" data-dismiss="{{modal}}">نعم</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

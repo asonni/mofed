@@ -87,11 +87,9 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$window', 'bloc
       console.log(data);
     });
   };
-
   $scope.getVerifyID = function(id){
     $scope.id = id;
   };
-
   $scope.verify = function (){
     blockUI.start("تحميل, الرجاء الانتظار...");
     $http.post('/admin/verify',{
@@ -102,17 +100,15 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$window', 'bloc
       console.log(data);
     });
   };
-
   $scope.errors =[{"errorId":1, "errorName":"خطأ في رقم القيد"},
                   {"errorId":2, "errorName":"خطأ في الرقم الوطني"},
                   {"errorId":3, "errorName":"خطأ في الاسم"},
                   {"errorId":4, "errorName":"خطأ في الساحة"}];
-  
   $scope.showSelectError = false;
   $scope.unVerify = function(){
     if (!$scope.error){
       $scope.showSelectError = true;
-    } else {
+    } else if ($scope.error.errorId) {
       $scope.modal = "modal";
       blockUI.start("تحميل, الرجاء الانتظار...");
       $http.post('/admin/unVerify',{
@@ -124,6 +120,9 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$window', 'bloc
         console.log(data);
       });
     }
+  };
+  $scope.resetSelect = function(){
+    $scope.error = [];
   };
 }]);
 
@@ -142,20 +141,31 @@ app.controller('MatchingCtrl', ['$scope', '$http', '$location', '$window', 'bloc
       console.log(data);
     });
   };
-
   $scope.getUnVerifyID = function(id){
     $scope.id = id;
   };
-
+  $scope.errors =[{"errorId":1, "errorName":"خطأ في رقم القيد"},
+                  {"errorId":2, "errorName":"خطأ في الرقم الوطني"},
+                  {"errorId":3, "errorName":"خطأ في الاسم"},
+                  {"errorId":4, "errorName":"خطأ في الساحة"}];
+  $scope.showSelectError = false;
   $scope.unVerify = function(){
-    blockUI.start("تحميل, الرجاء الانتظار...");
-    $http.post('/admin/unVerify',{
-      'id': $scope.id
-    }).success(function (results){
-      $scope.init();
-    }).error(function (data, status){
-      console.log(data);
-    });
+    if (!$scope.error){
+      $scope.showSelectError = true;
+    } else if ($scope.error.errorId) {
+      blockUI.start("تحميل, الرجاء الانتظار...");
+      $http.post('/admin/unVerify',{
+        'id': $scope.id,
+        'errorId': $scope.error.errorId
+      }).success(function (results){
+        $scope.init();
+      }).error(function (data, status){
+        console.log(data);
+      });
+    }
+  };
+  $scope.resetSelect = function(){
+    $scope.error = [];
   };
 }]);
 
@@ -189,16 +199,28 @@ app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', '$window', 'b
       console.log(data);
     });
   };
-
+  $scope.errors =[{"errorId":1, "errorName":"خطأ في رقم القيد"},
+                  {"errorId":2, "errorName":"خطأ في الرقم الوطني"},
+                  {"errorId":3, "errorName":"خطأ في الاسم"},
+                  {"errorId":4, "errorName":"خطأ في الساحة"}];
+  $scope.showSelectError = false;
   $scope.unVerify = function(){
-    blockUI.start("تحميل, الرجاء الانتظار...");
-    $http.post('/admin/unVerify',{
-      'id': $scope.id
-    }).success(function (results){
-      $scope.init();
-    }).error(function (data, status){
-      console.log(data);
-    });
+    if (!$scope.error){
+      $scope.showSelectError = true;
+    } else if ($scope.error.errorId) {
+      blockUI.start("تحميل, الرجاء الانتظار...");
+      $http.post('/admin/unVerify',{
+        'id': $scope.id,
+        'errorId': $scope.error.errorId
+      }).success(function (results){
+        $scope.init();
+      }).error(function (data, status){
+        console.log(data);
+      });
+    }
+  };
+  $scope.resetSelect = function(){
+    $scope.error = [];
   };
 }]);
 
