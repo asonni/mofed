@@ -103,15 +103,27 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$window', 'bloc
     });
   };
 
+  $scope.errors =[{"errorId":1, "errorName":"خطأ في رقم القيد"},
+                  {"errorId":2, "errorName":"خطأ في الرقم الوطني"},
+                  {"errorId":3, "errorName":"خطأ في الاسم"},
+                  {"errorId":4, "errorName":"خطأ في الساحة"}];
+  
+  $scope.showSelectError = false;
   $scope.unVerify = function(){
-    blockUI.start("تحميل, الرجاء الانتظار...");
-    $http.post('/admin/unVerify',{
-      'id': $scope.id
-    }).success(function (results){
-      $scope.init();
-    }).error(function (data, status){
-      console.log(data);
-    });
+    if (!$scope.error){
+      $scope.showSelectError = true;
+    } else {
+      $scope.modal = "modal";
+      blockUI.start("تحميل, الرجاء الانتظار...");
+      $http.post('/admin/unVerify',{
+        'id': $scope.id,
+        'errorId': $scope.error.errorId
+      }).success(function (results){
+        $scope.init();
+      }).error(function (data, status){
+        console.log(data);
+      });
+    }
   };
 }]);
 
