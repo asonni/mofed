@@ -122,7 +122,8 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$window', 'bloc
     }
   };
   $scope.resetSelect = function(){
-    $scope.error = [];
+    $scope.showSelectError = false;
+    $scope.error = '';
   };
 }]);
 
@@ -165,7 +166,8 @@ app.controller('MatchingCtrl', ['$scope', '$http', '$location', '$window', 'bloc
     }
   };
   $scope.resetSelect = function(){
-    $scope.error = [];
+    $scope.showSelectError = false;
+    $scope.error = '';
   };
 }]);
 
@@ -184,11 +186,9 @@ app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', '$window', 'b
       console.log(data);
     });
   };
-
   $scope.getVerifyID = function(id){
     $scope.id = id;
   };
-
   $scope.verify = function (){
     blockUI.start("تحميل, الرجاء الانتظار...");
     $http.post('/admin/verify',{
@@ -220,7 +220,8 @@ app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', '$window', 'b
     }
   };
   $scope.resetSelect = function(){
-    $scope.error = [];
+    $scope.showSelectError = false;
+    $scope.error = '';
   };
 }]);
 
