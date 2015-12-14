@@ -29,6 +29,7 @@ module.exports = {
       .populate('user', 'email _id name nid regnum lawnum country verified')
       .populate('mofedbase', 'sid _id name country lawnum')
       .populate('admin', '_id name')
+      .sort('user')
       .exec(function(err, students){
         cb({students:students, count:count});
       });
@@ -43,6 +44,7 @@ module.exports = {
       .populate('user', 'email _id name nid regnum lawnum country verified')
       .populate('mofedbase', 'sid _id name country lawnum')
       .populate('admin', '_id name')
+      .sort('user')
       .exec(function(err, students){
         cb({students:students, count:count});
       });
@@ -56,6 +58,7 @@ module.exports = {
     },'createdAt user mofednid mofedbase').limit(limit).skip(page*10)
       .populate('user', 'email _id name nid regnum lawnum country verified')
       .populate('mofedbase', 'sid _id name country lawnum')
+      .sort('user')
       .exec(function(err, students){
         cb({students:students, count:count});
       });
@@ -159,6 +162,19 @@ module.exports = {
     .populate('admin', '_id name')
     .exec(function(err, students){
       cb(students);
+    });
+  },
+
+   /* here we get all users with this NID */
+  removeDuplicates: function (id,cb) {
+    Confirm.remove({_id: id}, function(err, users){
+      if (!err) {
+        cb(users);
+      } else {
+        //TODO: return page with errors
+        console.log(err)
+        cb(null);
+      }
     });
   }
 }

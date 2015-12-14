@@ -271,8 +271,21 @@ module.exports = {
     .exec(function(err, students){
       cb(students);
     });
+  },
+
+  /* here we get all users with this NID */
+  getUsersByNid: function (nid,id,cb) {
+    User.find({nid : nid, _id: {$ne : id}}, function(err, users){
+      if (!err) {
+        cb(users);
+      } else {
+        //TODO: return page with errors
+        console.log(err)
+        cb(null);
+      }
+    });
   }
-}
+};
 
 
 
