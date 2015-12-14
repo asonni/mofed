@@ -13,8 +13,8 @@ module.exports = {
     res.redirect('/')
   },
   getFields : function() {
-    var fields = ['user.name','user.email','user.nid','user.country' ,'mofedbase.name','mofedbase.lawnum','mofedbase.country', 'mofedbase.sid','admin.name',];
-    var fieldNames = ['اسم الموفد', 'بريد الموفد', 'الرقم الوطني للموفد','الدولة المدخلة من الموفد','اسم الموفد من ادارة البعثات','رقم القرار','الدولة المدخلة من البعثات', 'الرقم الآلي من البعثات', 'اسم المسؤول عن التطابق'];
+    var fields = ['user.name','user.email','user.nid','user.regnum','user.country' ,'mofedbase.name','mofedbase.lawnum','mofedbase.country', 'mofedbase.sid','admin.name',];
+    var fieldNames = ['اسم الموفد', 'بريد الموفد', 'الرقم الوطني للموفد', 'رقم القيد للموفد', 'الدولة المدخلة من الموفد','اسم الموفد من ادارة البعثات','رقم القرار','الدولة المدخلة من البعثات', 'الرقم الآلي من البعثات', 'اسم المسؤول عن التطابق'];
     return ({fields: fields, fieldNames: fieldNames});
   }
 };

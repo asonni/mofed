@@ -37,6 +37,15 @@ router.post('/notMatching/:limit/:page', helpers.isAdmin, function(req, res, nex
   });
 });
 
+router.get('/nids', helpers.isAdmin, function(req, res, next) {
+  var fields = ['_id','name','email','nid','country', 'regnum'];
+  user.findNids(function (result){
+    json2csv({ data: result, fields:fields}, function(err, csv) {
+      res.attachment('users.csv');
+      res.send(csv);
+    });
+  });
+});
 
 /* GET all students csv. */
 router.get('/all2csv', helpers.isAdmin, function(req, res, next) {
@@ -98,27 +107,30 @@ router.post('/verify', helpers.isAdmin, function(req, res, next) {
   })
 });
 
+
+
 /* GET students listing. */
 router.post('/unVerify', helpers.isAdmin, function(req, res, next) {
-  confirm.unVerify(req.body.id,req.user.id, function(email){
-    if(email){
-      var obj = {
-        template : "unverified",
-        subject : "Mofed app Verification",
-        locals : {
-          email : email,
-          host: config.host,
-          user : {
-            email : email,
-          }
-        }
-      }
-      mailer.send(obj); // 
-      res.send({verify : true});
-    } else {
-      res.send({verify : false});
-    }
-  })
+  console.log(req.body);
+  // confirm.unVerify(req.body.id,req.user.id, function(email){
+  //   if(email){
+  //     var obj = {
+  //       template : "unverified",
+  //       subject : "Mofed app Verification",
+  //       locals : {
+  //         email : email,
+  //         host: config.host,
+  //         user : {
+  //           email : email,
+  //         }
+  //       }
+  //     }
+  //     mailer.send(obj); // 
+  //     res.send({verify : true});
+  //   } else {
+  //     res.send({verify : false});
+  //   }
+  // })
 });
 
 /* activate new user. */
