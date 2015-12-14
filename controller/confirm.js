@@ -36,7 +36,7 @@ module.exports = {
   },
   getMatchConfirmations: function(limit,page,cb) {
     page-=1;
-    Confirm.count({verified:1},function(err,count){
+    Confirm.count({verified:2},function(err,count){
       Confirm.find({
       verified:2
     },'createdAt user  mofedbase admin').limit(limit).skip(page*10)
