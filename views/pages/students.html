@@ -33,6 +33,7 @@
                 </th>
               </tr>
               <tr>
+                <th class="text-center">حذف</th>
                 <th class="text-center">الرقم الوطني</th>
                 <th class="text-center">رقم القيد</th>
                 <th class="text-center">الاسم</th>
@@ -53,6 +54,11 @@
                 </td>
               </tr>
               <tr ng-repeat="student in students">
+                <td class="text-center">
+                  <button type="button" class="btn btn-info btn-sm" ng-click="getDeleteId(student._id)" data-toggle="modal" data-target="#delete">
+                    خذف
+                  </button>
+                </td>
                 <td class="text-center">
                   {{student.user.nid}}
                 </td>
@@ -138,6 +144,23 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" ng-click="resetSelect()" data-dismiss="modal">لا</button>
           <button type="button" class="btn btn-info" ng-click="unVerify()" data-dismiss="{{modal}}">نعم</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h3 class="modal-title">رسالة تحذير</h3>
+        </div>
+        <div class="modal-body">
+          <h4>هل انت متأكد من الحذف ؟</h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">لا</button>
+          <button type="button" class="btn btn-info" ng-click="deleteDuplicates()" data-dismiss="modal">نعم</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

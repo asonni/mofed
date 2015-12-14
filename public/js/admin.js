@@ -134,6 +134,18 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$window', 'bloc
     $scope.showSelectError = false;
     $scope.error = '';
   };
+  $scope.getDeleteId = function(id) {
+    $scope.deleteId = id;
+  };
+  $scope.deleteDuplicates = function() {
+    $http.post('/admin/removeDuplicates',{
+      'id': $scope.deleteId
+    }).success(function (){
+      $scope.init();
+    }).error(function (data, status){
+      console.log(data);
+    });
+  };
 }]);
 
 app.controller('MatchingCtrl', ['$scope', '$http', '$location', '$window', 'blockUI', function($scope, $http, $location, $window, blockUI) {
