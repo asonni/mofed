@@ -87,8 +87,17 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$window', 'bloc
       console.log(data);
     });
   };
-  $scope.getVerifyID = function(id){
+  $scope.getVerifyID = function(id, studentNid){
     $scope.id = id;
+    $http.post('/admin/checkDuplicates',{
+      'id': id,
+      'nid': studentNid
+    }).success(function (results){
+      $scope.studentDupicate = results;
+      console.log(results);
+    }).error(function (data, status){
+      console.log(data);
+    });
   };
   $scope.verify = function (){
     blockUI.start("تحميل, الرجاء الانتظار...");
