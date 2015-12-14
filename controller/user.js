@@ -262,6 +262,16 @@ module.exports = {
       }
     });
   },
+
+  findNids: function(cb) {
+    User
+    .find({verified:3})
+    .sort({nid : 1})
+    .select('_id nid regnum name email country')
+    .exec(function(err, students){
+      cb(students);
+    });
+  }
 }
 
 

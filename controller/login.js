@@ -26,7 +26,6 @@ passport.use(new LocalStrategy(
 
 //read the passport api docs if you wanna know what this does
 passport.serializeUser(function (user, done) {
-  console.log(user);
   done(null, user.id);
 });
 
