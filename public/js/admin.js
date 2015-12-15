@@ -87,6 +87,17 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$window', 'bloc
       console.log(data);
     });
   };
+  $scope.pagination = function () {
+    blockUI.start("تحميل, الرجاء الانتظار...");
+    $http.get('/admin/students/'+$scope.pageSize+'/'+$scope.currentPage,{
+    }).success(function (results){
+      $scope.students = results.students;
+      $scope.total = results.count;
+      blockUI.stop();
+    }).error(function (data, status){
+      console.log(data);
+    });
+  };
   $scope.getVerifyID = function(id, studentNid){
     $scope.id = id;
     $http.post('/admin/checkDuplicates',{
