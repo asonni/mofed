@@ -1,5 +1,6 @@
 var Confirm = require("../models/confirm"),
-    User = require("../models/user");
+    User = require("../models/user"),
+    False = require("../models/false");
 
 
 module.exports = {
@@ -98,19 +99,32 @@ module.exports = {
       }
     });
   },
-  unVerify: function(id,admin, cb){
+  unVerify: function(id,admin,errId, cb){
     Confirm.findOne({_id : id}, function(err, confirmation){
       if(!err && confirmation != null){
-        var userId = confirmation.user;
           User.findOne({_id : confirmation.user}, function(err, user){
             if(!err && user != null){
               user.verified = 1;
-	      user.nid='';
+              var recordObj = {
+                mofedbase: confirmation.mofedbase,
+                admin : admin,
+                err: errId,
+                name : user.name,
+                lawnum:user.lawnum,
+                country : user.country,
+                nid : user.nid,
+                regnum : user.regnum,
+                email : user.email
+              }
+              var falseObj = new False(recordObj);
+	            delete user.nid;
               user.save(function(err,result){
                 if (!err) {
                   confirmation.remove(function(err, result){
                     if (!err) {
-                      cb(user.email);
+                      falseObj.save(function(err,result){
+                        cb(user.email);
+                      });
                     }  else {
                       //TODO: return page with errors
                       console.log(err)
