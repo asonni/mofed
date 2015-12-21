@@ -111,26 +111,26 @@ router.post('/verify', helpers.isAdmin, function(req, res, next) {
 
 /* GET students listing. */
 router.post('/unVerify', helpers.isAdmin, function(req, res, next) {
-  console.log(req.body);
-  // confirm.unVerify(req.body.id,req.user.id, function(email){
-  //   if(email){
-  //     var obj = {
-  //       template : "unverified",
-  //       subject : "Mofed app Verification",
-  //       locals : {
-  //         email : email,
-  //         host: config.host,
-  //         user : {
-  //           email : email,
-  //         }
-  //       }
-  //     }
-  //     mailer.send(obj); // 
-  //     res.send({verify : true});
-  //   } else {
-  //     res.send({verify : false});
-  //   }
-  // })
+  confirm.unVerify(req.body.id,req.user.id,req.body.errorId, function(email){
+    if(email){
+      var obj = {
+        template : "unverified",
+        subject : "Mofed app Verification",
+        locals : {
+          email : email,
+          host: config.host,
+          user : {
+            email : email,
+            errBody : helpers.getEmailBody(req.body.errorId)
+          }
+        }
+      }
+      mailer.send(obj); // 
+      res.send({verify : true});
+    } else {
+      res.send({verify : false});
+    }
+  })
 });
 
 /* activate new user. */
@@ -205,20 +205,18 @@ router.post('/remove', helpers.isAdmin, function(req, res, next) {
 
 /* GET students listing. */
 router.post('/checkDuplicates', helpers.isAdmin, function(req, res, next) {
-  console.log(req.body);
   user.getUsersByNid(req.body.nid, req.body.id, function (result){
-    console.log(result);
     res.send(result);
   });
 });
 
 /* GET students listing. */
-router.post('/removeDuplicates', helpers.isAdmin, function(req, res, next) {
-  console.log(req.body);
-  confirm.removeDuplicates(req.body.id, function (result){
-    //console.log(result);
-    res.send(true);
-  });
-});
+// router.post('/removeDuplicates', helpers.isAdmin, function(req, res, next) {
+//   console.log(req.body);
+//   confirm.removeDuplicates(req.body.id, function (result){
+//     //console.log(result);
+//     res.send(true);
+//   });
+// });
 
 module.exports = router;
