@@ -155,6 +155,9 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$window', 'bloc
       }).error(function (data, status){
         console.log(data);
       });
+    } else {
+      blockUI.start("تحميل, الرجاء الانتظار...");
+      $scope.init();
     }
   };
 }]);
