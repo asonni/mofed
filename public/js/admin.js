@@ -147,8 +147,14 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$window', 'bloc
   //   });
   // };
   $scope.searchAllStudent =function(){
-    if ($scope.searchByNidOrName.length >= 5){
-      console.log($scope.searchByNidOrName);
+    if ($scope.searchByNidOrName.length >= 7){
+      $http.get('/admin/searchAll/'+$scope.searchByNidOrName,{
+      }).success(function (results){
+        $scope.students = results.students;
+        // blockUI.stop();
+      }).error(function (data, status){
+        console.log(data);
+      });
     }
   };
 }]);
