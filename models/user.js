@@ -21,5 +21,5 @@ var User = new Schema({
   	studentId: { type : Date, default: Date.now }
 });
 User.plugin(timestamps);
-
+User.index({ name: 'text'});
 module.exports = mongoose.model('User', User);

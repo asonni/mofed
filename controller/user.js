@@ -1,4 +1,5 @@
 var User = require("../models/user"),
+    Confirm = require("../models/confirm"),
     generatePassword = require('password-generator'),
     easyPbkdf2 = require("easy-pbkdf2")(),
     user = null;
@@ -280,6 +281,42 @@ module.exports = {
         cb(users);
       } else {
         //TODO: return page with errors
+        console.log(err)
+        cb(null);
+      }
+    });
+  },
+
+  /* here we add a new user to the system */
+  searchStudents: function (query,cb) {
+    console.log(query);
+    var obj = null;
+    var lst = [];
+    if(!isNaN(query)){
+      obj = { nid : { "$regex": query, "$options": "i" } };
+    } else {
+      obj = {$text : {$search: query}}, {score: {$meta: "textScore"}};
+    }
+    User.find(obj, '_id')
+    .limit(20)
+    .exec(function(err, students){
+      if (!err) {
+
+        for (inx in students){
+          lst.push(students[inx]._id);
+        }
+        Confirm.find({
+        },'createdAt user mofedbase admin')
+          .where ('user').in(lst)
+          .populate('user', 'email _id name nid regnum lawnum country verified')
+          .populate('mofedbase', 'sid _id name country lawnum')
+          .populate('admin', '_id name')
+          .sort('user')
+          .exec(function(err, students){
+            cb({students:students});
+          });
+      } else {
+        // return page with errors
         console.log(err)
         cb(null);
       }

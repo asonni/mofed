@@ -17,6 +17,12 @@ router.get('/', helpers.isAdmin, function(req, res, next) {
 });
 
 /* GET students listing. */
+router.get('/searchAll/:query', helpers.isAdmin, function(req, res, next) {
+  user.searchStudents(req.params.query, function (results){
+    res.send(results);
+  });
+});
+/* GET students listing. */
 router.get('/students/:limit/:page', helpers.isAdmin, function(req, res, next) {
   confirm.getConfirmations(req.params.limit,req.params.page, function (results){
     res.send(results);
