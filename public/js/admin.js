@@ -146,6 +146,11 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$window', 'bloc
   //     console.log(data);
   //   });
   // };
+  $scope.searchAllStudent =function(){
+    if ($scope.searchByNidOrName.length >= 5){
+      console.log($scope.searchByNidOrName);
+    }
+  };
 }]);
 
 app.controller('MatchingCtrl', ['$scope', '$http', '$location', '$window', 'blockUI', function($scope, $http, $location, $window, blockUI) {
@@ -189,6 +194,11 @@ app.controller('MatchingCtrl', ['$scope', '$http', '$location', '$window', 'bloc
   $scope.resetSelect = function(){
     $scope.showSelectError = false;
     $scope.error = '';
+  };
+  $scope.searchMatching =function(){
+    if ($scope.searchByNidOrName.length >= 5){
+      console.log($scope.searchByNidOrName);
+    }
   };
 }]);
 
@@ -243,6 +253,11 @@ app.controller('NotMatchingCtrl', ['$scope', '$http', '$location', '$window', 'b
   $scope.resetSelect = function(){
     $scope.showSelectError = false;
     $scope.error = '';
+  };
+  $scope.searchNotMatching =function(){
+    if ($scope.searchByNidOrName.length >= 5){
+      console.log($scope.searchByNidOrName);
+    }
   };
 }]);
 

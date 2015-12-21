@@ -79,3 +79,17 @@ body {
     display: none;
   }
 }
+
+
+#panel-heading {
+  padding:5px 5px;
+}
+#col-lg-2 {
+  margin-left:-35px;
+}
+#col-lg-3 {
+  margin-left:-65px;
+}
+#panel-title {
+  margin-top:8px;
+}
