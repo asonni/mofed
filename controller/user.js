@@ -293,12 +293,13 @@ module.exports = {
     var obj = null;
     var lst = [];
     if(!isNaN(query)){
-      obj = { nid : { "$regex": query, "$options": "i" } };
+      obj = { nid : { "$regex": query, "$options": "i" } }, {score: {$meta: "textScore"}};
     } else {
-      obj = {$text : {$search: query}}, {score: {$meta: "textScore"}};
+      obj = {$text : {$search: query}}, { score : { $meta: "textScore" } };
     }
     User.find(obj, '_id')
     .limit(20)
+    .sort({ score : { '$meta' : 'textScore' } })
     .exec(function(err, students){
       if (!err) {
 

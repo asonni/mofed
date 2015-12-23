@@ -103,8 +103,8 @@ app.controller('LoginCtrl', ['$scope', '$http', '$location', 'Notification','$ro
       } else if (result.login == 99) {
         blockUI.stop();
         window.location.replace('/admin');
-        $scope.username='';
-        $scope.password='';
+        // $scope.username='';
+        // $scope.password='';
       }
     }).error(function (data, status){
       console.log(data);
