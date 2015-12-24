@@ -72,7 +72,7 @@ app.controller('AdminCtrl', ['$scope', '$http', '$location', '$route', function(
   $scope.$route = $route;
 }]);
 
-app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$window', 'blockUI', function($scope, $http, $location, $window, blockUI) {
+app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$window', 'blockUI','$document', function($scope, $http, $location, $window, blockUI,$document) {
   blockUI.start("تحميل, الرجاء الانتظار...");
   $scope.pageSize = 10;
   $scope.currentPage = 1;
@@ -146,6 +146,11 @@ app.controller('StudentsCtrl', ['$scope', '$http', '$location', '$window', 'bloc
   //     console.log(data);
   //   });
   // };
+  $document.on('keydown', function(e){
+    if( e.target.nodeName !== "INPUT"){ // you can add others here.
+      e.preventDefault();
+    }
+  });
   $scope.searchAllStudent =function(){
     if ($scope.searchByNidOrName.length >= 7){
       $http.get('/admin/searchAll/'+$scope.searchByNidOrName,{
