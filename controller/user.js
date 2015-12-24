@@ -289,17 +289,19 @@ module.exports = {
 
   /* here we add a new user to the system */
   searchStudents: function (query,cb) {
-    console.log(query);
-    var obj = null;
+    var obj = null,
+        sort = '';
     var lst = [];
     if(!isNaN(query)){
-      obj = { nid : { "$regex": query, "$options": "i" } }, {score: {$meta: "textScore"}};
+      sort = 'nid';
+      obj = { nid : { "$regex": query, "$options": "i" } };
     } else {
-      obj = {$text : {$search: query}}, { score : { $meta: "textScore" } };
+      sort = 'name';
+      obj = { name : { "$regex": query, "$options": "i" } };
     }
     User.find(obj, '_id')
     .limit(20)
-    .sort({ score : { '$meta' : 'textScore' } })
+    .sort(sort)
     .exec(function(err, students){
       if (!err) {
 
