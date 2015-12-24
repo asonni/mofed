@@ -93,3 +93,7 @@ body {
 #panel-title {
   margin-top:8px;
 }
+.noPaddingRightLeft{
+  padding-left: 0px;
+  padding-right: 0px;
+}
