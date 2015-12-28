@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('mofed', ['ngRoute', 'remoteValidation', 'ui-notification', 'toggle-switch', 'nya.bootstrap.select', 'ui.bootstrap', 'blockUI']);
+var app = angular.module('mofed', ['ngRoute', 'remoteValidation', 'ui-notification', 'toggle-switch', 'nya.bootstrap.select', 'ui.bootstrap', 'blockUI', 'ngCsvImport']);
 
 app.config(['$routeProvider', '$locationProvider' , function($routeProvider, $locationProvider) {
   $routeProvider.when('/', {
@@ -26,6 +26,10 @@ app.config(['$routeProvider', '$locationProvider' , function($routeProvider, $lo
   .when('/addUser',{
     templateUrl: '../addUser.html',
     controller: 'AddUserCtrl'
+  })
+  .when('/importCSV',{
+    templateUrl: '../importCSV.html',
+    controller: 'importCsvCtrl'
   });
 }]);
 // Coustom Directive Start
@@ -341,4 +345,24 @@ app.controller('AddUserCtrl', ['$scope', '$http', '$location', 'blockUI', 'Notif
     });
   };
 }]);
+
+app.controller('importCsvCtrl', ['$scope', '$http', 'blockUI', 'Notification', function($scope, $http, blockUI, Notification) {
+  $scope.csv = {
+    result: null,
+    encoding: 'UTF-8',
+  };
+  $scope.sendCSV = function (){
+    blockUI.start("تحميل, الرجاء الانتظار...");
+    $http.get('/admin/autoConfirm',{
+      'results': $scope.csv
+    }).success(function (results){
+      console.log($scope.csv);
+      blockUI.stop();
+      Notification.success({message: 'تمت المطابقة بنجاح', title: '<div class="text-right">نجاح</div>'});
+    }).error(function (data, status){
+      console.log(data);
+    });
+  };
+}]);
+
 // Angular Controllers End

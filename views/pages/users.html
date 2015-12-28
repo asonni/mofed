@@ -1,6 +1,6 @@
 <form data-ng-init="init()">
   <div class="row">
-    <div class="col-xs-12 -lg-12">
+    <div class="col-xs-12 col-lg-12">
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title">عرض المستخدمين</h3>
@@ -9,36 +9,38 @@
             مستخدم جديد
           </a>
         </div>
-        <table class="table table-striped table-condensed">
-          <thead>
-            <tr>
-              <th class="text-center">#</th>
-              <th class="text-center">الاسم</th>
-              <th class="text-center">البريد الالكتروني</th>
-              <th class="text-center">رقم الهاتف</th>
-              <th class="text-center">حذف</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="admin in admins">
-              <td class="text-center">
-                {{$index + 1}}
-              </td>
-              <td class="text-center">
-                {{admin.name}}
-              </td>
-              <td class="text-center">
-                {{admin.email}}
-              </td>
-              <td class="text-center">
-                {{admin.phone}}
-              </td>
-              <td class="text-center">
-                <button ng-click="sendID(admin._id)" value="{{admin._id}}" data-title="Delete" data-toggle="modal" data-target="#deleteUser" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-striped table-condensed">
+            <thead>
+              <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">الاسم</th>
+                <th class="text-center">البريد الالكتروني</th>
+                <th class="text-center">رقم الهاتف</th>
+                <th class="text-center">حذف</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="admin in admins">
+                <td class="text-center">
+                  {{$index + 1}}
+                </td>
+                <td class="text-center">
+                  {{admin.name}}
+                </td>
+                <td class="text-center">
+                  {{admin.email}}
+                </td>
+                <td class="text-center">
+                  {{admin.phone}}
+                </td>
+                <td class="text-center">
+                  <button ng-click="sendID(admin._id)" value="{{admin._id}}" data-title="Delete" data-toggle="modal" data-target="#deleteUser" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       <uib-pagination first-text="الاول" last-text="الاخير"  boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" previous-text="السابق" next-text="التالي" ng-click="init()"></uib-pagination>
     </div>
