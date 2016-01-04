@@ -70,8 +70,8 @@ body {
 }
 /*Style Logo End*/
 .start-important{
-  padding-top:5px;
-  color:red;
+  padding-top:3px;
+  /*color:red;*/
 }
 
 @media only screen and (max-width:1300px){

@@ -155,4 +155,12 @@ router.post('/forgotPassword', function (req, res, next) {
   });
 });
 
+router.get('/getJobInfo', helpers.isLogin, function (req, res, next) {
+  res.send({job:"testJob", area:"testArea"});
+});
+
+router.post('/addJobInfo', helpers.isLogin, function (req, res, next) {
+
+});
+
 module.exports = router;

@@ -14,6 +14,10 @@ app.config(['$routeProvider', '$locationProvider' , function($routeProvider, $lo
   .when('/confirm', {
     templateUrl: '../confirm.html',
     controller: 'ConfirmCtrl'
+  })
+  .when('/recruit', {
+    templateUrl: '../recruit.html',
+    controller: 'RecruitCtrl'
   });
   // $locationProvider.html5Mode({
   //   enabled: true,
@@ -174,6 +178,33 @@ app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', '
   $scope.unconfirm = function(){
     $location.path("/check");
     Notification.info({message: 'الرجاء التحقق من البيانات المدخلة او مراجعة إدارة البعثات', title: '<div class="text-right">رسالة تحقق</div>'});
+  }
+}]);
+
+
+app.controller('JobCtl',['$scope', '$http', 'blockUI', function($scope, $http, blockUI){
+  blockUI.start("تحميل, الرجاء الانتظار...");
+  $scope.getJobInfo = function(){
+    $http.get('/user/getJobInfo',{
+    }).success(function (results){
+      blockUI.stop();
+      $scope.job = results.job;
+      $scope.area = results.area;
+    }).error(function (data, status){
+      console.log(data);
+    });
+  }
+}]);
+
+app.controller('RecruitCtrl',['$scope', '$http', 'blockUI', function($scope, $http, blockUI){
+  $scope.addJobInfo = function(){
+    $http.post('/user/addJobInfo',{
+      'salary': $scope.salary
+    }).success(function (results){
+      console.log(results);
+    }).error(function (data, status){
+      console.log(data);
+    });
   }
 }]);
 // Angular Controllers End
