@@ -9,6 +9,7 @@ var passport = require('passport');
 var redis = require("redis"),
     client = redis.createClient();
 var RedisStore = require('connect-redis')(session);
+var autoconfirm = require('./controller/autoconfirm');
 
 var routes = require('./routes/index');
 var user = require('./routes/user');
@@ -63,6 +64,7 @@ app.use(function(req, res, next) {
   next(err);
 });
 
+autoconfirm.check();
 // error handlers
 
 // development error handler

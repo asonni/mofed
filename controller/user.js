@@ -304,7 +304,6 @@ module.exports = {
     .sort(sort)
     .exec(function(err, students){
       if (!err) {
-
         for (inx in students){
           lst.push(students[inx]._id);
         }
