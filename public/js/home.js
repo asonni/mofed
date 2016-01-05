@@ -183,11 +183,11 @@ app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', '
 
 
 app.controller('JobCtl',['$scope', '$http', 'blockUI', function($scope, $http, blockUI){
-  blockUI.start("تحميل, الرجاء الانتظار...");
+  // blockUI.start("تحميل, الرجاء الانتظار...");
   $scope.getJobInfo = function(){
     $http.get('/user/getJobInfo',{
     }).success(function (results){
-      blockUI.stop();
+      // blockUI.stop();
       $scope.job = results.job;
       $scope.area = results.area;
     }).error(function (data, status){
