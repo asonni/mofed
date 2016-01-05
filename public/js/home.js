@@ -70,7 +70,6 @@ app.service('checkService', function(){
   this.regnum = "";
   this.lawnum = "";
 });
-
 // Angular Custom Service End
 // Angular Controllers Start
 app.controller('HomeCtrl', ['$scope', '$http', '$location', 'blockUI', function($scope, $http, $location, blockUI) {
@@ -183,7 +182,12 @@ app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', '
 
 
 app.controller('JobCtl',['$scope', '$http', 'blockUI', function($scope, $http, blockUI){
-  // blockUI.start("تحميل, الرجاء الانتظار...");
+  blockUI.start("تحميل, الرجاء الانتظار...");
+  $http.post('/user/verify',{
+  }).success(function (results){
+    $scope.verify = results.verify;
+    blockUI.stop();
+  });
   $scope.getJobInfo = function(){
     $http.get('/user/getJobInfo',{
     }).success(function (results){
