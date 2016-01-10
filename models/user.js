@@ -18,7 +18,10 @@ var User = new Schema({
   	activated : {type: Boolean, default:false},
     admin : {type: Boolean, default:false},
   	verified: { type: Number, min: 1, max: 10, default:1 },
-  	studentId: { type : Date, default: Date.now }
+  	studentId: { type : Date, default: Date.now },
+    job : {type : String},
+    area : {type: String},
+    salary : {type : String}
 });
 User.plugin(timestamps);
 User.index({ name: 'text'});

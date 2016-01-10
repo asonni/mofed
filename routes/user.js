@@ -6,6 +6,7 @@ var user = require("../controller/user"),
     confirm = require('../controller/confirm'),
     helpers = require('../controller/userHelpers'),
     mailer = require('../controller/mailer'),
+    mofedarea = require('../controller/mofedarea'),
     config = require('../config'); // get our config file
 
 
@@ -156,10 +157,14 @@ router.post('/forgotPassword', function (req, res, next) {
 });
 
 router.get('/getJobInfo', helpers.isLogin, function (req, res, next) {
-  res.send({job:"testJob", area:"testArea"});
+  mofedarea.getJobInfo("119770248449", function(result){
+    console.log(result);
+    res.send({job:result.job, area:result.area,salary : req.user.salary});
+  })
 });
 
 router.post('/addJobInfo', helpers.isLogin, function (req, res, next) {
+  console.log("hello");
 
 });
 
