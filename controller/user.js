@@ -323,7 +323,31 @@ module.exports = {
         cb(null);
       }
     });
-  }
+  },
+
+  /* here update salary */
+  updatesalary: function (token,body, cb) {
+    User.findOne({_id : token}, function(err, user){
+      if(!err && user != null){
+        user.salary = body.salary;
+        user.save(function(err,result){
+          if (!err) {
+            delete result.password;
+            delete result.salt;
+            delete result.admin;
+            delete result.password;
+            cb(result);
+          } else {
+            //TODO: return page with errors
+            console.log(err)
+            cb(null);
+          }
+        });
+      } else {
+        cb(null);
+      }
+    });
+  },
 };
 
 

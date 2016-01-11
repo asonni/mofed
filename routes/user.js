@@ -164,7 +164,13 @@ router.get('/getJobInfo', helpers.isLogin, function (req, res, next) {
 });
 
 router.post('/addJobInfo', helpers.isLogin, function (req, res, next) {
-  console.log("hello");
+  user.updatesalary(req.user._id,req.body,function (result){
+    if(result) {
+      res.send({verify : result});
+    } else {
+      res.send({verify : null});
+    }
+  });
 
 });
 

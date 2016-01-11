@@ -182,12 +182,7 @@ app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', '
 
 
 app.controller('JobCtl',['$scope', '$http', 'blockUI', function($scope, $http, blockUI){
-  blockUI.start("تحميل, الرجاء الانتظار...");
-  $http.post('/user/verify',{
-  }).success(function (results){
-    $scope.verify = results.verify;
-    blockUI.stop();
-  });
+  // blockUI.start("تحميل, الرجاء الانتظار...");
   $scope.getJobInfo = function(){
     $http.get('/user/getJobInfo',{
     }).success(function (results){
@@ -203,7 +198,7 @@ app.controller('JobCtl',['$scope', '$http', 'blockUI', function($scope, $http, b
 app.controller('RecruitCtrl',['$scope', '$http', 'blockUI', function($scope, $http, blockUI){
   $scope.addJobInfo = function(){
     $http.post('/user/addJobInfo',{
-      
+      'salary': $scope.salary
     }).success(function (results){
       console.log(results);
     }).error(function (data, status){
