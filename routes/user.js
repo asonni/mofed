@@ -157,7 +157,7 @@ router.post('/forgotPassword', function (req, res, next) {
 });
 
 router.get('/getJobInfo', helpers.isLogin, function (req, res, next) {
-  mofedarea.getJobInfo("119770248449", function(result){
+  mofedarea.getJobInfo(req.user.nid, function(result){
     console.log(result);
     res.send({job:result.job, area:result.area,salary : req.user.salary});
   })
