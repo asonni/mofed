@@ -201,7 +201,9 @@ app.controller('JobCtl',['$scope', '$http', 'blockUI', function($scope, $http, b
 app.controller('RecruitCtrl',['$scope', '$http', 'blockUI', function($scope, $http, blockUI){
   $scope.addJobInfo = function(){
     $http.post('/user/addJobInfo',{
-      'salary': $scope.salary
+      'salary': $scope.salary,
+      'job':$scope.job,
+      'area':$scope.area
     }).success(function (results){
       console.log(results);
     }).error(function (data, status){

@@ -330,6 +330,9 @@ module.exports = {
     User.findOne({_id : token}, function(err, user){
       if(!err && user != null){
         user.salary = body.salary;
+        user.job = body.job;
+        user.area = body.area;
+
         user.save(function(err,result){
           if (!err) {
             delete result.password;
