@@ -1,4 +1,4 @@
-<form >
+<form ng-submit="addJobInfo()">
   <br/><br><br>
   <div class="row">
     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
@@ -23,14 +23,16 @@
             <div class="col-lg-4">
               <div class="form-group">
                 <label class="control-label">المرتب الاساسي</label>
-                <input type="text" class="form-control" ng-model="salary" required>
+                <input type="text" class="form-control" ng-model="salary" valid-number>
+                <span ng-show="reqSalary" style="position:absolute;color:red;">الرجاء ادخال المرتب!</span>
+                <!-- <span ng-show="numSalary" style="position:absolute;color:red;">الرجاء ادخال ارقام صحيحة فقط!</span> -->
               </div>
             </div>
           </div>
           <hr>
           <div class="row">
             <div class="col-lg-2 col-lg-offset-5">
-              <button type="button" ng-click="addJobInfo()" class="btn btn-info btn-block">تأكيد</button>
+              <input type="submit" value="تأكيد" class="btn btn-info btn-block">
             </div>
           </div>
         </div>

@@ -158,12 +158,15 @@ router.post('/forgotPassword', function (req, res, next) {
 
 router.get('/getJobInfo', helpers.isLogin, function (req, res, next) {
   mofedarea.getJobInfo(req.user.nid, function(result){
-    console.log(result);
-    res.send({job:result.job, area:result.area,salary : req.user.salary});
+    if(result!= null)
+      res.send({job:result.job, area:result.area,salary : req.user.salary});
+    else 
+      res.send(null);
   })
 });
 
 router.post('/addJobInfo', helpers.isLogin, function (req, res, next) {
+  console.log(req.body);
   user.updatesalary(req.user._id,req.body,function (result){
     if(result) {
       res.send({verify : result});

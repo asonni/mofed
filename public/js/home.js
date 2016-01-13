@@ -62,6 +62,32 @@ app.directive('autoActive', ['$location', function ($location) {
     }
   }
 }]);
+app.directive('validNumber', function() {
+  return {
+    require: '?ngModel',
+    link: function(scope, element, attrs, ngModelCtrl) {
+      if(!ngModelCtrl) {
+        return; 
+      }
+      ngModelCtrl.$parsers.push(function(val) {
+        if (angular.isUndefined(val)) {
+            var val = '';
+        }
+        var clean = val.replace( /[^0-9]+/g, '');
+        if (val !== clean) {
+          ngModelCtrl.$setViewValue(clean);
+          ngModelCtrl.$render();
+        }
+        return clean;
+      });
+      element.bind('keypress', function(event) {
+        if(event.keyCode === 32) {
+          event.preventDefault();
+        }
+      });
+    }
+  };
+});
 // Coustom Directive Start End
 // Angular Custom Service Start
 app.service('checkService', function(){
@@ -89,10 +115,14 @@ app.controller('HomeCtrl', ['$scope', '$http', '$location', 'blockUI', function(
       $scope.statusName = 'اكتمال مرحلة التأكيد';
     }
     else if (results.verify == 3) {
-      blockUI.stop();
+      $http.get('/user/getJobInfo',{
+      }).success(function (results){
+        $scope.result = results;
+      });
       $scope.verify = 100;
       $scope.type = 'success';
       $scope.statusName = 'اكتمال مرحلة التطابق';
+      blockUI.stop();
     }
   }).error(function (data, status){
     console.log(data);
@@ -182,33 +212,41 @@ app.controller('ConfirmCtrl', ['$scope', '$http', '$location', 'checkService', '
 
 
 app.controller('JobCtl',['$scope', '$http', 'blockUI', function($scope, $http, blockUI){
-  // blockUI.start("تحميل, الرجاء الانتظار...");
   $scope.getJobInfo = function(){
+    blockUI.start("تحميل, الرجاء الانتظار...");
     $http.get('/user/getJobInfo',{
     }).success(function (results){
-      // if (results) {
+      if (results) {
         $scope.job = results.job;
         $scope.area = results.area;
         $scope.salary = results.salary;
-        // blockUI.stop();
-      // }
+        blockUI.stop();
+      }
     }).error(function (data, status){
       console.log(data);
     });
   }
 }]);
 
-app.controller('RecruitCtrl',['$scope', '$http', 'blockUI', function($scope, $http, blockUI){
+app.controller('RecruitCtrl',['$scope', '$http', 'blockUI', '$location', 'Notification', function($scope, $http, blockUI, $location, Notification){
+  $scope.reqSalary = false;
   $scope.addJobInfo = function(){
-    $http.post('/user/addJobInfo',{
-      'salary': $scope.salary,
-      'job':$scope.job,
-      'area':$scope.area
-    }).success(function (results){
-      console.log(results);
-    }).error(function (data, status){
-      console.log(data);
-    });
+    if(!$scope.salary) {
+      $scope.reqSalary = true;
+    } else {
+      $scope.reqSalary = false;
+      $http.post('/user/addJobInfo',{
+        'job':$scope.job,
+        'area':$scope.area,
+        'salary':$scope.salary
+      }).success(function (results){
+        // console.log(results);
+        $location.path("/");
+        Notification.success({message: 'تمت اضافة قيمة المرتب ينجاح', title: '<div class="text-right">نجاح</div>'});
+      }).error(function (data, status){
+        console.log(data);
+      });
+    }
   }
 }]);
 // Angular Controllers End
