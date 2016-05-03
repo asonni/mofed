@@ -9,7 +9,20 @@ var passport = require('passport');
 var redis = require("redis"),
     client = redis.createClient();
 var RedisStore = require('connect-redis')(session);
+var MongoDBStore = require('connect-mongodb-session')(session);
 var autoconfirm = require('./controller/autoconfirm');
+
+var store = new MongoDBStore({
+  uri: 'mongodb://localhost:27017/mofed',
+  collection: 'mySessions'
+});
+
+// Catch errors
+store.on('error', function(error) {
+  assert.ifError(error);
+  assert.ok(false);
+});
+
 
 var routes = require('./routes/index');
 var user = require('./routes/user');
@@ -44,12 +57,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'views/pages')));
 // app.use(session({secret: 'mofed_app',resave: true,saveUninitialized: true}));
-app.use(session({store: new RedisStore({
-  client: client,
-  host:'127.0.0.1',
-  port:6379,
-  prefix:'sess'
-}), secret: 'SEKR37' }));
+app.use(session(
+  { store: store, 
+    secret: 'SEKR37',
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+    },
+    resave: true,
+    saveUninitialized: true 
+  }
+));
 app.use(passport.initialize());
 app.use(passport.session());
 
